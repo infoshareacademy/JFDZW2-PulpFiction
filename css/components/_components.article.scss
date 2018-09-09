@@ -3,12 +3,17 @@
     flex-wrap: wrap;
     background: $backgroudColor;
 }
-
+.c-creators--title{
+    color:$accentColor;
+    text-align: center;
+    width: 100%;
+}
 .c-avatar--box{
     width: 200px;
     height: auto;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 .c-avatar--txt{
     text-align: center;
