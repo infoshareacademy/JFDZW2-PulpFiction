@@ -34,8 +34,10 @@
 @import "components/components.sidebar";
 @import "components/components.testimonial";
 @import "components/components.cookies";
+@import "components/components.footer";
 
 
 /* Utilities */
 
-@import "utilities/utilities.layout"
+@import "utilities/utilities.layout";
+@import "utilities/utilities.all";
