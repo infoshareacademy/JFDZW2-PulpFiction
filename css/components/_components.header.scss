@@ -1,0 +1,16 @@
+* {
+    border: 1px solid orangered;
+    box-sizing: border-box;
+}
+
+.c-header {
+    width: 100%;
+    max-width: 1200px;
+    height: $headerHeight;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    position: fixed;
+    top: 0;
+}

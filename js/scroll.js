@@ -1,4 +1,8 @@
 function loadEvents() {
+    var target = document.getElementsByClassName('u-nav__button-return');
+    target[0].style.visibility = "hidden";
+    target[0].style.opacity = 0;
+
     window.addEventListener("scroll", function () {
         var target = document.getElementsByClassName('u-nav__button-return');
         if (window.pageYOffset > 100) {
