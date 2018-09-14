@@ -125,6 +125,18 @@
 }
 
 
+.u-nav__button-return {
+    display: inline-block;
+    position: fixed;
+    top: 90%;
+    left: 90%;
+    font-size: 3em;
+    color: $fontColor;
+    cursor: pointer;
+    //visibility: hidden;
+    transition: all .5s ease-in-out;
+}
+
 @media (min-width:$mobileScreen) {
 
     .c-menu__bar {
