@@ -1,3 +1,16 @@
 .u-blocked{
     display:block;
 }
+
+@for $i from 1 to 4 {
+    .u-order#{$i}{
+        order:#{$i};
+    }
+}
+
+@media (max-width:1024px)
+{
+  .u-order1, .u-order3{
+      display:none;
+  }
+}

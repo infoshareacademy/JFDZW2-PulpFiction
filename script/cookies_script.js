@@ -5,13 +5,13 @@ document.getElementById('close_cookies_link').addEventListener("click", cookiesH
 
 
 function cookiesFunction(){
-if(localStorage.getItem('cookies'))
+if(sessionStorage.getItem('cookies'))
 {
     var element = document.getElementById('cookies_info_container');
     element.classList.add('u-hidden');
 }
 else{  
-    localStorage.setItem("cookies", "true");
+    sessionStorage.setItem("cookies", "true");
 }}
 
 function cookiesHidden(){

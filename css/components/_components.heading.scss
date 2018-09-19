@@ -1,0 +1,93 @@
+#slider,
+.c-hero {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height:37.5vw;//z racji że obraz jest nominalnie wielkosci 1200x600 (50%), srodkowy slide zajmuje 6/8
+  //szerokosci ekranu zatem wysokosc jest to 100vh*6/8/2=37.5vh
+  overflow-x: hidden;
+}
+
+
+.c-hero {
+  position: relative;
+  &__elem{
+    display:flex;
+  }
+  &__slide{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    resize: both;
+    max-width: 1024px;
+    margin-left:auto;
+    margin-right: auto;
+    &--edge{
+      flex-grow:1;
+      opacity: 0.2;
+      height: 90%;
+      margin-top:auto;
+      margin-bottom:auto;
+      z-index:-1;
+      cursor: pointer;
+    }
+    &--main{
+      flex-grow:6;
+      opacity:1;
+      -webkit-box-shadow: 0px 0px 40px 0px rgba(0,0,0,0.7);
+      -moz-box-shadow: 0px 0px 40px 0px rgba(0,0,0,0.7);
+      box-shadow: 0px 0px 40px 0px rgba(0,0,0,0.7);
+      background-size: 100%;
+    }
+    &--left{
+
+    }
+    &--right{
+
+    }
+  }
+}
+
+.slide1 {
+  background-image: url("../img/slide1.jpeg");
+}
+.slide2 {
+  background-image: url("../img/slide2.jpg");
+}
+.slide3 {
+  background-image: url("../img/slide3.jpeg");
+
+}
+
+.c-hero__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: inherit;
+}
+
+.c-hero__arrow {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  margin-top: -35px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  &--left{
+    border-width: 30px 40px 30px 0;
+    border-color: transparent #000 transparent transparent;
+    left: 0;
+    margin-left: 30px;
+  }
+  &--right{
+    border-width: 30px 0 30px 40px;
+    border-color: transparent transparent transparent #000;
+    right: 0;
+    margin-right: 30px;
+  }
+}
+
+
