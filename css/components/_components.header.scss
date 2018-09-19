@@ -1,5 +1,5 @@
 * {
-    border: 1px solid orangered;
+   // border: 1px solid orangered;
     box-sizing: border-box;
 }
 
@@ -13,4 +13,9 @@
     padding: 0;
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 2;
+    background: rgba(red($backgroudColor), green($backgroudColor), blue($backgroudColor), 0.2);
 }

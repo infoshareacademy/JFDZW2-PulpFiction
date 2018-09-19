@@ -1,3 +1,5 @@
+window.onload=loadEvents
+
 function loadEvents() {
     var target = document.getElementsByClassName('u-nav__button-return');
     target[0].style.visibility = "hidden";
