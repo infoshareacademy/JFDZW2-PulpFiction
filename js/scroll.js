@@ -9,7 +9,7 @@ function loadEvents() {
         var target = document.getElementsByClassName('u-nav__button-return');
         if (window.pageYOffset > 100) {
             target[0].style.visibility = "visible";
-            target[0].style.opacity = 0.8;
+            target[0].style.opacity = 1;
         } else if (window.pageYOffset < 100) {
             target[0].style.visibility = "hidden";
             target[0].style.opacity = 0;

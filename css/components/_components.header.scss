@@ -1,11 +1,10 @@
 * {
-   // border: 1px solid orangered;
+    // border: 1px solid orangered;
     box-sizing: border-box;
 }
 
 .c-header {
     width: 100%;
-    max-width: 1200px;
     height: $headerHeight;
     display: flex;
     justify-content: space-between;
@@ -18,4 +17,10 @@
     margin: 0 auto;
     z-index: 2;
     background: rgba(red($backgroudColor), green($backgroudColor), blue($backgroudColor), 0.2);
+}
+
+@media (min-width:$mobileScreen) {
+    .c-header {
+        justify-content: space-around;
+    }
 }
