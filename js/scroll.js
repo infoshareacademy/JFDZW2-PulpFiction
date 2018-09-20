@@ -1,4 +1,4 @@
-window.onload=loadEvents
+window.onload = loadEvents
 
 function loadEvents() {
     var target = document.getElementsByClassName('u-nav__button-return');
@@ -31,7 +31,7 @@ function scroll(element) {
 
     var currentPos = window.pageYOffset;
 
-    var offsetElement = document.getElementsByClassName("u-dummy");
+    var offsetElement = document.getElementsByClassName("c-header");
     var offset = offsetElement[0].offsetHeight;
     window.scrollTo({
         top: currentPos + top - offset,
