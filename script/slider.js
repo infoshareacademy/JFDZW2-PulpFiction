@@ -5,7 +5,28 @@ var sliderImages = document.getElementsByClassName("c-hero__slide"),
   var timer;
   var leftslide, rightslide;
 
-  window.onload=setTimeout('slideRight()',7000);
+addOnload(slideAutomatic);
+
+  function slideAutomatic(){
+    setTimeout('slideRight()',7000);
+  }
+
+
+function addOnload(newFunction){
+  var oldOnload=window.onload;
+
+  if(typeof oldOnload =="function"){
+    window.onload=function(){
+      if(oldOnload){
+        oldOnload();
+      }
+      newFunction();
+    }
+  }else{
+    window.onload=newFunction();
+  }
+}
+
 
 // Clear all images
 function reset() {
