@@ -11,8 +11,8 @@
         border-radius: 3px;
         z-index: 1;
         transform-origin: 4px 0px;
-        transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
-            background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+        transition: transform 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+            background 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0),
             opacity 0.55s ease;
     }
 
@@ -65,7 +65,7 @@
     -webkit-font-smoothing: antialiased; // To stop flickering of text in Safari
     transform-origin: 0% 0%;
     transform: translate(200%, 0);
-    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+    transition: transform 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
 
     &__bar {
         display: block;
@@ -102,7 +102,17 @@
 
 .c-figure {
     min-width: 10em;
-    padding: 0.5em 1em;
+    padding: 0 0;
+
+    &__item {
+        color: $primaryColor;
+        font-size: $fontBasicSize * 1.3;
+        font-weight: bolder;
+        text-shadow: 1px 1px 2px;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+    }
 }
 
 .u-nav__button-return {
@@ -115,7 +125,7 @@
     top: 90%;
     left: 80%;
     cursor: pointer;
-    transition: all .5s ease-in-out;
+    transition: all .4s ease-in-out;
 }
 
 @media (min-width:$mobileScreen) {

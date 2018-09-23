@@ -19,36 +19,63 @@ function loadEvents() {
 
     var target1 = document.getElementsByClassName('u-nav__button-return');
     target1[0].addEventListener("click", function () {
-        scroll("hero");
+        scrollToElement("hero");
     }, false);
 
+
+    var myNav = document.getElementById('mynav');
+    window.addEventListener("scroll", function () {
+        if (window.pageYOffset >= 100) {
+            myNav.classList.add("c-header__small");
+        } else {
+            myNav.classList.remove("c-header__small");
+        }
+    }, false);
 }
 
-//function isIE() {
-//    const userAgent = navigator.userAgent;
-//    const regex = /(Trident|MSIE)/;
-//    return regex.test(userAgent);
-//}
+function searchChromeVersion() {
+    if (isChrome()) {
+        const userAgent = navigator.userAgent;
+        const chromeVersionSubs1 = userAgent.substr(userAgent.search(/(Chrome\/)/) + 7, userAgent.length - userAgent.search(/(Chrome\/)/) - 8);
+        return parseInt(chromeVersionSubs1.substr(0, chromeVersionSubs1.search(/\./)));
+    }
+    return 0;
+}
+
+function isChrome() {
+    const userAgent = navigator.userAgent;
+    const regex = /(Chrome\/)/;
+    return regex.test(userAgent);
+}
+
+function isIE() {
+    const userAgent = navigator.userAgent;
+    const regex = /(Trident|MSIE)/;
+    return regex.test(userAgent);
+}
 
 
 function scrollToElement(element) {
-    var elmnt = document.getElementById(element);
+    const elmnt = document.getElementById(element);
+    const top = elmnt.getBoundingClientRect().top;
+    const currentPos = window.pageYOffset;
+    const offsetElement = document.getElementsByClassName("c-header");
+    const offset = offsetElement[0].offsetHeight;
 
-    console.log(elmnt);
-    var top = elmnt.getBoundingClientRect().top;
-
-    var currentPos = window.pageYOffset;
-
-    var offsetElement = document.getElementsByClassName("c-header");
-    var offset = offsetElement[0].offsetHeight;
-
-    var dest = currentPos + top - offset;
-    var i = 10;
-    var int = setInterval(function () {
-        window.scrollTo(0, i);
-        i += 10;
-        if (i >= dest) clearInterval(int);
-    }, 20);
-
+    if (isIE() || isChrome() && searchChromeVersion() <= 69) {
+        const dest = currentPos + top - offset;
+        let i = currentPos;
+        const step = (dest - currentPos) / 100;
+        let int = setInterval(function () {
+            window.scrollTo(0, i);
+            i += step;
+            if (step > 0 && i >= dest || step < 0 && i <= dest) clearInterval(int);
+        }, 1);
+    } else {
+        window.scrollTo({
+            top: currentPos + top - offset,
+            left: 0,
+            behavior: "smooth"
+        });
+    }
 }
-
