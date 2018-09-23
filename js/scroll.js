@@ -24,18 +24,31 @@ function loadEvents() {
 
 }
 
+//function isIE() {
+//    const userAgent = navigator.userAgent;
+//    const regex = /(Trident|MSIE)/;
+//    return regex.test(userAgent);
+//}
 
-function scroll(element) {
+
+function scrollToElement(element) {
     var elmnt = document.getElementById(element);
+
+    console.log(elmnt);
     var top = elmnt.getBoundingClientRect().top;
 
     var currentPos = window.pageYOffset;
 
     var offsetElement = document.getElementsByClassName("c-header");
     var offset = offsetElement[0].offsetHeight;
-    window.scrollTo({
-        top: currentPos + top - offset,
-        left: 0,
-        behavior: "smooth"
-    });
+
+    var dest = currentPos + top - offset;
+    var i = 10;
+    var int = setInterval(function () {
+        window.scrollTo(0, i);
+        i += 10;
+        if (i >= dest) clearInterval(int);
+    }, 20);
+
 }
+
