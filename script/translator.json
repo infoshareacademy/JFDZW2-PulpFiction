@@ -1,0 +1,29 @@
+{
+
+    "en":
+        {
+            "home":"Home",
+            "product":"Product",
+            "team":"Team",
+            "contact":"Contact",
+            "follow":"Follow",
+            "project":"Project",
+            "takeInfo":"Follow us!"
+
+        },
+    
+
+
+    "pl":
+        {
+            "home":"Strona główna",
+            "product":"O produkcie",
+            "team":"O nas",
+            "contact":"Kontakt",
+            "follow":"Obserwuj",
+            "project":"Projekt",
+            "takeInfo":"Bądź na bieżąco!"
+
+        }
+
+}
