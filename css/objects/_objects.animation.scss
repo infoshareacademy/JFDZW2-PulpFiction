@@ -1,1 +1,15 @@
-.o-animation{}
+.o-animation{ 
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    transition-duration: 2s;
+    margin: 0 auto;
+    display: block;
+}
+
+.o-animation img:hover{
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    z-index: 0;
+}
