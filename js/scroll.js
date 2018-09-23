@@ -62,7 +62,7 @@ function scrollToElement(element) {
     const offsetElement = document.getElementsByClassName("c-header");
     const offset = offsetElement[0].offsetHeight;
 
-    if (isIE() || isChrome() && searchChromeVersion() <= 69) {
+    if (isIE() || isChrome() && searchChromeVersion() <= 62) {
         const dest = currentPos + top - offset;
         let i = currentPos;
         const step = (dest - currentPos) / 100;

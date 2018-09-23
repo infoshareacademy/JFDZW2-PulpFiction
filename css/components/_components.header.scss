@@ -29,6 +29,17 @@
         height: $headerHeight * 0.7;
         background: rgba(red($backgroundfooter), green($backgroundfooter), blue($backgroundfooter), 1);        
     }
+    &__flag{
+        position:fixed;
+        right:4rem;
+        margin-top:auto;
+        margin-bottom: auto;
+        text-align: center;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+
 }
 
 @media (min-width:$mobileScreen) {
