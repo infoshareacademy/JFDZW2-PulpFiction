@@ -148,3 +148,4 @@ arrowRight.addEventListener("click", function() {
   slideRight();
 });
 
+

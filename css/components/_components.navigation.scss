@@ -80,6 +80,9 @@
     &__item {
         padding: 10px 10px;
         font-size: $fontBasicSize;
+        &--hightlight{
+            background-color: $backgroundfooterHover;
+        }
     }
 
     &__anchor {
