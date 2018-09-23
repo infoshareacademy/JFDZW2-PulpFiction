@@ -1,16 +1,17 @@
 .c-creators{
     display: flex;
     flex-wrap: wrap;
-    background: $backgroudColor;
+    background: $backGroundColor;
 }
 .c-creators--title{
-    color:$accentColor;
+    margin-top: 15px;
+    color: $colorTeamFont;
     text-align: center;
     width: 100%;
 }
 .c-avatar--box{
-    width: 200px;
-    height: auto;
+    width: 250px;
+    height: 500px;
     padding: 5px;
     margin: auto;
     display: flex;
@@ -19,7 +20,7 @@
 }
 .c-avatar--txt{
     text-align: center;
-    color: $accentColor;
+    color: $primaryColor;
 }
 .c-avatar--txt p{
     color:$borderColor;
