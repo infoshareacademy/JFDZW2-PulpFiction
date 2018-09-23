@@ -8,7 +8,7 @@ var sliderImages = document.getElementsByClassName("c-hero__slide"),
 addOnload(slideAutomatic);
 
   function slideAutomatic(){
-    setTimeout('slideRight()',7000);
+    setTimeout('slideRight()',5000);
   }
 
 
@@ -93,7 +93,7 @@ for (let i = 0; i < sliderImages.length; i++) {
     sliderImages[i].classList.add("c-hero__slide--main");
   }
 }
-timer= setTimeout('slideRight()',7000);
+timer= setTimeout('slideRight()',5000);
 }
 
 // Show next
@@ -127,7 +127,7 @@ function slideRight() {
     }
   }
   
-  timer= setTimeout('slideRight()',7000);
+  timer= setTimeout('slideRight()',5000);
 }
 
 // Left arrow click

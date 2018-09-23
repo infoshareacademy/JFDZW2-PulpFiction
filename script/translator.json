@@ -1,0 +1,44 @@
+{
+
+    "en":
+        {
+            "home":"Home",
+            "product":"Product",
+            "team":"Team",
+            "contact":"Contact",
+            "follow":"Follow",
+            "project":"Project",
+            "takeInfo":"Follow us!",
+            "cookies":"By using the site you agree to the storage of cookies by the browser.",
+            "cancel":"Cancel",
+            "daniel":"Student 4-go roku telekomunikacji, zainteresowany technologiami platformy .NET. Uczestnik kursu Junior Front-end Developer.  Miłośnik sportów drużynowych, w szczególności piłki nożnej i siatkówki.",
+            "maria":"Uczestniczka kursu programistycznego. Autorka sekcji 'o produkcie'. Uwielbia zwierzeta i podroze.",
+            "michal":"Uczestnik kursu infoShare Academy. Filar naszego zespolu, autor sekcji nawigacyjnej. Zaangazowanie i motywacja to jego motto.",
+            "kuba":"Uczestnik kursu programistycznego Front-End by infoShare Academy. Walczy by zsotac programista. Hobby: Motoryzacja, Sport, Podroze.",
+            "aneta":"Uczestniczka kursu Front-End by infoShare Academy. Grafika i marketing nie jest jej obca. Autorka naszego logo. Lubi podrozowac i gotowac."
+
+        },
+    
+
+
+    "pl":
+        {
+            "home":"Strona główna",
+            "product":"Oferta",
+            "team":"O nas",
+            "contact":"Kontakt",
+            "follow":"Obserwuj",
+            "project":"Projekt",
+            "takeInfo":"Bądź na bieżąco!",
+            "cookies":"Korzystając z witryny wyrażasz zgodę na przechowywanie plików cookies przez przeglądarkę.",
+            "cancel":"Zamknij",
+            "daniel":"Student 4-go roku telekomunikacji, zainteresowany technologiami platformy .NET. Uczestnik kursu Junior Front-end Developer.  Miłośnik sportów drużynowych, w szczególności piłki nożnej i siatkówki.",
+            "maria":"Uczestniczka kursu programistycznego. Autorka sekcji 'o produkcie'. Uwielbia zwierzeta i podroze.",
+            "michal":"Uczestnik kursu infoShare Academy. Filar naszego zespolu, autor sekcji nawigacyjnej. Zaangazowanie i motywacja to jego motto.",
+            "kuba":"Uczestnik kursu programistycznego Front-End by infoShare Academy. Walczy by zsotac programista. Hobby: Motoryzacja, Sport, Podroze.",
+            "aneta":"Uczestniczka kursu Front-End by infoShare Academy. Grafika i marketing nie jest jej obca. Autorka naszego logo. Lubi podrozowac i gotowac."
+
+
+        }
+
+}

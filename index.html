@@ -23,15 +23,19 @@
                     <span class="c-hamburger-icon"></span>
                     <span class="c-hamburger-icon"></span>
 
-                    <ul class="c-menu">
-                        <li class="c-menu__item"><a class="c-menu__anchor" href="javascript:scrollToElement('hero');">Home</a></li>
-                        <li class="c-menu__item"><a class="c-menu__anchor" href="javascript:scrollToElement('about');">Product</a></li>
-                        <li class="c-menu__item"><a class="c-menu__anchor" href="javascript:scrollToElement('creators');">Team</a></li>
-                        <li class="c-menu__item"><a class="c-menu__anchor" href="javascript:scrollToElement('contact');">Contact us</a></li>
+                    <ul id="id_menu"class="c-menu">
+                        <li class="c-menu__item"><a data-language="home" class="c-menu__anchor" href="javascript:scroll('hero')">Strona główna</a></li>
+                        <li class="c-menu__item"><a data-language="product" class="c-menu__anchor" href="javascript:scroll('about')">Oferta</a></li>
+                        <li class="c-menu__item"><a data-language="team" class="c-menu__anchor" href="javascript:scroll('creators')">O nas</a></li>
+                        <li class="c-menu__item"><a data-language="contact" class="c-menu__anchor" href="javascript:scroll('contact')">Kontakt</a></li>
                     </ul>
                 </div>
                 <span class="u-nav__button-return"><!--&#8648;--></span>
             </nav>
+            <div class="c-header__flag">
+                <img class="c-header__flag--img" src="img/uk-flag.png" alt="en">
+                <img src="img/pol-flag.png" class="c-header__flag--img" alt="pl">
+            </div>
         </header>
         <section class="c-hero" id="hero">
             <div id="arrow-left" class="c-hero__arrow c-hero__arrow--left"></div>
@@ -54,7 +58,7 @@
         <section class="c-contact" id="contact"></section>
         <section class="c-creators" id="creators">
             <div class="c-creators--title">
-                <h1>About Team</h1>
+                <h1 data-language="team">O nas</h1>
             </div>
             <!-- DANIEL SEKCJA -->
             <figure class="c-avatar--box">
@@ -63,7 +67,7 @@
                 </div>
                 <figcaption class="c-avatar--txt">
                 <h2>Daniel</h2>
-                <p>Student 4-go roku telekomunikacji, zainteresowany technologiami platformy .NET. 
+                <p data-language="daniel">Student 4-go roku telekomunikacji, zainteresowany technologiami platformy .NET. 
                     Uczestnik kursu Junior Front-end Developer. 
                     Miłośnik sportów drużynowych, w szczególności piłki nożnej i siatkówki.</p>
                 </figcaption>
@@ -86,7 +90,7 @@
                 </div>
                 <figcaption class="c-avatar--txt">
                 <h2>Michal</h2>
-                <p>Uczestnik kursu infoShare Academy.
+                <p data-language="michal">Uczestnik kursu infoShare Academy.
                     Filar naszego zespolu, autor sekcji nawigacyjnej.
                     Zaangazowanie i motywacja to jego motto.
                     
@@ -110,7 +114,7 @@
                 </div>
                 <figcaption class="c-avatar--txt">
                 <h2>Maria</h2>
-                <p>Uczestniczka kursu programistycznego.
+                <p data-language="maria">Uczestniczka kursu programistycznego.
                     Autorka sekcji "o produkcie".
                     Uwielbia zwierzeta i podroze.
                 </p></figcaption>
@@ -133,7 +137,7 @@
                 </div>
                 <figcaption class="c-avatar--txt">
                 <h2>Aneta</h2>
-                <p>Uczestniczka kursu Front-End by infoShare Academy.
+                <p data-language="aneta">Uczestniczka kursu Front-End by infoShare Academy.
                     Grafika i marketing nie jest jej obca. Autorka naszego logo.
                     Lubi podrozowac i gotowac.
                 </p></figcaption>
@@ -156,7 +160,7 @@
                 </div>
                 <figcaption class="c-avatar--txt">
                     <h2>Kuba</h2>
-                    <p>Uczestnik kursu programistycznego Front-End by infoShare Academy.
+                    <p data-language="kuba">Uczestnik kursu programistycznego Front-End by infoShare Academy.
                         Walczy by zsotac programista. 
                         Hobby: Motoryzacja, Sport, Podroze.
                     </p></figcaption>
@@ -177,14 +181,14 @@
             <div class="c-footer__content">
                 <div class="c-footer__nav">
                     <ul class="c-footer__list">
-                        <li class="c-footer__elem"><a class="c-footer__link o-link u-blocked" href="">Projekt</a></li>
-                        <li class="c-footer__elem"><a class="c-footer__link o-link u-blocked" href="">Obserwuj</a></li>
-                        <li class="c-footer__elem"><a class="c-footer__link o-link u-blocked" href="">Kontakt</a></li>
-                        <li class="c-footer__elem"><a class="c-footer__link o-link u-blocked" href="">O nas</a></li>
+                        <li class="c-footer__elem"><a data-language="project" class="c-footer__link o-link u-blocked" href="">Projekt</a></li>
+                        <li class="c-footer__elem"><a data-language="follow" class="c-footer__link o-link u-blocked" href="">Obserwuj</a></li>
+                        <li class="c-footer__elem"><a data-language="contact" class="c-footer__link o-link u-blocked" href="">Kontakt</a></li>
+                        <li class="c-footer__elem"><a data-language="team" class="c-footer__link o-link u-blocked" href="">O nas</a></li>
                     </ul>
                 </div>
                 <div class="c-footer__SM">
-                    <span>Bądź na bieżąco!</span>
+                    <span data-language="follow_us">Bądź na bieżąco!</span>
                     <div class="c-social-media">
                         <figure class="c-footer__img"><img height="64" src="img/facebook.svg" alt=""></figure>
                         <figure class="c-footer__img"><img height="64" src="img/linkedin.svg" alt=""></figure>
@@ -198,15 +202,17 @@
         <div class="c-cookies c-cookies--steaky" id="cookies_info_container">
             <nav class="c-cookies__nav">
                 <div class="c-cookies__text">
-                    <span>Korzystając z witryny wyrażasz zgodę na przechowywanie plików cookies przez przeglądarkę.</span>
+                    <span data-language="cookies">Korzystając z witryny wyrażasz zgodę na przechowywanie plików cookies przez przeglądarkę.</span>
                 </div>
-                <button id="close_cookies_link" class="o-btn__nav c-cookies__btn" href="">Zamknij</button>
+                <button data-language="cancel" id="close_cookies_link" class="o-btn__nav c-cookies__btn" href="">Zamknij</button>
             </nav>
         </div>
     </div>
+    <script src="script/translator.js"></script>
     <script src="script/cookies_script.js"></script>
     <script src="script/slider.js"></script>
     <script async defer src="js/scroll.js"></script>
+
 </body>
 
 </html>

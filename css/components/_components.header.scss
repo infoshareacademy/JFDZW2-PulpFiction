@@ -17,6 +17,17 @@
     margin: 0 auto;
     z-index: 2;
     background: rgba(red($backgroundfooter), green($backgroundfooter), blue($backgroundfooter), 0.9);
+    &__flag{
+        position:fixed;
+        right:4rem;
+        margin-top:auto;
+        margin-bottom: auto;
+        text-align: center;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+
 }
 
 @media (min-width:$mobileScreen) {
