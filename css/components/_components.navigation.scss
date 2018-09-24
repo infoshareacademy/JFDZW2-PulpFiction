@@ -58,17 +58,22 @@
 .c-menu {
     position: absolute;
     width: 300px;
-    margin: 0.4em 0 0 -10em;
+    margin: 0.4em 0 0 -14em;
     padding: 4em;
     background: rgba(red($backgroundfooter), green($backgroundfooter), blue($backgroundfooter), 0.9);
     list-style-type: none;
     -webkit-font-smoothing: antialiased; // To stop flickering of text in Safari
     transform-origin: 0% 0%;
     transform: translate(200%, 0);
-    transition: transform 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+    transition: all 0.57s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+
+    &__small {
+        margin: -0.1em 0 0 -14em;
+        background: $backgroundfooter;
+    }
 
     &__bar {
-        display: block;
+        display: inline-block;
         position: relative;
         top: 0.5em;
         right: 1em;
@@ -146,6 +151,8 @@
         padding-top: 0;
         text-align: center;
         background: transparent;
+
+        &__small {}
 
         &__bar {
             top: auto;

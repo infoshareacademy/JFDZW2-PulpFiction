@@ -24,11 +24,14 @@ function loadEvents() {
 
 
     var myNav = document.getElementById('mynav');
+    var myMenu = document.getElementById('id_menu');
     window.addEventListener("scroll", function () {
         if (window.pageYOffset >= 100) {
             myNav.classList.add("c-header__small");
+            myMenu.classList.add('c-menu__small');
         } else {
             myNav.classList.remove("c-header__small");
+            myMenu.classList.remove('c-menu__small');
         }
     }, false);
 }
@@ -45,8 +48,15 @@ function searchChromeVersion() {
 function isChrome() {
     const userAgent = navigator.userAgent;
     const regex = /(Chrome\/)/;
+    return regex.test(userAgent) && (!isEdge());
+}
+
+function isEdge() {
+    const userAgent = navigator.userAgent;
+    const regex = /(Edge\/)/;
     return regex.test(userAgent);
 }
+
 
 function isIE() {
     const userAgent = navigator.userAgent;
