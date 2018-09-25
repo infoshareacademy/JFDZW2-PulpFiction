@@ -1,5 +1,6 @@
 window.onload = loadEvents
 
+
 function loadEvents() {
     var target = document.getElementsByClassName('u-nav__button-return');
     target[0].style.visibility = "hidden";
@@ -65,12 +66,13 @@ function isIE() {
 }
 
 
+const offsetElement = document.getElementsByClassName("c-header");
+const offset = offsetElement[0].offsetHeight;
+
 function scrollToElement(element) {
     const elmnt = document.getElementById(element);
     const top = elmnt.getBoundingClientRect().top;
     const currentPos = window.pageYOffset;
-    const offsetElement = document.getElementsByClassName("c-header");
-    const offset = offsetElement[0].offsetHeight;
 
     if (isIE() || isChrome() && searchChromeVersion() <= 62) {
         const dest = currentPos + top - offset;
