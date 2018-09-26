@@ -1,43 +1,41 @@
 {
 
-    "en":
-        {
-            "home":"Home",
-            "product":"Product",
-            "team":"Team",
-            "contact":"Contact",
-            "follow":"Follow",
-            "project":"Project",
-            "takeInfo":"Follow us!",
-            "cookies":"By using the site you agree to the storage of cookies by the browser.",
-            "cancel":"Cancel",
-            "daniel":"Lider zespołu. Student 4-go roku telekomunikacji, zainteresowany technologiami platformy .NET. Uczestnik kursu infoShare Academy. Miłośnik sportów drużynowych, w szczególności piłki nożnej i siatkówki.",
-            "maria":"Autorka sekcji 'zapis na newsletter'. Uczestniczka kursu infoShare Academy. Jej pasją są podróże, które upamiętnia świenymi zdjęciami. Zawsze radosna i uśmiechnięta.",
-            "michal":"Filar naszego zespołu, autor sekcji nawigacyjnej. Uczestnik kursu infoShare Academy. Pasjonat nowych technologii i nowoczesnych rozwiązań. Zawsze zaangażowany w to co robi.",
-            "kuba":"Odpowiedzialny za sekcje 'About Team'. Uczestnik kursu infoShare Academy. Walczy by zsotać programistą. Wielbiciel motoryzacji w szczególności japońskiej i sportów w każdej postaci.",
-            "aneta":"Autorka sekcji 'o produkcie'. Kreatorka elementów graficznych strony. Grafika i marketing nie jest jej obca. Uczestniczka kursu infoShare Academy. Uwielbia włoską kuchnie i zabawy ze swoją córeczką."
+    "en": {
+        "home": "Home",
+        "product": "Product",
+        "team": "Team",
+        "contact": "Contact",
+        "follow": "Follow",
+        "project": "Project",
+        "takeInfo": "Follow us!",
+        "cookies": "By using the site you agree to the storage of cookies by the browser.",
+        "cancel": "Close",
+        "daniel": "Team leader. Fourth year undergraduate of telecommunication, interested in .NET platform. infoShare Academy training participant. Passionate about team sports, particularly football and basketball.",
+        "maria": "Creator of the section \"Subcribe to the newsletter\". infoShare Academy training participant. Her passion is traveling, which commemorates great photos, always joyful and smiling.",
+        "michal": "The pillar of our team, the author of the navigation section. infoShare Academy training participant. Passionate about new technologies and modern solutions. Always involved in what he does.",
+        "kuba": "Responsible for the \"About team\" section. Participant of the infoShare Academy course. Struggling to be a programmer. An enthusiast of motorization in particular Japanese, and sports in every form.",
+        "aneta": "Author of \"About the product\" section. Creator of page graphic elements. Graphics and marketing are familiar to her. infoShare Academy training participant. She loves Italian cuisine and playing with her daughter."
 
-        },
-    
+    },
 
 
-    "pl":
-        {
-            "home":"Strona główna",
-            "product":"Oferta",
-            "team":"O nas",
-            "contact":"Kontakt",
-            "follow":"Obserwuj",
-            "project":"Projekt",
-            "takeInfo":"Bądź na bieżąco!",
-            "cookies":"Korzystając z witryny wyrażasz zgodę na przechowywanie plików cookies przez przeglądarkę.",
-            "cancel":"Zamknij",
-            "daniel":"Lider zespołu. Student 4-go roku telekomunikacji, zainteresowany technologiami platformy .NET. Uczestnik kursu infoShare Academy. Miłośnik sportów drużynowych, w szczególności piłki nożnej i siatkówki.",
-            "maria":"Autorka sekcji 'zapis na newsletter'. Uczestniczka kursu infoShare Academy. Jej pasją są podróże, które upamiętnia świenymi zdjęciami. Zawsze radosna i uśmiechnięta.",
-            "michal":"Filar naszego zespołu, autor sekcji nawigacyjnej. Uczestnik kursu infoShare Academy. Pasjonat nowych technologii i nowoczesnych rozwiązań. Zawsze zaangażowany w to co robi.",
-            "kuba":"Odpowiedzialny za sekcje 'About Team'. Uczestnik kursu infoShare Academy. Walczy by zsotać programistą. Wielbiciel motoryzacji w szczególności japońskiej i sportów w każdej postaci.",
-            "aneta":"Autorka sekcji 'o produkcie'. Kreatorka elementów graficznych strony. Grafika i marketing nie jest jej obca. Uczestniczka kursu infoShare Academy. Uwielbia włoską kuchnie i zabawy ze swoją córeczką."
 
-        }
+    "pl": {
+        "home": "Strona główna",
+        "product": "Oferta",
+        "team": "O nas",
+        "contact": "Kontakt",
+        "follow": "Obserwuj",
+        "project": "Projekt",
+        "takeInfo": "Bądź na bieżąco!",
+        "cookies": "Korzystając z witryny wyrażasz zgodę na przechowywanie plików cookies przez przeglądarkę.",
+        "cancel": "Zamknij",
+        "daniel": "Lider zespołu. Student 4-go roku telekomunikacji, zainteresowany technologiami platformy .NET. Uczestnik kursu infoShare Academy. Miłośnik sportów drużynowych, w szczególności piłki nożnej i siatkówki.",
+        "maria": "Autorka sekcji 'zapis na newsletter'. Uczestniczka kursu infoShare Academy. Jej pasją są podróże, które upamiętnia świenymi zdjęciami. Zawsze radosna i uśmiechnięta.",
+        "michal": "Filar naszego zespołu, autor sekcji nawigacyjnej. Uczestnik kursu infoShare Academy. Pasjonat nowych technologii i nowoczesnych rozwiązań. Zawsze zaangażowany w to co robi.",
+        "kuba": "Odpowiedzialny za sekcję \"O zespole\". Uczestnik kursu infoShare Academy. Walczy by zostać programistą. Wielbiciel motoryzacji w szczególności japońskiej i sportów w każdej postaci.",
+        "aneta": "Autorka sekcji \"O produkcie\". Kreatorka elementów graficznych strony. Grafika i marketing nie jest jej obca. Uczestniczka kursu infoShare Academy. Uwielbia włoską kuchnie i zabawy ze swoją córeczką."
+
+    }
 
 }
