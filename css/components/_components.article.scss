@@ -1,0 +1,62 @@
+.c-creators{
+    display: flex;
+    flex-wrap: wrap;
+    background: $backGroundColor;
+}
+.c-creators--title{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    color: $colorTeamFont;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+}
+.c-avatar--box{
+    width: 250px;
+    height: 500px;
+    padding: 5px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.c-avatar--txt{
+    text-align: center;
+    color: $primaryColor;
+}
+.c-avatar--txt h2{
+    margin-bottom: 10px;
+    font-size: 32px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.c-avatar--txt p{
+    color:$borderColor;
+    font-family: 'Helvetica Neue' Helvetica, sans-serif;
+}
+.c-social a{
+    text-decoration: none;
+}
+//--- ICON SHAKE --- //
+.c-social img:hover {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  @keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    
+    20%, 80% {
+      transform: translate3d(1.5px, 0, 0);
+    }
+  
+    30%, 50%, 70% {
+      transform: translate3d(-1px, 0, 0);
+    }
+  
+    40%, 60% {
+      transform: translate3d(1.5px, 0, 0);
+    }
+  }

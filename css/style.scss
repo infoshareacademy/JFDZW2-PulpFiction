@@ -23,6 +23,7 @@
 @import "objects/objects.layout";
 @import "objects/objects.link";
 @import "objects/objects.list";
+@import "objects/objects.animation";
 
 /* Components */
 
@@ -33,6 +34,11 @@
 @import "components/components.navigation";
 @import "components/components.sidebar";
 @import "components/components.testimonial";
+@import "components/components.cookies";
+@import "components/components.footer";
+@import "components/component.contact";
 
-@import "components/_component.contact.scss";
 /* Utilities */
+
+@import "utilities/utilities.layout";
+@import "utilities/utilities.all";

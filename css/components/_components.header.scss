@@ -1,0 +1,55 @@
+* {
+    //border: 1px solid orangered;
+    box-sizing: border-box;
+}
+
+.c-header {
+    width: 100%;
+    height: $headerHeight;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 2;
+    background: rgba(red($backgroundfooter), green($backgroundfooter), blue($backgroundfooter), 0.9);
+    transition: all 0.6s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+
+    &__logo {
+        height: $headerHeight;
+        opacity: 0.8;
+        transition: transform 1s ease-in-out;
+
+        &:hover {
+            transform: rotate(-300deg) scale(1.2);
+        }
+    }
+
+
+    &__small {
+        height: $headerHeight * 0.7;
+        background: rgba(red($backgroundfooter), green($backgroundfooter), blue($backgroundfooter), 1);
+    }
+
+    &__flag {
+        display: inline-block;
+        padding: 0 10px;
+        margin: 0 auto;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+}
+
+@media (min-width:$mobileScreen) {
+    .c-header {
+        justify-content: space-around;
+        min-width: $minWidth;
+    }
+}
