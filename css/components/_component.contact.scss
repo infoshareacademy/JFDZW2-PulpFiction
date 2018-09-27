@@ -1,7 +1,37 @@
-.c-contact{
+.c-contact {
     min-width: 600px;
     max-width: 1200px;
     position: absolute;
     left: 50%;
     bottom: 65px;
-    margin-left: -371px}
+    margin-left: -371px
+}
+
+.c-contact__form {
+    padding: 10px;
+}
+
+.c-contact__label {
+    display: inline-block;
+    padding: 20px;
+    margin: 10px;
+    color: $fontColor
+}
+
+.c-contact__input {
+    display: inline-block;
+    background-color: $backgroudColor;
+    padding: 20px;
+    margin: 10px;
+    color: $fontColor;
+    border-radius: 5px
+}
+
+.c-contact__submit {
+    border-radius: 10px;
+    background-color: $backgroudColor;
+    padding: 20px;
+    margin: 10px;
+    cursor: pointer;
+    //border: none;
+}
