@@ -85,7 +85,8 @@
     &__item {
         padding: 10px 10px;
         font-size: $fontBasicSize;
-        &--hightlight{
+
+        &--hightlight {
             background-color: $backgroundfooterHover;
         }
     }
@@ -130,10 +131,10 @@
     border-width: 30px 30px 40px 30px;
     border-color: transparent transparent $borderColor transparent;
     position: fixed;
-    top: 90%;
-    left: 80%;
+    top: 90vh;
+    left: 80vw;
     cursor: pointer;
-    transition: all .4s ease-in-out;
+    transition: opacity 0.5s linear;
 }
 
 @media (min-width:$mobileScreen) {
@@ -185,6 +186,6 @@
     }
 
     .u-nav__button-return {
-        left: 90%;
+        left: 90vw;
     }
 }

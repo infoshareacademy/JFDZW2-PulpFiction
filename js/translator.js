@@ -58,7 +58,7 @@ if(flags.item(1).classList.contains("u-hidden")){
 
 function changeLanguage(language){
     var ourRequest = new XMLHttpRequest();
-    ourRequest.open('GET', 'script/translator.json');
+    ourRequest.open("GET", "js/translator.json");
     ourRequest.onload = function() {
       if (ourRequest.status >= 200 && ourRequest.status < 400) {
         var ourData = JSON.parse(ourRequest.responseText);
