@@ -2,14 +2,16 @@
     display: flex;
     flex-wrap: wrap;
     background: $backGroundColor;
-}
-.c-creators--title{
     margin-top: 15px;
+}
+.c-creators--title{   
     margin-bottom: 15px;
     color: $colorTeamFont;
     font-size: 20px;
     text-align: center;
     width: 100%;
+    background: white;
+
 }
 .c-avatar--box{
     width: 250px;
