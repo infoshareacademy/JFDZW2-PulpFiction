@@ -8,13 +8,13 @@ var creators_nav = document.getElementById("creators_nav");
 var product_nav = document.getElementById("product_nav");
 
 window.addEventListener("scroll", function () {
-    if (window.scrollY < hero_elem.scrollHeight) {
+    if (window.scrollY < hero_elem.scrollHeight/2) {
         clearHightlight();
         home_nav.classList.add("c-menu__item--hightlight");
-    } else if (window.scrollY < (hero_elem.scrollHeight + product_elem.scrollHeight)) {
+    } else if (window.scrollY < (hero_elem.scrollHeight + product_elem.scrollHeight/2)) {
         clearHightlight();
         product_nav.classList.add("c-menu__item--hightlight");
-    } else if (window.scrollY < (hero_elem.scrollHeight + product_elem.scrollHeight + contact_elem.scrollHeight)) {
+    } else if (window.scrollY < (hero_elem.scrollHeight + product_elem.scrollHeight + contact_elem.scrollHeight/2)) {
         clearHightlight();
         contact_nav.classList.add("c-menu__item--hightlight");
     } else {
