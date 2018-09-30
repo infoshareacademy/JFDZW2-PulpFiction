@@ -1,0 +1,133 @@
+.c-contact{
+  margin-top:2rem;
+  display:flex;
+  flex-wrap:nowrap;
+  justify-content: center;
+  padding:1rem;
+  background:$backgroundfooter;
+
+  &__content{
+    flex-basis: 50%;
+    display:flex;
+  flex-wrap:nowrap;
+  justify-content: space-between;
+  background: white;
+  box-shadow: 0px 0px 104px 8px rgba(0,0,0,0.75);
+  opacity:0.8;
+  border-radius:5px;
+  &--img{
+
+  }
+  }
+}
+
+.c-login {
+  border-radius: 5px;
+  text-align: center;
+  color: rgb(250, 251, 253);
+  max-width: 300px;
+  padding: 15px 40px 20px 40px;
+  margin-left: 1000px;
+  margin-bottom: 50px;
+}
+
+.c-login__text {
+  margin-top: 20;
+  margin-bottom: 15px;
+  font-size: 30px;
+  font-family: 'Cuprum', sans-serif;
+  font-family: 'Finger Paint', cursive;
+  font-family: 'Baloo Paaji', cursive;
+  color:$backgroundfooter;
+}
+
+.c-login__title {
+ // color: rgb(231, 214, 214);
+  color:$backgroundfooter;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 15px;
+  font-family: 'Cuprum', sans-serif;
+  font-family: 'Finger Paint', cursive;
+  font-family: 'Baloo Paaji', cursive;
+  font-family: 'Gurajada', serif;
+}
+
+.c-login__input {
+  display: inline-block;
+  color: #252537;
+  background-color: $primaryColor;
+  width: 200px;
+  height: 50px;
+  border:1px solid $backgroundfooter !important;
+
+
+  outline: none;
+  border: none;
+
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s linear;
+
+  margin: 7% auto;
+  letter-spacing: 0.02em;
+}
+
+.c-login_input:focus {
+  outline: none;
+}
+
+.c-login__input--password {
+  border-bottom: 1px solid rgb(122, 78, 37);
+  border-top: px solid rgb(55, 56, 56);
+}
+
+.c-login__input--password:first-child {
+  border-top: 0;
+}
+
+.c-login__input--password:last-child {
+  border-bottom: 10;
+}
+
+.c-login__button {
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+  line-height: 2em;
+  background: rgb(214, 109, 11);
+  border-radius: 5px;
+  border: 0;
+  cursor: pointer;
+  border-top: 1px solid rgb(243, 120, 6);
+  box-shadow: 0 0 0 1px rgb(243, 120, 6), 0 2px 2px rgb(243, 120, 6);
+  color: rgb(248, 244, 244);
+  font-size: 1.5em;
+  text-shadow: 0 1px 2px rgb(243, 120, 6);
+}
+
+.c-login__button:hover {
+  background: linear-gradient(to bottom, rgb(189, 86, 2) 0%, rgb(250, 81, 3) 100%);
+}
+
+.c-login__button:active {
+  box-shadow: inset 0 0 5px rgb(247, 120, 2);
+  background: linear-gradient(to bottom, rgb(250, 81, 3) 0%, rgb(250, 81, 3) 100%);
+}
+
+.c-login__informacja {
+
+  color: rgb(250, 249, 249);
+  margin-top: 1;
+  padding-top: 15px;
+  margin-bottom: 15px;
+  font-size: 10px;
+  font-style: oblique;
+}
+
+
+@media (max-width:$tabletScreen){
+  .c-contact__content--img{
+    display:none;
+  }
+}

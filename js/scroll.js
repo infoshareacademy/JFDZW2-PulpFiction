@@ -2,30 +2,31 @@ window.onload = loadEvents
 
 
 function loadEvents() {
-    var target = document.getElementsByClassName('u-nav__button-return');
-    target[0].style.visibility = "hidden";
-    target[0].style.opacity = 0;
+    var target = document.getElementsByClassName("u-nav__button-return");
+    if (window.pageYOffset < 100) {
+        if (!target[0].classList.contains("u-fadeout")) {
+            target[0].classList.add("u-fadeout");
+        }
+    }
 
     window.addEventListener("scroll", function () {
-        var target = document.getElementsByClassName('u-nav__button-return');
         if (window.pageYOffset > 100) {
-            target[0].style.visibility = "visible";
-            target[0].style.opacity = 1;
+            if (target[0].classList.contains("u-fadeout")) {
+                target[0].classList.remove("u-fadeout");
+            }
         } else if (window.pageYOffset < 100) {
-            target[0].style.visibility = "hidden";
-            target[0].style.opacity = 0;
+            if (!target[0].classList.contains("u-fadeout")) {
+                target[0].classList.add("u-fadeout");
+            }
         }
     }, false);
 
-
-    var target1 = document.getElementsByClassName('u-nav__button-return');
-    target1[0].addEventListener("click", function () {
+    target[0].addEventListener("click", function () {
         scrollToElement("hero");
     }, false);
 
-
-    var myNav = document.getElementById('mynav');
-    var myMenu = document.getElementById('id_menu');
+    var myNav = document.getElementById("mynav");
+    var myMenu = document.getElementById("id_menu");
     window.addEventListener("scroll", function () {
         if (window.pageYOffset >= 100) {
             myNav.classList.add("c-header__small");
@@ -58,13 +59,11 @@ function isEdge() {
     return regex.test(userAgent);
 }
 
-
 function isIE() {
     const userAgent = navigator.userAgent;
     const regex = /(Trident|MSIE)/;
     return regex.test(userAgent);
 }
-
 
 const offsetElement = document.getElementsByClassName("c-header");
 const offset = offsetElement[0].offsetHeight;
@@ -73,16 +72,21 @@ function scrollToElement(element) {
     const elmnt = document.getElementById(element);
     const top = elmnt.getBoundingClientRect().top;
     const currentPos = window.pageYOffset;
+    const dest = currentPos + top - offset;
+    const step = Math.sign(dest - currentPos) * 10;
+    let destPos = currentPos;
 
     if (isIE() || isChrome() && searchChromeVersion() <= 62) {
-        const dest = currentPos + top - offset;
-        let i = currentPos;
-        const step = (dest - currentPos) / 100;
-        let int = setInterval(function () {
-            window.scrollTo(0, i);
-            i += step;
-            if (step > 0 && i >= dest || step < 0 && i <= dest) clearInterval(int);
+        let int = setInterval(() => {
+            destPos += step;
+            window.scrollTo(0, destPos);
+            if (step > 0 && destPos >= dest ||
+                step < 0 && destPos <= dest) {
+                clearInterval(int);
+            }
         }, 1);
+        let event = new Event("scroll");
+        window.dispatchEvent(event);
     } else {
         window.scrollTo({
             top: currentPos + top - offset,

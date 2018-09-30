@@ -4,7 +4,36 @@
 
 }
 
-.c-about-project,
-.c-contact {
-    height: 800px;
+.c-about-project {
+    width: 100%;
+
+    &__title{
+        text-align: center;
+    }
+
+    margin-top:2rem;
+
+}
+
+.c-flexbox-product {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.c-box {
+    min-width: 220px;
+    max-width: 300px;
+    height:auto;
+    padding: 5px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.c-about-product--txt {
+    text-align: center;
+    color: $accentColor;
+
 }
