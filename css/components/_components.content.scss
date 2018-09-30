@@ -18,7 +18,30 @@
 .c-flexbox-product {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     width: 100%;
+    &__about{
+        flex-basis: 80%;
+    }
+    &__box{
+        box-shadow: 0px 0px 104px 8px rgba(0,0,0,0.75);
+        padding:2rem;
+        margin-top:1rem;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+
+    &__arrow{
+        width: 0;
+height: 0;
+border-style: solid;
+border-width: 0 25px 40px 25px;
+border-color: transparent transparent #030303 transparent;
+        &:hover{
+            cursor: pointer;
+        }
+    }
 }
 
 .c-box {
@@ -30,6 +53,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    border-radius:5px;
+    &:hover{
+        cursor: pointer;
+    }
+    &-img{
+        border-radius: inherit;
+    }
 }
 
 .c-about-product--txt {
