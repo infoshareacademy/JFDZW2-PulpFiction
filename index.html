@@ -25,15 +25,17 @@
                     <span class="c-hamburger-icon"></span>
                     <span class="c-hamburger-icon"></span>
                     <span class="c-hamburger-icon"></span>
-                    
+
                     <ul id="id_menu" class="c-menu">
-                        <li id="home_nav" class="c-menu__item"><a data-language="home" class="c-menu__anchor" href="javascript:scrollToElement('hero')">Strona główna</a></li>
+                        <li id="home_nav" class="c-menu__item"><a data-language="home" class="c-menu__anchor" href="javascript:scrollToElement('hero')">Strona
+                                główna</a></li>
                         <li id="product_nav" class="c-menu__item"><a data-language="product" class="c-menu__anchor" href="javascript:scrollToElement('about')">Oferta</a></li>
                         <li id="contact_nav" class="c-menu__item"><a data-language="contact" class="c-menu__anchor" href="javascript:scrollToElement('contact')">Kontakt</a></li>
-                        <li id="creators_nav" class="c-menu__item"><a data-language="team" class="c-menu__anchor" href="javascript:scrollToElement('creators')">O nas</a></li>
+                        <li id="creators_nav" class="c-menu__item"><a data-language="team" class="c-menu__anchor" href="javascript:scrollToElement('creators')">O
+                                nas</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="c-header__flag">
                     <img class="c-header__flag--img" src="img/uk-flag.png" alt="en">
                     <img src="img/pol-flag.png" class="c-header__flag--img" alt="pl">
@@ -41,7 +43,7 @@
 
                 <span class="u-nav__button-return"></span>
             </nav>
-            
+
         </header>
         <section class="c-hero" id="hero">
             <div id="arrow-left" class="c-hero__arrow c-hero__arrow--left"></div>
@@ -60,47 +62,59 @@
             </div>
             <div id="arrow-right" class="c-hero__arrow c-hero__arrow--right"></div>
         </section>
-        
+
 
 
         <section class="c-about-project" id="about"></section>
-            <div class="c-about-product"><h1>O PULP FITNESS</h1></div>
-            <div class="c-flexbox-product">
-                <!-- planner treningów -->
-                <figure class="c-box">
-                    <img class="c-box-img" src="/image/pulp_product_icon1.JPG" alt="pulp_product_icon1" title="planner treningów">
-                    <figcaption class="c-about-product--txt"><h2>PLANNER TRENINGÓW</h2></figcaption>
-                </figure>
-                <!-- licznik kalorii -->
-                <figure class="c-box">
-                    <img class="c-box-img" src="/image/pulp_product_icon2.JPG" alt="pulp_product_icon2" title="licznik kalorii">
-                    <figcaption class="c-about-product--txt"><h2>LICZNIK KALORII</h2></figcaption>
-                </figure>
-                <!-- planner diety -->
-                <figure class="c-box">
-                    <img class="c-box-img" src="/image/pulp_product_icon3.JPG" alt="pulp_product_icon3" title="planner diety">
-                    <figcaption class="c-about-product--txt"><h2>PLANNER DIETY</h2></figcaption>
-                </figure>
-                <!-- trenujmy razem -->
-                <figure class="c-box">
-                    <img class="c-box-img" src="/image/pulp_product_icon4.JPG" alt="pulp_product_icon4" title="trenujemy razem">
-                <figcaption class="c-about-product--txt"><h2>TRENUJEMY RAZEM</h2></figcaption>
-                </figure>
-            </div>
-        <section class="c-contact" id="contact"></section>
-        <form class="c-login" submit="/api/submit">
-            <h2 class="c-login__text"> ZAPISZ SIĘ NA NASZ NEWSLETTER!</h2>
-      <p class="c-login__title">OBIECUJEMY WYSYŁAĆ, TYLKO WAŻNE INFORMACJE!! </p>           
-        <input class="c-login__input" type="text" placeholder="Twoje Imię" />
-        <input class="c-login__input login__input--password" type="password" placeholder="Twoj adress e-mail" />
-           <button class="c-login__button" type="submit">Rejestracja</button>
-           <p class ="c-login__informacja"> Wypełniając formularz zgadzasz się na przetwarzanie Twoich danych w celu nawiązania kontaktu w sprawie udziału.</p>
-      </form>
+        <div class="c-about-product">
+            <h1>O PULP FITNESS</h1>
+        </div>
+        <div class="c-flexbox-product">
+            <!-- planner treningów -->
+            <figure class="c-box">
+                <img class="c-box-img" src="/image/pulp_product_icon1.JPG" alt="pulp_product_icon1" title="planner treningów">
+                <figcaption class="c-about-product--txt">
+                    <h2>PLANNER TRENINGÓW</h2>
+                </figcaption>
+            </figure>
+            <!-- licznik kalorii -->
+            <figure class="c-box">
+                <img class="c-box-img" src="/image/pulp_product_icon2.JPG" alt="pulp_product_icon2" title="licznik kalorii">
+                <figcaption class="c-about-product--txt">
+                    <h2>LICZNIK KALORII</h2>
+                </figcaption>
+            </figure>
+            <!-- planner diety -->
+            <figure class="c-box">
+                <img class="c-box-img" src="/image/pulp_product_icon3.JPG" alt="pulp_product_icon3" title="planner diety">
+                <figcaption class="c-about-product--txt">
+                    <h2>PLANNER DIETY</h2>
+                </figcaption>
+            </figure>
+            <!-- trenujmy razem -->
+            <figure class="c-box">
+                <img class="c-box-img" src="/image/pulp_product_icon4.JPG" alt="pulp_product_icon4" title="trenujemy razem">
+                <figcaption class="c-about-product--txt">
+                    <h2>TRENUJEMY RAZEM</h2>
+                </figcaption>
+            </figure>
+        </div>
+        <section class="c-contact" id="contact">
+            <form class="c-login u-center" submit="/api/submit">
+                <h2 class="c-login__text"> ZAPISZ SIĘ NA NASZ NEWSLETTER!</h2>
+                <p class="c-login__title">OBIECUJEMY WYSYŁAĆ, TYLKO WAŻNE INFORMACJE!! </p>
+                <input class="c-login__input" type="text" placeholder="Twoje Imię" />
+                <input class="c-login__input login__input--password" type="password" placeholder="Twoj adress e-mail" />
+                <button class="c-login__button" type="submit">Rejestracja</button>
+                <p class="c-login__informacja"> Wypełniając formularz zgadzasz się na przetwarzanie Twoich danych w celu
+                    nawiązania kontaktu w sprawie udziału.</p>
+            </form>
+        </section>
         <section class="c-creators" id="creators">
             <div class="c-creators--title">
                 <h1 data-language="team">O nas</h1>
             </div>
-            
+
             <!-- DANIEL SEKCJA -->
             <figure class="c-avatar--box">
                 <div class="o-animation">
@@ -108,9 +122,9 @@
                 </div>
                 <figcaption class="c-avatar--txt">
                     <h2>Daniel</h2>
-                    <p data-language="daniel">Lider zespołu. Student 4-go roku telekomunikacji, zainteresowany technologiami platformy .NET. 
-                        Uczestnik kursu infoShare Academy. 
-                        Miłośnik sportów drużynowych, w szczególności piłki nożnej i siatkówki.</p>
+                    <p data-language="daniel">Lider zespołu. Student 4-go roku telekomunikacji, zainteresowany technologiami
+                        platformy .NET. Uczestnik kursu infoShare Academy. Miłośnik sportów drużynowych, w szczególności
+                        piłki nożnej i siatkówki.</p>
                 </figcaption>
                 <div class="c-social">
                     <a class="o-link" target="_blank" href="http://www.facebook.com"><img class="o-social--icon" src="/img/fb-icon.png"
@@ -129,10 +143,8 @@
                 <figcaption class="c-avatar--txt">
 
                     <h2>Michal</h2>
-                    <p data-language="michal">Filar naszego zespołu, autor sekcji nawigacyjnej.
-                        Uczestnik kursu infoShare Academy.
-                        Pasjonat nowych technologii i nowoczesnych rozwiązań.
-                        Zawsze zaangażowany w to co robi.
+                    <p data-language="michal">Filar naszego zespołu, autor sekcji nawigacyjnej. Uczestnik kursu infoShare
+                        Academy. Pasjonat nowych technologii i nowoczesnych rozwiązań. Zawsze zaangażowany w to co robi.
                     </p>
                 </figcaption>
                 <div class="c-social">
@@ -140,11 +152,10 @@
                             alt="Fb"></a>
                     <a target="_blank" href="http://www.instagram.com"><img class="o-social--icon" src="/img/ig-icon.png"
                             alt="Instagram"></a>
-                    <a target="_blank" href="http://www.github.com"><img class="o-social--icon" src="/img/git-icon.png"
-                            alt="GitHub"></a>
+                    <a target="_blank" href="http://www.github.com"><img class="o-social--icon" src="/img/git-icon.png" alt="GitHub"></a>
                 </div>
             </figure>
-             
+
             <!-- MARIYA SEKCJA -->
             <figure class="c-avatar--box">
                 <div class="o-animation">
@@ -153,10 +164,8 @@
                 <figcaption class="c-avatar--txt">
 
                     <h2>Maria</h2>
-                    <p data-language="maria">Autorka sekcji "zapis na newsletter".
-                        Uczestniczka kursu infoShare Academy. Jej pasją są podróże, które upamiętnia
-                        świenymi zdjęciami. 
-                        Zawsze radosna i uśmiechnięta.
+                    <p data-language="maria">Autorka sekcji "zapis na newsletter". Uczestniczka kursu infoShare Academy.
+                        Jej pasją są podróże, które upamiętnia świenymi zdjęciami. Zawsze radosna i uśmiechnięta.
                     </p>
                 </figcaption>
                 <div class="c-social">
@@ -164,8 +173,7 @@
                             alt="Fb"></a>
                     <a target="_blank" href="http://www.instagram.com"><img class="o-social--icon" src="/img/ig-icon.png"
                             alt="Instagram"></a>
-                    <a target="_blank" href="http://www.github.com"><img class="o-social--icon" src="/img/git-icon.png"
-                            alt="GitHub"></a>
+                    <a target="_blank" href="http://www.github.com"><img class="o-social--icon" src="/img/git-icon.png" alt="GitHub"></a>
                 </div>
             </figure>
             <!-- ANETA SEKCJA -->
@@ -175,10 +183,9 @@
                 </div>
                 <figcaption class="c-avatar--txt">
                     <h2>Aneta</h2>
-                    <p data-language="aneta">Autorka sekcji "o produkcie". Kreatorka elementów graficznych strony.
-                        Grafika i marketing nie jest jej obca.
-                        Uczestniczka kursu infoShare Academy.
-                        Uwielbia włoską kuchnie i zabawy ze swoją córeczką.
+                    <p data-language="aneta">Autorka sekcji "o produkcie". Kreatorka elementów graficznych strony. Grafika
+                        i marketing nie jest jej obca. Uczestniczka kursu infoShare Academy. Uwielbia włoską kuchnie i zabawy
+                        ze swoją córeczką.
                     </p>
                 </figcaption>
                 <div class="c-social">
@@ -186,8 +193,7 @@
                             alt="Fb"></a>
                     <a target="_blank" href="http://www.instagram.com"><img class="o-social--icon" src="/img/ig-icon.png"
                             alt="Instagram"></a>
-                    <a target="_blank" href="http://www.github.com"><img class="o-social--icon" src="/img/git-icon.png"
-                            alt="GitHub"></a>
+                    <a target="_blank" href="http://www.github.com"><img class="o-social--icon" src="/img/git-icon.png" alt="GitHub"></a>
                 </div>
             </figure>
             <!-- KUBA SEKCJA -->
@@ -197,10 +203,8 @@
                 </div>
                 <figcaption class="c-avatar--txt">
                     <h2>Kuba</h2>
-                    <p data-language="kuba">Odpowiedzialny za sekcje "About Team".
-                        Uczestnik kursu infoShare Academy.
-                        Walczy by zsotać programistą. Wielbiciel
-                        motoryzacji w szczególności japońskiej i sportów w każdej postaci.
+                    <p data-language="kuba">Odpowiedzialny za sekcje "About Team". Uczestnik kursu infoShare Academy. Walczy
+                        by zsotać programistą. Wielbiciel motoryzacji w szczególności japońskiej i sportów w każdej postaci.
                     </p>
                 </figcaption>
                 <div class="c-social">
@@ -208,8 +212,7 @@
                             alt="Fb"></a>
                     <a target="_blank" href="http://www.instagram.com"><img class="o-social--icon" src="/img/ig-icon.png"
                             alt="Instagram"></a>
-                    <a target="_blank" href="http://www.github.com"><img class="o-social--icon" src="/img/git-icon.png"
-                            alt="GitHub"></a>
+                    <a target="_blank" href="http://www.github.com"><img class="o-social--icon" src="/img/git-icon.png" alt="GitHub"></a>
                 </div>
             </figure>
         </section>
@@ -217,14 +220,12 @@
             <div class="c-footer__content">
                 <div class="c-footer__nav">
                     <ul class="c-footer__list">
-                        <li class="c-footer__elem"><a data-language="project" class="c-footer__link o-link u-blocked"
-                                href="">Projekt</a></li>
-                        <li class="c-footer__elem"><a data-language="follow" class="c-footer__link o-link u-blocked"
-                                href="">Obserwuj</a></li>
-                        <li class="c-footer__elem"><a data-language="contact" class="c-footer__link o-link u-blocked"
-                                href="">Kontakt</a></li>
+                        <li class="c-footer__elem"><a data-language="project" class="c-footer__link o-link u-blocked" href="">Projekt</a></li>
+                        <li class="c-footer__elem"><a data-language="follow" class="c-footer__link o-link u-blocked" href="">Obserwuj</a></li>
+                        <li class="c-footer__elem"><a data-language="contact" class="c-footer__link o-link u-blocked" href="">Kontakt</a></li>
                         <li class="c-footer__elem"><a data-language="team" class="c-footer__link o-link u-blocked" href="">O
-                                nas</a></li>
+                                nas
+                            </a></li>
                     </ul>
                 </div>
                 <div class="c-footer__SM">
@@ -247,8 +248,8 @@
         <div class="c-cookies c-cookies--steaky" id="cookies_info_container">
             <nav class="c-cookies__nav">
                 <div class="c-cookies__text">
-                    <span data-language="cookies">Korzystając z witryny wyrażasz zgodę na przechowywanie plików cookies
-                        przez przeglądarkę.</span>
+                    <span data-language="cookies">Korzystając z witryny wyrażasz zgodę na przechowywanie plików cookies przez
+                        przeglądarkę.</span>
                 </div>
                 <button data-language="cancel" id="close_cookies_link" class="o-btn__nav c-cookies__btn">Zamknij</button>
             </nav>
