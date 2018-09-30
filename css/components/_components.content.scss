@@ -6,18 +6,19 @@
 
 .c-about-project {
     width: 100%;
-}
 
-.c-about-product {
-    background: FF7500;
-    width: 100%;
+    &__title{
+        text-align: center;
+    }
+
+    margin-top:2rem;
+
 }
 
 .c-flexbox-product {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    background: FF7500;
 }
 
 .c-box {
@@ -29,7 +30,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    background: FF7500;
 }
 
 .c-about-product--txt {
