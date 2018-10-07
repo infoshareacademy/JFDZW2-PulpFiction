@@ -13,6 +13,10 @@ var michal = document.querySelector('[data-language="michal"]');
 var maria = document.querySelector('[data-language="maria"]');
 var aneta = document.querySelector('[data-language="aneta"]');
 var kuba = document.querySelector('[data-language="kuba"]');
+var trainingPlanner = document.querySelector('[data-language="trainingPlanner"]');
+var calorator = document.querySelector('[data-language="calorator"]');
+var trainingTogether = document.querySelector('[data-language="trainingTogether"]');
+var plannerDiet = document.querySelector('[data-language="plannerDiet"]');
 
 
 var flags = document.getElementsByClassName("c-header__flag--img");
@@ -102,5 +106,8 @@ function renderHTML(data, language) {
   maria.innerHTML = data[language]["maria"];
   aneta.innerHTML = data[language]["aneta"];
   kuba.innerHTML = data[language]["kuba"];
-
+  trainingPlanner.innerHTML=data[language]["trainingPlanner"];
+  calorator.innerHTML=data[language]["calorator"];
+  trainingTogether.innerHTML=data[language]["calorator"];
+  plannerDiet.innerHTML=data[language]["plannerDiet"];
 }
