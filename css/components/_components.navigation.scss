@@ -12,6 +12,7 @@
         transform-origin: 4px 0px;
         transition: transform 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0), background 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0), opacity 0.55s ease;
     }
+
     &-trigger {
         display: block;
         width: 2.5em;
@@ -24,20 +25,28 @@
         z-index: 2; // And place it over the hamburger
         -webkit-touch-callout: none;
     }
+
     .c-menu__bar &-icon:nth-last-child(1) {
         transform-origin: 0% 50%;
     }
+
     .c-menu__bar &-icon:nth-last-child(2) {
         transform-origin: 0% 50%;
-    } // Transform all the slices of hamburger into a crossmark.
+    }
+
+    // Transform all the slices of hamburger into a crossmark.
     &-trigger:checked~span {
         opacity: 1;
         transform: rotate(45deg) translate(-2px, -1px);
-    } // But let's hide the middle one.
+    }
+
+    // But let's hide the middle one.
     &-trigger:checked~span:nth-last-child(3) {
         opacity: 0;
         transform: rotate(0deg) scale(0.2, 0.2);
-    } // The last one should go the other direction
+    }
+
+    // The last one should go the other direction
     &-trigger:checked~span:nth-last-child(2) {
         transform: rotate(-45deg) translate(0, -1px);
     }
@@ -54,26 +63,32 @@
     transform-origin: 0% 0%;
     transform: translate(200%, 0);
     transition: all 0.57s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+
     &__small {
         margin: -0.1em 0 0 -14em;
         background: $backgroundfooter;
     }
+
     &__bar {
         display: inline-block;
         position: relative;
         top: 0.5em;
         right: 1em;
+        padding-bottom: 4px;
         z-index: 1;
         -webkit-user-select: none;
         user-select: none;
     }
+
     &__item {
         padding: 10px 10px;
         font-size: $fontBasicSize;
+
         &--hightlight {
             background-color: $backgroundfooterHover;
         }
     }
+
     &__anchor {
         color: $primaryColor;
         text-shadow: 1px 1px 2px $primaryColor;
@@ -81,9 +96,11 @@
         font-size: $fontBasicSize * 1.2;
         transition: all 0.2s ease;
     }
+
     &__anchor:hover {
         text-shadow: 1px 1px 5px $primaryColor;
     }
+
     &__bar .c-hamburger-trigger:checked~ul {
         transform: none;
     }
@@ -92,6 +109,8 @@
 .c-figure {
     min-width: 10em;
     padding: 0 0;
+    height: inherit;
+
     &__item {
         color: $primaryColor;
         font-size: $fontBasicSize * 1.3;
@@ -100,6 +119,7 @@
         text-align: center;
         display: table-cell;
         vertical-align: middle;
+        height: inherit;
     }
 }
 
@@ -130,26 +150,33 @@
         padding-top: 0;
         text-align: center;
         background: transparent;
+
         &__small {}
+
         &__bar {
             top: auto;
             right: auto;
         }
+
         &__item {
             padding: 0.5em 1em;
         }
+
         &__anchor {
             text-align: center;
             transition: all 0.2s ease;
         }
+
         &__bar .c-hamburger-trigger~ul {
             transform: none;
         }
     }
+
     .c-hamburger {
         &-trigger {
             display: none;
         }
+
         &-icon {
             display: none;
         }

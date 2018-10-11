@@ -9,7 +9,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0;
     position: fixed;
     top: 0;
     left: 0;
@@ -21,14 +20,12 @@
 
     &__logo {
         height: $headerHeight;
-        opacity: 0.8;
         transition: transform 1s ease-in-out;
 
         &:hover {
             transform: rotate(-300deg) scale(1.2);
         }
     }
-
 
     &__small {
         height: $headerHeight * 0.7;
@@ -39,6 +36,10 @@
         display: inline-block;
         padding: 0 10px;
         margin: 0 auto;
+
+        &--img {
+            padding: 4px 0;
+        }
 
         &:hover {
             cursor: pointer;
@@ -51,5 +52,11 @@
     .c-header {
         justify-content: space-around;
         min-width: $minWidth;
+
+        &__flag--img {
+            padding: 0;
+        }
     }
+
+
 }
