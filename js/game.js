@@ -24,6 +24,7 @@ let level = 1;
 const dimensions = getGameWidthHeight();
 let upPressed = false;
 let downPressed = false;
+let interval;
 
 const hero = {
     x: dimensions.width / 6,
@@ -31,7 +32,7 @@ const hero = {
     height: 40,
     moved: false
 }
- 
+
 function appendHero() {
     const gameContainer = document.getElementById("game_container");
     const element = document.createElement("div");
@@ -50,7 +51,7 @@ function resetIntervals() {
     timeInterval = 0;
 }
 
- 
+
 
 function moveEnemies() {
     for (let enemy of enemies) {
@@ -81,7 +82,7 @@ function createNewEnemy() {
         resetIntervals();
     }
 }
- 
+
 function appendEnemy(enemy) {
     const gameContainer = document.getElementById("game_container");
     const element = document.createElement("div");
@@ -116,6 +117,20 @@ function moveHero() {
 }
 
 function checkCollisions() {
+    const adjustPosition = -dimensions.height / (2 * noSwimLines);
+    for (let enemy of enemies) {
+        
+        let heroy = Math.floor(dimensions.height / noSwimLines * hero.swLine + adjustPosition);
+
+        if (enemy.x > hero.x && enemy.x < hero.x + 13 &&
+            enemy.y < heroy + 40
+            && enemy.y > heroy - 40) {
+            clearInterval(interval);
+            alert("GameOver");
+        }
+
+    }
+
 }
 
 function checkBoundries() {
@@ -170,15 +185,15 @@ function frame() {
 }
 
 function keyPressHandler(e) {
-    if(e.keyCode==38){
+    if (e.keyCode == 38) {
         upPressed = true;
-    }else if(e.keyCode==40){
-        downPressed=true;
+    } else if (e.keyCode == 40) {
+        downPressed = true;
     }
 }
 
 function game() {
     appendHero();
     document.addEventListener("keydown", keyPressHandler, false);
-    setInterval(frame, 1000 / 60);
+    interval = setInterval(frame, 1000 / 60);
 }
