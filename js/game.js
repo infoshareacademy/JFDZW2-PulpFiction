@@ -169,25 +169,16 @@ function frame() {
     drawHero();
 }
 
-function keyDownHandler(e) {
-    if (e.keyCode === 38) {
+function keyPressHandler(e) {
+    if(e.keyCode==38){
         upPressed = true;
-    } else if (e.keyCode === 40) {
-        downPressed = true;
-    }
-}
-
-function keyUpHandler(e) {
-    if (e.keyCode === 38) {
-        upPressed = false;
-    } else if (e.keyCode === 40) {
-        downPressed = false;
+    }else if(e.keyCode==40){
+        downPressed=true;
     }
 }
 
 function game() {
     appendHero();
-    document.addEventListener("keydown", keyDownHandler, false);
-    document.addEventListener("keyup", keyUpHandler, false);
+    document.addEventListener("keydown", keyPressHandler, false);
     setInterval(frame, 1000 / 60);
 }
