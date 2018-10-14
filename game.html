@@ -27,11 +27,37 @@
             position: absolute;
             background: wheat;
         }
+
+        .c-reset__button{
+            padding: 1rem 1rem;
+            height: 3rem;
+            color: white;
+            background-color:deepskyblue;
+            border: solid 1px gainsboro;
+        }
+
+        .c-reset__button:hover{
+            cursor: pointer;
+            color:deepskyblue;
+            background-color: white;
+            border-color: deepskyblue;
+        }
+
+        .c-container{
+            display:flex;
+            justify-content: space-around;
+        }
+
     </style>
 </head>
 
 <body>
+    <div class="c-container">
     <div id="game_container"></div>
+    <div class="c-reset__button">
+        <p>Reset</p>
+    </div>
+    </div>
     <script src="js/game.js"></script>
 </body>
 

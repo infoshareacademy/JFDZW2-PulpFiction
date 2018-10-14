@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", game);
+let gameContainer = document.getElementById("game_container");
+let resetButton = document.querySelector('.c-reset__button');
+resetButton.addEventListener("click",function(){
+    resetGame();
+})
 
 class Enemy {
     constructor(x, y) {
@@ -16,10 +21,10 @@ class Enemy {
     }
 };
 
-const enemies = []
+let enemies = []
 let timeInterval = 0;
 let time = Date.now();
-let noSwimLines = 4;
+let noSwimLines = 3;
 let level = 1;
 const dimensions = getGameWidthHeight();
 let upPressed = false;
@@ -34,7 +39,6 @@ const hero = {
 }
 
 function appendHero() {
-    const gameContainer = document.getElementById("game_container");
     const element = document.createElement("div");
     element.classList.add("animate__hero");
     element.setAttribute("id", "game__hero");
@@ -84,11 +88,23 @@ function createNewEnemy() {
 }
 
 function appendEnemy(enemy) {
-    const gameContainer = document.getElementById("game_container");
     const element = document.createElement("div");
     element.classList.add("animate");
     element.setAttribute("id", enemy.htmlId);
     gameContainer.appendChild(element);
+}
+
+function removeEnemies(){
+    for(let object of enemies){
+        removeEnemy(object);
+    }
+}
+
+function removeHero(){
+    let hero=document.getElementById("game__hero");
+    if(hero){
+    gameContainer.removeChild(hero);
+    }
 }
 
 function moveHero() {
@@ -119,7 +135,7 @@ function moveHero() {
 function checkCollisions() {
     const adjustPosition = -dimensions.height / (2 * noSwimLines);
     for (let enemy of enemies) {
-        
+
         let heroy = Math.floor(dimensions.height / noSwimLines * hero.swLine + adjustPosition);
 
         if (enemy.x > hero.x && enemy.x < hero.x + 13 &&
@@ -159,18 +175,36 @@ function getGameWidthHeight() {
 }
 
 function drawHero() {
+    appendHero();
     const element = document.getElementById("game__hero");
     const adjustPosition = -dimensions.height / (2 * noSwimLines);
     element.style.left = hero.x + 'px';
     element.style.top = Math.floor(dimensions.height / noSwimLines * hero.swLine + adjustPosition) + 'px';
+    
 }
 
 function drawEnemies() {
     for (let enemy of enemies) {
-        const element = document.getElementById(enemy.htmlId);
+        appendEnemy(enemy);
+        let element = document.getElementById(enemy.htmlId);
         element.style.top = enemy.y + 'px';
         element.style.left = enemy.x + 'px';
+ 
     }
+}
+
+function clearBoard(){
+    removeEnemies();
+    removeHero();
+
+}
+
+function resetGame(){
+    removeEnemies();
+    enemies=[];
+    hero.swLine=1;
+    clearInterval(interval);
+    interval = setInterval(frame, 1000 / 60);
 }
 
 function frame() {
@@ -180,6 +214,7 @@ function frame() {
     checkBoundries();
     checkCollisions();
     createNewEnemy();
+    clearBoard();
     drawEnemies();
     drawHero();
 }
