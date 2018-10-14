@@ -73,7 +73,7 @@ let interval;
 
 
 const hero = {
-    x: gameSettings.dimensions.width / 6,
+    x: 0,
     swLine: 1,
     height: 40,
     moved: false,
@@ -81,6 +81,7 @@ const hero = {
 }
 
 function appendHero() {
+    hero.x = gameSettings.dimensions.width / 6;
     const gameContainer = document.getElementById("game_container");
     const element = document.createElement("div");
     element.classList.add("animate__hero");
