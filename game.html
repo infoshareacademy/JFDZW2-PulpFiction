@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=3Dedge">
+    <title>Game</title>
+    <style>
+        #game_container {
+            width: 800px;
+            height: 600px;
+            position: relative;
+
+        }
+
+        .game_container{
+            background: gold;
+        }
+
+        .c-game-container__start {
+            background-color: rgb(206, 235, 230);
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .u--hide{
+            display:none;
+        }
+
+        .c-button__start{
+            padding: 1rem 4rem;
+            height: 4rem;            
+            border-radius: 10px;
+            font-size: 2rem;
+        }
+
+        .c-button--color{
+            color: white;
+            background-color:deepskyblue;
+            border: solid 1px gainsboro;
+        }
+
+        .c-button--color:hover{
+            cursor: pointer;
+            color:deepskyblue;
+            background-color: white;
+            border-color: deepskyblue;
+        }
+
+        .animate {
+            width: auto;
+            height: 25px;
+            position: absolute;
+        }
+
+        .animate__hero {
+            width: 15px;
+            height: 40px;
+            position: absolute;
+            background: wheat;
+        }
+
+        .c-reset__button{
+            padding: 0.5rem 2rem;
+            height: 2rem;
+            border-radius: 10px;
+            font-size:1.2rem;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .c-container{
+            display:flex;
+            justify-content: space-around;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="c-container">
+    <div id="game_container" class="c-game-container__start">
+        <input type="button" class="c-button__start c-button--color" value="Start" onclick="game();">
+    </div>
+    <div class="c-reset__button c-button--color">
+        <p>Reset</p>
+    </div>
+    </div>
+    <script src="js/game.js"></script>
+</body>
+
+</html>
