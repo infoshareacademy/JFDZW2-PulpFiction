@@ -4,13 +4,10 @@ class Enemy {
         this.y = y;
         this.vx = -1;
         this.vy = 0;
-        this.iniWidth = 15;
-        this.iniHeight = 15;
+        this.iniWidth = 30;
+        this.iniHeight = 30;
         this.htmlId = "enemy" + Date.now();
-        this.scale = 1;
-        this.sprites = [];
-        this.currentSprite = 1;
-        this.phase = 1;
+        this.enemyType = {};
     }
 };
 const gameSettings = {
@@ -25,7 +22,45 @@ const gameSettings = {
     gameStatus: "stoped"
 };
 
-const enemies = []
+const enemyTypes = [{
+        id: "beer",
+        sprite: "beer1.png",
+        score: -10
+    },
+    {
+        id: "cupcake",
+        sprite: "cupcake1.png",
+        score: -5
+    },
+    {
+        id: "dogfood",
+        sprite: "dogfood1.png",
+        score: 5
+    },
+    {
+        id: "energydrink",
+        sprite: "energydrink.png",
+        score: 5
+    },
+    {
+        id: "hamb",
+        sprite: "hamb1.png",
+        score: -10
+    },
+    {
+        id: "soda",
+        sprite: "soda1.png",
+        score: -2
+    },
+    {
+        id: "taco",
+        sprite: "taco1.png",
+        score: -5
+    }
+];
+
+const enemies = [];
+const initialScore = 200;
 let timeInterval = 0;
 let time = Date.now();
 let noSwimLines = 4;
@@ -36,11 +71,13 @@ let upPressed = false;
 let downPressed = false;
 let interval;
 
+
 const hero = {
     x: gameSettings.dimensions.width / 6,
     swLine: 1,
     height: 40,
-    moved: false
+    moved: false,
+    score: initialScore
 }
 
 function appendHero() {
@@ -70,6 +107,11 @@ function moveEnemies() {
     }
 }
 
+function randomizeEnemmyType() {
+    const enemyType = Math.floor(Math.random() * enemyTypes.length);
+    return enemyType;
+}
+
 function randomizeSwimLine(noSwimLines) {
     const sw = Math.floor(Math.random() * noSwimLines) + 1;
     return sw;
@@ -86,7 +128,8 @@ function createNewEnemy() {
         const x = dimensions.width;
         const adjustPosition = -dimensions.height / (2 * noSwimLines);
         const y = Math.floor(dimensions.height * chooseEnemySwimLine()) + adjustPosition;
-        const newEnemy = new Enemy(x, y)
+        const newEnemy = new Enemy(x, y);
+        newEnemy.enemyType = enemyTypes[randomizeEnemmyType()];
         newEnemy.x -= newEnemy.iniWidth;
         enemies.push(newEnemy);
         appendEnemy(newEnemy)
@@ -97,7 +140,11 @@ function createNewEnemy() {
 function appendEnemy(enemy) {
     const gameContainer = document.getElementById("game_container");
     const element = document.createElement("div");
+    const img = document.createElement("img");
     element.classList.add("animate");
+    img.classList.add("animate");
+    img.setAttribute("src", `img/game/${enemy.enemyType.sprite}`);
+    element.appendChild(img);
     element.setAttribute("id", enemy.htmlId);
     gameContainer.appendChild(element);
 }
@@ -106,43 +153,45 @@ function moveHero() {
     if (!hero.moved) {
         if (downPressed) {
             downPressed = false;
-            hero.swLine++;
+            if (hero.swLine < noSwimLines) hero.swLine++;
             hero.moved = true;
-        }
-        if (hero.swLine > noSwimLines) {
-            hero.swLine = noSwimLines;
         }
         if (upPressed) {
             upPressed = false;
-            hero.swLine--;
+            if (hero.swLine > 1) hero.swLine--;
             hero.moved = true;
-        }
-        if (hero.swLine < 1) {
-            hero.swLine = 1;
         }
     }
     if (!upPressed && !downPressed) {
         hero.moved = false;
     }
-    console.log(hero.swLine);
+    //console.log(hero.swLine);
 }
 
 function checkCollisions() {
     const dimensions = gameSettings.dimensions;
     const adjustPosition = -dimensions.height / (2 * noSwimLines);
     for (let enemy of enemies) {
-        
+
         let heroy = Math.floor(dimensions.height / noSwimLines * hero.swLine + adjustPosition);
 
         if (enemy.x > hero.x && enemy.x < hero.x + 13 &&
-            enemy.y < heroy + 40
-            && enemy.y > heroy - 40) {
-            clearInterval(interval);
-            alert("GameOver");
+            enemy.y < heroy + hero.height / 2 &&
+            enemy.y > heroy - hero.height / 2) {
+            changeScore(enemy);
         }
 
     }
+}
 
+function changeScore(enemy) {
+    hero.score += enemy.enemyType.score;
+    console.log(hero.score);
+
+    if (hero.score < 0) {
+        alert("Game Over!!!!");
+        clearInterval(interval);
+    }
 }
 
 function checkBoundries() {
