@@ -1,6 +1,6 @@
 .c-footer{
     background-color: $backgroundfooter;
-    color:$primaryColor;
+    color: $primaryColor;
     text-align: center;
     &__elem{
         line-height: 3rem;
@@ -67,7 +67,7 @@
         height: 0;
         border-style: solid;
         border-width: 10px 10px 0 10px;
-        border-color: #282828 transparent transparent transparent;
+        border-color: $accentSecondColor transparent transparent transparent;
       }
       // TOOLTIP BUBBLE
       &:after {
@@ -75,8 +75,8 @@
         content: attr(data-tooltip);
         font-size: 14px;
         position: absolute;
-        color: #fff;
-        background: #282828;
+        color: $primaryColor;
+        background: $accentSecondColor;
         padding: 8px 12px;
         width: -webkit-max-content;
         width: -moz-max-content;
@@ -93,7 +93,7 @@
       }
       &:hover {
         //color: #282828;
-        background-color: rgba(0,0,0,0.12);
+        background-color: $accentSecondColor;
         // TOOLTIP FADEIN AND TRANSLATION
         &:before, &:after {
           opacity: 1;
