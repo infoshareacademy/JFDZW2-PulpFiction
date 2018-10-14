@@ -4,6 +4,12 @@ resetButton.addEventListener("click", function () {
     resetGame();
 })
 
+window.onblur = function() { if(interval){
+    clearInterval(interval)} };
+window.onfocus = function() { if(interval && !gameOver){
+    clearInterval(interval);
+setGameInterval();} };
+
 class Enemy {
     constructor(x, y) {
         this.x = x;
@@ -66,7 +72,7 @@ const enemyTypes = [{
 ];
 
 let enemies = [];
-const initialScore = 200;
+const initialScore = 30;
 let timeInterval = 0;
 let time = Date.now();
 let noSwimLines = 3;
@@ -76,6 +82,7 @@ let level = 1;
 let upPressed = false;
 let downPressed = false;
 let interval;
+let gameOver=false;
 
 
 const hero = {
@@ -193,10 +200,11 @@ function checkCollisions() {
 
         let heroy = Math.floor(dimensions.height / noSwimLines * hero.swLine + adjustPosition);
 
-        if (enemy.x > hero.x && enemy.x < hero.x + 13 &&
+        if (enemy.x > hero.x + 6 && enemy.x < hero.x + 9 &&
             enemy.y < heroy + hero.height / 2 &&
             enemy.y > heroy - hero.height / 2) {
             changeScore(enemy);
+            break;
         }
 
     }
@@ -206,9 +214,10 @@ function changeScore(enemy) {
     hero.score += enemy.enemyType.score;
     console.log(hero.score);
 
-    if (hero.score < 0) {
+    if (hero.score <= 0) {
         alert("Game Over!!!!");
         clearInterval(interval);
+        gameOver=true;
     }
 }
 
@@ -269,6 +278,7 @@ function resetGame() {
     hero.swLine = 1;
     clearInterval(interval);
     interval = setInterval(frame, 1000 / 60);
+    gameOver=false;
 }
 
 function frame() {
@@ -300,6 +310,10 @@ function startGameChangeBoard(){
     buttonStart.style.display="none";
 }
 
+function setGameInterval(){
+    interval = setInterval(frame, 1000 / 60);
+}
+
 function game() {
     startGameChangeBoard();
     gameSettings.setDimensions();
@@ -308,7 +322,7 @@ function game() {
         clearInterval(interval);
         appendHero();
         document.addEventListener("keydown", keyPressHandler, false);
-        interval = setInterval(frame, 1000 / 60);
+        setGameInterval();
     }
 
 }
