@@ -1,3 +1,9 @@
+let gameContainer = document.getElementById("game_container");
+let resetButton = document.querySelector('.c-reset__button');
+resetButton.addEventListener("click", function () {
+    resetGame();
+})
+
 class Enemy {
     constructor(x, y) {
         this.x = x;
@@ -11,59 +17,59 @@ class Enemy {
     }
 };
 const gameSettings = {
-    setDimensions: function(){
+    setDimensions: function () {
         this.dimensions = getGameWidthHeight();
     },
     dimensions: {
         width: 0,
         height: 0
 
-    } , 
+    },
     gameStatus: "stoped"
 };
 
 const enemyTypes = [{
-        id: "beer",
-        sprite: "beer1.png",
-        score: -10
-    },
-    {
-        id: "cupcake",
-        sprite: "cupcake1.png",
-        score: -5
-    },
-    {
-        id: "dogfood",
-        sprite: "dogfood1.png",
-        score: 5
-    },
-    {
-        id: "energydrink",
-        sprite: "energydrink.png",
-        score: 5
-    },
-    {
-        id: "hamb",
-        sprite: "hamb1.png",
-        score: -10
-    },
-    {
-        id: "soda",
-        sprite: "soda1.png",
-        score: -2
-    },
-    {
-        id: "taco",
-        sprite: "taco1.png",
-        score: -5
-    }
+    id: "beer",
+    sprite: "beer1.png",
+    score: -10
+},
+{
+    id: "cupcake",
+    sprite: "cupcake1.png",
+    score: -5
+},
+{
+    id: "dogfood",
+    sprite: "dogfood1.png",
+    score: 5
+},
+{
+    id: "energydrink",
+    sprite: "energydrink.png",
+    score: 5
+},
+{
+    id: "hamb",
+    sprite: "hamb1.png",
+    score: -10
+},
+{
+    id: "soda",
+    sprite: "soda1.png",
+    score: -2
+},
+{
+    id: "taco",
+    sprite: "taco1.png",
+    score: -5
+}
 ];
 
-const enemies = [];
+let enemies = [];
 const initialScore = 200;
 let timeInterval = 0;
 let time = Date.now();
-let noSwimLines = 4;
+let noSwimLines = 3;
 let level = 1;
 
 
@@ -82,7 +88,6 @@ const hero = {
 
 function appendHero() {
     hero.x = gameSettings.dimensions.width / 6;
-    const gameContainer = document.getElementById("game_container");
     const element = document.createElement("div");
     element.classList.add("animate__hero");
     element.setAttribute("id", "game__hero");
@@ -139,7 +144,6 @@ function createNewEnemy() {
 }
 
 function appendEnemy(enemy) {
-    const gameContainer = document.getElementById("game_container");
     const element = document.createElement("div");
     const img = document.createElement("img");
     element.classList.add("animate");
@@ -148,6 +152,19 @@ function appendEnemy(enemy) {
     element.appendChild(img);
     element.setAttribute("id", enemy.htmlId);
     gameContainer.appendChild(element);
+}
+
+function removeEnemies() {
+    for (let object of enemies) {
+        removeEnemy(object);
+    }
+}
+
+function removeHero() {
+    let hero = document.getElementById("game__hero");
+    if (hero) {
+        gameContainer.removeChild(hero);
+    }
 }
 
 function moveHero() {
@@ -221,19 +238,37 @@ function getGameWidthHeight() {
 }
 
 function drawHero() {
+    appendHero();
     const element = document.getElementById("game__hero");
     const dimensions = gameSettings.dimensions;
     const adjustPosition = -dimensions.height / (2 * noSwimLines);
     element.style.left = hero.x + 'px';
     element.style.top = Math.floor(dimensions.height / noSwimLines * hero.swLine + adjustPosition) + 'px';
+
 }
 
 function drawEnemies() {
     for (let enemy of enemies) {
-        const element = document.getElementById(enemy.htmlId);
+        appendEnemy(enemy);
+        let element = document.getElementById(enemy.htmlId);
         element.style.top = enemy.y + 'px';
         element.style.left = enemy.x + 'px';
+
     }
+}
+
+function clearBoard() {
+    removeEnemies();
+    removeHero();
+
+}
+
+function resetGame() {
+    removeEnemies();
+    enemies = [];
+    hero.swLine = 1;
+    clearInterval(interval);
+    interval = setInterval(frame, 1000 / 60);
 }
 
 function frame() {
@@ -243,6 +278,7 @@ function frame() {
     checkBoundries();
     checkCollisions();
     createNewEnemy();
+    clearBoard();
     drawEnemies();
     drawHero();
 }
@@ -255,17 +291,25 @@ function keyPressHandler(e) {
     }
 }
 
-function game() {
+function startGameChangeBoard(){
     const game_container = document.getElementById("game_container");
+    game_container.classList.add("game_container");
+    game_container.classList.remove("c-game-container__start");
     game_container.style.display = "block";
+    const buttonStart = document.querySelector(".c-button__start");
+    buttonStart.style.display="none";
+}
+
+function game() {
+    startGameChangeBoard();
     gameSettings.setDimensions();
-    if(gameSettings.gameStatus === 'stoped'){
+    if (gameSettings.gameStatus === 'stoped') {
         gameSettings.gameStatus = 'start';
         clearInterval(interval);
         appendHero();
         document.addEventListener("keydown", keyPressHandler, false);
         interval = setInterval(frame, 1000 / 60);
     }
-    
+
 }
 
