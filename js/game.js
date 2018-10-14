@@ -1,5 +1,3 @@
-document.addEventListener("DOMContentLoaded", game);
-
 class Enemy {
     constructor(x, y) {
         this.x = x;
@@ -15,19 +13,31 @@ class Enemy {
         this.phase = 1;
     }
 };
+const gameSettings = {
+    setDimensions: function(){
+        this.dimensions = getGameWidthHeight();
+    },
+    dimensions: {
+        width: 0,
+        height: 0
+
+    } , 
+    gameStatus: "stoped"
+};
 
 const enemies = []
 let timeInterval = 0;
 let time = Date.now();
 let noSwimLines = 4;
 let level = 1;
-const dimensions = getGameWidthHeight();
+
+
 let upPressed = false;
 let downPressed = false;
 let interval;
 
 const hero = {
-    x: dimensions.width / 6,
+    x: gameSettings.dimensions.width / 6,
     swLine: 1,
     height: 40,
     moved: false
@@ -72,6 +82,7 @@ function chooseEnemySwimLine() {
 
 function createNewEnemy() {
     if (timeInterval >= 5000 / level) {
+        const dimensions = gameSettings.dimensions;
         const x = dimensions.width;
         const adjustPosition = -dimensions.height / (2 * noSwimLines);
         const y = Math.floor(dimensions.height * chooseEnemySwimLine()) + adjustPosition;
@@ -117,6 +128,7 @@ function moveHero() {
 }
 
 function checkCollisions() {
+    const dimensions = gameSettings.dimensions;
     const adjustPosition = -dimensions.height / (2 * noSwimLines);
     for (let enemy of enemies) {
         
@@ -160,6 +172,7 @@ function getGameWidthHeight() {
 
 function drawHero() {
     const element = document.getElementById("game__hero");
+    const dimensions = gameSettings.dimensions;
     const adjustPosition = -dimensions.height / (2 * noSwimLines);
     element.style.left = hero.x + 'px';
     element.style.top = Math.floor(dimensions.height / noSwimLines * hero.swLine + adjustPosition) + 'px';
@@ -193,7 +206,16 @@ function keyPressHandler(e) {
 }
 
 function game() {
-    appendHero();
-    document.addEventListener("keydown", keyPressHandler, false);
-    interval = setInterval(frame, 1000 / 60);
+    const game_container = document.getElementById("game_container");
+    game_container.style.display = "block";
+    gameSettings.setDimensions();
+    if(gameSettings.gameStatus === 'stoped'){
+        gameSettings.gameStatus = 'start';
+        clearInterval(interval);
+        appendHero();
+        document.addEventListener("keydown", keyPressHandler, false);
+        interval = setInterval(frame, 1000 / 60);
+    }
+    
 }
+
