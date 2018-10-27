@@ -11,11 +11,13 @@
             width: 800px;
             height: 600px;
             position: relative;
-
+            background-image: url("img/game/street1.jpg");
+            background-repeat: repeat-x;
+            background-size: cover;
+            background-position: 0px 0;
         }
 
         .game_container{
-            background: gold;
         }
 
         .c-game-container__start {
@@ -31,7 +33,6 @@
 
         .c-button__start{
             padding: 1rem 4rem;
-            height: 4rem;            
             border-radius: 10px;
             font-size: 2rem;
         }
@@ -40,6 +41,7 @@
             color: white;
             background-color:deepskyblue;
             border: solid 1px gainsboro;
+            
         }
 
         .c-button--color:hover{
@@ -50,18 +52,30 @@
         }
 
         .animate {
-            width: auto;
-            height: 25px;
+            width: 40px;
+            height: 40px;
+            margin: 0;
+            padding: 0;
             position: absolute;
+        }
+
+        .animate img {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            border: solid 1px black;
         }
 
         .animate__hero {
-            width: 15px;
-            height: 40px;
+            width: 110px;
+            height: 175px;
             position: absolute;
-            background: wheat;
+            border: solid 1px black;
         }
-
+                    
         .c-reset__button{
             padding: 0.5rem 2rem;
             height: 2rem;
@@ -82,12 +96,10 @@
 
 <body>
     <div class="c-container">
-    <div id="game_container" class="c-game-container__start">
-        <input type="button" class="c-button__start c-button--color" value="Start" onclick="game();">
-    </div>
-    <div class="c-reset__button c-button--color">
-        <p>Reset</p>
-    </div>
+        <div id="game_container" class="c-game-container__start">
+            <input type="button" class="c-button__start c-button--color" value="Start" onclick="game();">
+        </div>
+        <div class="c-reset__button c-button--color">Reset</div>
     </div>
     <script src="js/game.js"></script>
 </body>
