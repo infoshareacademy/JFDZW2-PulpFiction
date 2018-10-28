@@ -8,36 +8,35 @@
     background-position: 0px 0;
 }
 
-.game_container{
-}
+.game_container {}
 
 .c-game-container__start {
     background-color: rgb(206, 235, 230);
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.u--hide{
-    display:none;
+.u--hide {
+    display: none;
 }
 
-.c-button__start{
+.c-button__start {
     padding: 1rem 4rem;
     border-radius: 10px;
     font-size: 2rem;
 }
 
-.c-button--color{
+.c-button--color {
     color: white;
-    background-color:deepskyblue;
+    background-color: deepskyblue;
     border: solid 1px gainsboro;
-    
+
 }
 
-.c-button--color:hover{
+.c-button--color:hover {
     cursor: pointer;
-    color:deepskyblue;
+    color: deepskyblue;
     background-color: white;
     border-color: deepskyblue;
 }
@@ -66,18 +65,18 @@
     position: absolute;
     border: solid 1px black;
 }
-            
-.c-reset__button{
+
+.c-reset__button {
     padding: 0.5rem 2rem;
     height: 2rem;
     border-radius: 10px;
-    font-size:1.2rem;
-    display:flex;
+    font-size: 1.2rem;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.c-container{
-    display:flex;
+.c-game-container {
+    display: flex;
     justify-content: space-around;
 }
