@@ -65,35 +65,42 @@ class Swing {
 };
 
 class Animation {
-    constructor(frames, filePrefix, fileSuffix) {
-        this.directory = "img/game";
-        this.filePrefix = filePrefix;
-        this.fileSuffix = fileSuffix;
-        this.file = `${this.directory}/${this.filePrefix}000.${this.fileSuffix}`;
+    constructor(frames, animationClass, framesPerRow, frameWidth, frameHeight) {
+        this.animationClass = animationClass;
         this.frames = frames;
+        this.framesPerRow = framesPerRow;
         this.currentFrame = 0;
+        this.frameWidth = frameWidth;
+        this.frameHeight = frameHeight;
+        this.posX = 0;
+        this.posY = 0;
 
-        this.getFrameString = () => {
-            const countString = `00${this.currentFrame}`;
-            return countString.substr(countString.length - 3);
+        this.setFramePosition = () => {
+            const currentRow = Math.floor(this.currentFrame / this.framesPerRow);
+            const currentFrame = this.currentFrame % this.framesPerRow;
+            this.posX = currentFrame / (this.framesPerRow - 1) * 100;
+            this.posY = 100 * currentRow / Math.floor((this.frames) / (this.framesPerRow));
         }
 
         this.updateFrame = () => {
             this.currentFrame = (this.currentFrame + 1) % (this.frames + 1);
-            this.file = `${this.directory}/${this.filePrefix}${this.getFrameString()}.${this.fileSuffix}`;
+            this.setFramePosition();
         }
     }
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> cbe1950623ed0b57fcf7198f95d3ed471d2ba6a6
 const gameSettings = {
     setDimensions: function () {
         this.dimensions = getGameWidthHeight();
+        this.dimensions.noSwimLines = 2;
     },
     dimensions: {
         width: 0,
-        height: 0
-
+        height: 0,
     },
     gameStatus: "stoped"
 };
@@ -135,69 +142,104 @@ const enemyTypes = [{
     }
 ];
 
+const jump = {
+    gravityAsc: 0.5,
+    gravityDesc: 0.6,
+    gravityClimax: 0.2,
+    initialVelocity: -16,
+}
+
 let enemies = [];
-const initialScore = 30;
+const initialHealth = 30;
 const fps = 60;
 let interval;
 let timeInterval = 0;
 let time = Date.now();
-let noSwimLines = 2;
-let level = 3;
-let upPressed = false;
-let downPressed = false;
+let level = 1;
 let gameOver = false;
 let backgroundPosition = 0;
 
-
 const hero = {
     x: 0,
-    swLine: 1,
-    height: 175,
+    y: 320,
+    swLine: 2,
+    height: 170,
     width: 100,
     moved: false,
-    score: initialScore,
+    health: initialHealth,
+    score: 0,
     state: "run",
-    animRun: new Animation(42, "run/r_", "png"),
-    animJump: new Animation(24, "jump/j_", "png"),
-    currentAnim: null
-}
+    animRun: new Animation(42, "animate__hero--run", 9, 100, 169),
+    animJump: new Animation(24, "animate__hero--jump", 5, 83, 168),
+
+    jumpInitialY: 0,
+    velocity: 0,
+    minY: 1000,
 
 
+    setCurrentAnim: function () {
+        if (this.state === "run") {
+            this.currentAnim = this.animRun;
+        } else {
+            this.currentAnim = this.animJump;
+        }
+    },
 
-function setCurrentAnimHero() {
-    if (hero.state === "run") {
-        hero.currentAnim = hero.animRun;
-    } else {
-        hero.currentAnim = hero.animJump;
+    changeState: function (state) {
+        if (this.state !== "jump" && state === "jump") {
+            this.initJump();
+            snd("snd/jump.mp3");
+        }
+        this.state = state;
+        this.setCurrentAnim();
+    },
+
+    initJump: function () {
+        this.velocity = jump.initialVelocity;
+        this.jumpInitialY = this.y;
+    },
+
+    finishJump: function () {
+        this.initialVelocity = 0;
+        this.y = this.jumpInitialY;
+    },
+
+    jumpHero: function () {
+        if (this.state === "jump") {
+            this.y += this.velocity;
+            this.minY = this.minY < this.y ? this.minY : this.y
+            if (Math.abs(this.velocity) < 0.2 * Math.abs(jump.initialVelocity)) {
+                this.velocity += jump.gravityClimax;
+            } else if (this.velocity < 0) {
+                this.velocity += jump.gravityAsc;
+            } else {
+                this.velocity += jump.gravityDesc;
+            }
+            if (this.jumpInitialY <= this.y) {
+                this.finishJump();
+                this.changeState("run");
+            }
+        }
+    },
+
+    moveHero: function () {
+        if (hero.state === "jump") {
+            hero.jumpHero();
+        }
+    },
+
+    setX: function () {
+        this.x = Math.floor(gameSettings.dimensions.width / 6);
     }
 }
 
-function animateHero() {
-    setCurrentAnimHero();
-    hero.currentAnim.updateFrame();
-    const elHero = document.getElementById("game__hero");
-    elHero.style.background = `url(${hero.currentAnim.file}) no-repeat`;
-}
 
-function preloadAnimations() {
-    let frames = hero.animRun.frames;
-    const elHero = document.getElementById("game__hero");
-    for (i = 0; i < frames; i++) {
-        hero.animRun.updateFrame();
-        elHero.style.background = `url(${hero.animRun.file}) no-repeat`;
-    }
-
-    frames = hero.animJump.frames;
-    for (i = 0; i < frames; i++) {
-        hero.animRun.updateFrame();
-        elHero.style.background = `url(${hero.animJump.file}) no-repeat`;
-    }
-}
 
 function appendHero() {
-    hero.x = gameSettings.dimensions.width / 6;
+    hero.setX();
+    //hero.changeState(hero.state);
     const element = document.createElement("div");
-    element.classList.add("animate__hero");
+    element.classList.add("animate__hero", hero.currentAnim.animationClass);
     element.setAttribute("id", "game__hero");
     gameContainer.appendChild(element);
 }
@@ -212,13 +254,12 @@ function resetIntervals() {
     timeInterval = 0;
 }
 
-
 function moveEnemies() {
-    for (let enemy of enemies) {
+    enemies.forEach(enemy => {
         enemy.x += enemy.vx;
         enemy.y += enemy.vy;
         enemy.swingDeg = enemy.swing.swingDeg();
-    }
+    });
 }
 
 function randomizeEnemyType() {
@@ -227,12 +268,12 @@ function randomizeEnemyType() {
 }
 
 function randomizeSwimLine() {
-    const sw = Math.floor(Math.random() * noSwimLines) + 1;
+    const sw = Math.floor(Math.random() * gameSettings.dimensions.noSwimLines) + 1;
     return sw;
 }
 
 function chooseEnemySwimLine() {
-    const swNumber = randomizeSwimLine() / noSwimLines;
+    const swNumber = randomizeSwimLine() / gameSettings.dimensions.noSwimLines;
     return swNumber;
 }
 
@@ -240,7 +281,7 @@ function createNewEnemy() {
     if (timeInterval >= 5000 * (60 / fps) / level) {
         const dimensions = gameSettings.dimensions;
         const x = dimensions.width;
-        const adjustPosition = -3 / 4 * dimensions.height / noSwimLines;
+        const adjustPosition = -3 / 4 * dimensions.height / dimensions.noSwimLines;
         const y = Math.floor(dimensions.height * chooseEnemySwimLine()) + adjustPosition;
         const newEnemy = new Enemy(x, y);
         newEnemy.enemyType = enemyTypes[randomizeEnemyType()];
@@ -264,9 +305,9 @@ function appendEnemy(enemy) {
 }
 
 function removeEnemies() {
-    for (let object of enemies) {
+    enemies.forEach(object => {
         removeEnemy(object);
-    }
+    });
 }
 
 function removeHero() {
@@ -276,13 +317,8 @@ function removeHero() {
     }
 }
 
-function heroY() {
-    const dimensions = gameSettings.dimensions;
-    const adjustPosition = -dimensions.height / noSwimLines;
-    const heroy = Math.floor(dimensions.height / noSwimLines * hero.swLine + adjustPosition);
-    return heroy;
-}
 
+<<<<<<< HEAD
 
 function jump() {
     hero.state = 'jump';
@@ -308,13 +344,14 @@ function moveHero() {
         hero.moved = false;
     }
 }
+=======
+>>>>>>> cbe1950623ed0b57fcf7198f95d3ed471d2ba6a6
 
 function checkCollisions() {
-    const heroy = heroY();
     for (let enemy of enemies) {
         if (enemy.x > hero.x + hero.width / 4 && enemy.x < hero.x + hero.width * 3 / 4 &&
-            enemy.y < heroy + hero.height && enemy.y > heroy) {
-            changeScore(enemy);
+            enemy.y < hero.y + hero.height && enemy.y > hero.y) {
+            changeHealth(enemy);
             removeEnemy(enemy);
             enemies.splice(enemies.indexOf(enemy), 1);
             return true;
@@ -323,11 +360,10 @@ function checkCollisions() {
     return false;
 }
 
-function changeScore(enemy) {
-    //hero.score += enemy.enemyType.score;
-    //console.log(hero.score);
+function changeHealth(enemy) {
+    hero.health += enemy.enemyType.score;
 
-    if (hero.score <= 0) {
+    if (hero.health <= 0) {
         //alert("Game Over!!!!");
         //clearInterval(interval);
         //gameOver = true;
@@ -337,10 +373,13 @@ function changeScore(enemy) {
 function checkBoundries() {
     for (let i = enemies.length - 1; i >= 0; i--) {
         if (enemies[i].x < 0) {
+            let score = Math.abs(enemies[i].enemyType.score);
             removeEnemy(enemies[i]);
             enemies.splice(i, 1);
+            return score;
         }
     }
+    return false;
 }
 
 function removeEnemy(enemy) {
@@ -361,10 +400,12 @@ function getGameWidthHeight() {
 
 function drawHero() {
     appendHero();
-    animateHero();
+    hero.currentAnim.updateFrame();
     const element = document.getElementById("game__hero");
-    element.style.left = hero.x + 'px';
-    element.style.top = heroY() + 'px';
+    element.style.transform = `translate(${hero.x}px, ${hero.y}px)`;
+    element.style.backgroundPosition = `${hero.currentAnim.posX}% ${hero.currentAnim.posY}%`
+    element.style.width = `${hero.currentAnim.frameWidth}px`;
+    element.style.height = `${hero.currentAnim.frameHeight}px`;
 }
 
 function setStyleEnemy(enemy) {
@@ -374,32 +415,37 @@ function setStyleEnemy(enemy) {
 }
 
 function drawEnemies() {
-    for (let enemy of enemies) {
+    enemies.forEach(enemy => {
         appendEnemy(enemy);
-    }
+    });
 }
 
 function clearBoard() {
     removeEnemies();
     removeHero();
-
 }
 
 function resetGame() {
     if (gameSettings.gameStatus === 'start') {
         removeEnemies();
         enemies = [];
-        hero.swLine = 1;
         clearInterval(interval);
         setGameInterval();
         gameOver = false;
     }
 }
 
+// function animateBackground() {
+//     backgroundPosition = backgroundPosition > 0 ? backgroundPosition - 1 : 1757;
+//     const gameBackground = document.getElementById("game_container");
+//     gameBackground.style.backgroundPosition = `${backgroundPosition}px 0`;
+// }
+
+
 function animateBackground() {
-    backgroundPosition = backgroundPosition > 0 ? backgroundPosition - 1 : 1757;
+    backgroundPosition = backgroundPosition < 100 ? backgroundPosition + 0.1 : 0;
     const gameBackground = document.getElementById("game_container");
-    gameBackground.style.backgroundPosition = `${backgroundPosition}px 0`;
+    gameBackground.style.backgroundPosition = `${backgroundPosition}% 0`;
 }
 
 function frame() {
@@ -407,27 +453,27 @@ function frame() {
     animateBackground();
     createNewEnemy();
     moveEnemies();
-    moveHero();
-    checkBoundries();
+    hero.moveHero();
+    const score = checkBoundries()
+    if (score) {
+        hero.score += score;
+    }
     if (checkCollisions()) {
-        gulp("snd/gulp.mp3");
+        snd("snd/gulp.mp3");
     }
     clearBoard();
     drawEnemies();
     drawHero();
 }
 
-
-function gulp(filename) {
+function snd(filename) {
     let audio = new Audio(filename);
     audio.play();
 }
 
 function keyPressHandler(e) {
-    if (e.keyCode == 38) {
-        upPressed = true;
-    } else if (e.keyCode == 40) {
-        downPressed = true;
+    if (e.keyCode === 32) {
+        hero.changeState("jump");
     }
 }
 
@@ -451,8 +497,7 @@ function game() {
     if (gameSettings.gameStatus === 'stoped') {
         gameSettings.gameStatus = 'start';
         clearInterval(interval);
-        appendHero();
-        preloadAnimations();
+        hero.changeState("run");
         document.addEventListener("keydown", keyPressHandler, false);
         setGameInterval();
     }

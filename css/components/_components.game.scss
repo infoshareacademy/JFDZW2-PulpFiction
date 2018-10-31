@@ -1,0 +1,88 @@
+#game_container {
+    width: 800px;
+    height: 600px;
+    position: relative;
+    background-image: url("../../img/game/street1.jpg");
+    background-repeat: repeat-x;
+    background-size: cover;
+    background-position: 0px 0;
+}
+
+.game_container{
+}
+
+.c-game-container__start {
+    background-color: rgb(206, 235, 230);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.u--hide{
+    display:none;
+}
+
+.c-button__start{
+    padding: 1rem 4rem;
+    border-radius: 10px;
+    font-size: 2rem;
+}
+
+.c-button--color{
+    color: white;
+    background-color:deepskyblue;
+    border: solid 1px gainsboro;
+    
+}
+
+.c-button--color:hover{
+    cursor: pointer;
+    color:deepskyblue;
+    background-color: white;
+    border-color: deepskyblue;
+}
+
+.animate {
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+}
+
+.animate img {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    //border: solid 1px black;
+}
+
+.animate__hero {
+    position: absolute;
+    //border: solid 1px black;
+}
+
+.animate__hero--run {
+    background-image: url("../img/game/hero_run.png");
+}
+ 
+.animate__hero--jump {
+    background-image: url("../img/game/hero_jump.png")
+}
+.c-reset__button{
+    padding: 0.5rem 2rem;
+    height: 2rem;
+    border-radius: 10px;
+    font-size:1.2rem;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.c-container--game{
+    display:flex;
+    justify-content: space-around;
+}
