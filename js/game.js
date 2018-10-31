@@ -64,7 +64,6 @@ class Swing {
     }
 };
 
-
 class Animation {
     constructor(frames, filePrefix, fileSuffix) {
         this.directory = "img/game";
@@ -85,10 +84,6 @@ class Animation {
         }
     }
 }
-
-
-
-
 
 
 const gameSettings = {
@@ -287,6 +282,14 @@ function heroY() {
     const heroy = Math.floor(dimensions.height / noSwimLines * hero.swLine + adjustPosition);
     return heroy;
 }
+
+
+function jump() {
+    hero.state = 'jump';
+    
+
+}
+
 
 function moveHero() {
     if (!hero.moved) {
