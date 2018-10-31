@@ -152,7 +152,7 @@ const fps = 60;
 let interval;
 let timeInterval = 0;
 let time = Date.now();
-let level = 3;
+let level = 1;
 let gameOver = false;
 let backgroundPosition = 0;
 
@@ -164,6 +164,7 @@ const hero = {
     width: 100,
     moved: false,
     health: initialHealth,
+    score: 0,
     state: "run",
     animRun: new Animation(42, "animate__hero--run", 9, 100, 169),
     animJump: new Animation(24, "animate__hero--jump", 5, 83, 168),
@@ -184,6 +185,7 @@ const hero = {
     changeState: function (state) {
         if (this.state !== "jump" && state === "jump") {
             this.initJump();
+            snd("snd/jump.mp3");
         }
         this.state = state;
         this.setCurrentAnim();
@@ -203,31 +205,24 @@ const hero = {
         if (this.state === "jump") {
             this.y += this.velocity;
             this.minY = this.minY < this.y ? this.minY : this.y
-            if (this.velocity < 0) {
-                this.velocity += jump.gravityAsc;
-            } else if (Math.abs(this.velocity) < 0.2 * Math.abs(jump.initialVelocity)) {
+            if (Math.abs(this.velocity) < 0.2 * Math.abs(jump.initialVelocity)) {
                 this.velocity += jump.gravityClimax;
+            } else if (this.velocity < 0) {
+                this.velocity += jump.gravityAsc;
             } else {
                 this.velocity += jump.gravityDesc;
             }
             if (this.jumpInitialY <= this.y) {
-                this.changeState("run");
                 this.finishJump();
+                this.changeState("run");
             }
         }
-        console.log(this.y, this.velocity);
     },
 
     moveHero: function () {
         if (hero.state === "jump") {
             hero.jumpHero();
         }
-    },
-
-    setY: function () {
-        const dimensions = gameSettings.dimensions;
-        const adjustPosition = -dimensions.height / dimensions.noSwimLines;
-        this.y = Math.floor(dimensions.height / dimensions.noSwimLines * this.swLine + adjustPosition);
     },
 
     setX: function () {
@@ -239,8 +234,7 @@ const hero = {
 
 function appendHero() {
     hero.setX();
-    //hero.setY();
-    hero.changeState(hero.state);
+    //hero.changeState(hero.state);
     const element = document.createElement("div");
     element.classList.add("animate__hero", hero.currentAnim.animationClass);
     element.setAttribute("id", "game__hero");
@@ -258,11 +252,11 @@ function resetIntervals() {
 }
 
 function moveEnemies() {
-    for (let enemy of enemies) {
+    enemies.forEach(enemy => {
         enemy.x += enemy.vx;
         enemy.y += enemy.vy;
         enemy.swingDeg = enemy.swing.swingDeg();
-    }
+    });
 }
 
 function randomizeEnemyType() {
@@ -308,9 +302,9 @@ function appendEnemy(enemy) {
 }
 
 function removeEnemies() {
-    for (let object of enemies) {
+    enemies.forEach(object => {
         removeEnemy(object);
-    }
+    });
 }
 
 function removeHero() {
@@ -326,7 +320,7 @@ function checkCollisions() {
     for (let enemy of enemies) {
         if (enemy.x > hero.x + hero.width / 4 && enemy.x < hero.x + hero.width * 3 / 4 &&
             enemy.y < hero.y + hero.height && enemy.y > hero.y) {
-            changeScore(enemy);
+            changeHealth(enemy);
             removeEnemy(enemy);
             enemies.splice(enemies.indexOf(enemy), 1);
             return true;
@@ -335,7 +329,7 @@ function checkCollisions() {
     return false;
 }
 
-function changeScore(enemy) {
+function changeHealth(enemy) {
     hero.health += enemy.enemyType.score;
 
     if (hero.health <= 0) {
@@ -348,9 +342,10 @@ function changeScore(enemy) {
 function checkBoundries() {
     for (let i = enemies.length - 1; i >= 0; i--) {
         if (enemies[i].x < 0) {
+            let score = Math.abs(enemies[i].enemyType.score);
             removeEnemy(enemies[i]);
             enemies.splice(i, 1);
-            return true;
+            return score;
         }
     }
     return false;
@@ -389,9 +384,9 @@ function setStyleEnemy(enemy) {
 }
 
 function drawEnemies() {
-    for (let enemy of enemies) {
+    enemies.forEach(enemy => {
         appendEnemy(enemy);
-    }
+    });
 }
 
 function clearBoard() {
@@ -409,10 +404,17 @@ function resetGame() {
     }
 }
 
+// function animateBackground() {
+//     backgroundPosition = backgroundPosition > 0 ? backgroundPosition - 1 : 1757;
+//     const gameBackground = document.getElementById("game_container");
+//     gameBackground.style.backgroundPosition = `${backgroundPosition}px 0`;
+// }
+
+
 function animateBackground() {
-    backgroundPosition = backgroundPosition > 0 ? backgroundPosition - 1 : 1757;
+    backgroundPosition = backgroundPosition < 100 ? backgroundPosition + 0.1 : 0;
     const gameBackground = document.getElementById("game_container");
-    gameBackground.style.backgroundPosition = `${backgroundPosition}px 0`;
+    gameBackground.style.backgroundPosition = `${backgroundPosition}% 0`;
 }
 
 function frame() {
@@ -421,17 +423,19 @@ function frame() {
     createNewEnemy();
     moveEnemies();
     hero.moveHero();
-    checkBoundries();
+    const score = checkBoundries()
+    if (score) {
+        hero.score += score;
+    }
     if (checkCollisions()) {
-        gulp("snd/gulp.mp3");
+        snd("snd/gulp.mp3");
     }
     clearBoard();
     drawEnemies();
     drawHero();
 }
 
-
-function gulp(filename) {
+function snd(filename) {
     let audio = new Audio(filename);
     audio.play();
 }
@@ -462,7 +466,7 @@ function game() {
     if (gameSettings.gameStatus === 'stoped') {
         gameSettings.gameStatus = 'start';
         clearInterval(interval);
-        //appendHero();
+        hero.changeState("run");
         document.addEventListener("keydown", keyPressHandler, false);
         setGameInterval();
     }
