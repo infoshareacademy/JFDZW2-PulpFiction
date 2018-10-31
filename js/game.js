@@ -412,7 +412,7 @@ function resetGame() {
 
 
 function animateBackground() {
-    backgroundPosition = backgroundPosition < 100 ? backgroundPosition + 0.1 : 0;
+    backgroundPosition = backgroundPosition < 183.5 ? backgroundPosition + 0.1 : 0;
     const gameBackground = document.getElementById("game_container");
     gameBackground.style.backgroundPosition = `${backgroundPosition}% 0`;
 }
