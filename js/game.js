@@ -17,18 +17,36 @@ window.onfocus = function () {
     }
 };
 
+window.onresize = function () {
+    if (gameSettings !== null) {
+        gameSettings.setDimensions();
+    }
+    if (hero !== null) {
+        hero.setCurrentAnim();
+        hero.setCurrentHeroDimensions();
+        updateHeroStyle();
+    }
+}
+
 class Enemy {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.vx = -1;
-        this.vy = 0;
         this.iniWidth = 40;
         this.iniHeight = 40;
         this.htmlId = "enemy" + Date.now();
         this.enemyType = {};
         this.swing = new Swing();
         this.swingDeg = this.swing.swingDeg();
+        this.phase = Math.random() + 0.5;
+
+        this.vx = function (speed) {
+            return -speed;
+        };
+
+        this.vy = function () {
+            return 0.1 * Math.sin((this.x / (4 * Math.PI)) - 2 * Math.PI / this.phase);
+        };
     }
 };
 
@@ -36,11 +54,11 @@ class Swing {
     constructor() {
         this.swingTime = Date.now();
         this.swingTimer = 0;
-        this.swingFrames = 7;
-        this.swingSeqNumber = Math.floor(Math.random() * (this.swingFrames + 1));
         this.animationTime = 700;
-        this.frameDuration = this.animationTime / this.swingFrames;
         this.swingDegs = [-10, -5, 0, 5, 10, 5, 0, -5];
+        this.swingFrames = this.swingDegs.length - 1;
+        this.swingSeqNumber = Math.floor(Math.random() * (this.swingFrames));
+        this.frameDuration = this.animationTime / this.swingFrames;
 
         this.setSwingTimer = () => {
             const oldTimer = this.swingTime;
@@ -89,10 +107,6 @@ class Animation {
     }
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> cbe1950623ed0b57fcf7198f95d3ed471d2ba6a6
 const gameSettings = {
     setDimensions: function () {
         this.dimensions = getGameWidthHeight();
@@ -143,10 +157,10 @@ const enemyTypes = [{
 ];
 
 const jump = {
-    gravityAsc: 0.5,
-    gravityDesc: 0.6,
-    gravityClimax: 0.2,
-    initialVelocity: -16,
+    gravityAsc: 0.2,
+    gravityDesc: 0.3,
+    gravityClimax: 0.05,
+    initialVelocity: -4,
 }
 
 let enemies = [];
@@ -158,11 +172,13 @@ let time = Date.now();
 let level = 1;
 let gameOver = false;
 let backgroundPosition = 0;
+let speed = 0.1;
 
 const hero = {
     x: 0,
-    y: 320,
-    swLine: 2,
+    y: 50,
+    fullHeight: 170,
+    fullWidth: 100,
     height: 170,
     width: 100,
     moved: false,
@@ -172,16 +188,26 @@ const hero = {
     animRun: new Animation(42, "animate__hero--run", 9, 100, 169),
     animJump: new Animation(24, "animate__hero--jump", 5, 83, 168),
 
+    animRunSmall: new Animation(42, "animate__hero--run", 9, 50, 84),
+    animJumpSmall: new Animation(24, "animate__hero--jump", 5, 42, 84),
     jumpInitialY: 0,
     velocity: 0,
     minY: 1000,
 
 
     setCurrentAnim: function () {
-        if (this.state === "run") {
-            this.currentAnim = this.animRun;
+        if (gameSettings.dimensions.width <= 400) {
+            if (this.state === "run") {
+                this.currentAnim = this.animRunSmall;
+            } else {
+                this.currentAnim = this.animJumpSmall;
+            }
         } else {
-            this.currentAnim = this.animJump;
+            if (this.state === "run") {
+                this.currentAnim = this.animRun;
+            } else {
+                this.currentAnim = this.animJump;
+            }
         }
     },
 
@@ -229,15 +255,41 @@ const hero = {
     },
 
     setX: function () {
-        this.x = Math.floor(gameSettings.dimensions.width / 6);
+        this.x = Math.floor(1 / 6 * 100);
+    },
+
+    setCurrentHeroDimensions: function () {
+        this.width = this.currentAnim.frameWidth;
+        this.height = this.currentAnim.frameHeight;
+    },
+
+    updateScore: function (score) {
+        this.score += score;
+    },
+
+    resetScore: function () {
+        this.score = 0;
+    },
+
+    updateHealth: function (health) {
+        this.health += health;
+    },
+
+    resetHealth: function () {
+        this.health = initialHealth;
+    },
+
+    getHeroWidthPerc: function () {
+        return 100 * this.width / gameSettings.dimensions.width;
+    },
+
+    getHeroHeightPerc: function () {
+        return 100 * this.height / gameSettings.dimensions.height;
     }
 }
 
-
-
 function appendHero() {
     hero.setX();
-    //hero.changeState(hero.state);
     const element = document.createElement("div");
     element.classList.add("animate__hero", hero.currentAnim.animationClass);
     element.setAttribute("id", "game__hero");
@@ -256,8 +308,8 @@ function resetIntervals() {
 
 function moveEnemies() {
     enemies.forEach(enemy => {
-        enemy.x += enemy.vx;
-        enemy.y += enemy.vy;
+        enemy.x += enemy.vx(speed);
+        enemy.y += enemy.vy();
         enemy.swingDeg = enemy.swing.swingDeg();
     });
 }
@@ -279,18 +331,17 @@ function chooseEnemySwimLine() {
 
 function createNewEnemy() {
     if (timeInterval >= 5000 * (60 / fps) / level) {
-        const dimensions = gameSettings.dimensions;
-        const x = dimensions.width;
-        const adjustPosition = -3 / 4 * dimensions.height / dimensions.noSwimLines;
-        const y = Math.floor(dimensions.height * chooseEnemySwimLine()) + adjustPosition;
+        const x = 100;
+        const y = 55;
         const newEnemy = new Enemy(x, y);
         newEnemy.enemyType = enemyTypes[randomizeEnemyType()];
-        newEnemy.x -= newEnemy.iniWidth;
+        newEnemy.x -= newEnemy.iniWidth / gameSettings.dimensions.width * 100;
         enemies.push(newEnemy);
         appendEnemy(newEnemy);
         resetIntervals();
     }
 }
+
 
 function appendEnemy(enemy) {
     const element = document.createElement("div");
@@ -317,41 +368,11 @@ function removeHero() {
     }
 }
 
-
-<<<<<<< HEAD
-
-function jump() {
-    hero.state = 'jump';
-    
-
-}
-
-
-function moveHero() {
-    if (!hero.moved) {
-        if (downPressed) {
-            downPressed = false;
-            if (hero.swLine < noSwimLines) hero.swLine++;
-            hero.moved = true;
-        }
-        if (upPressed) {
-            upPressed = false;
-            if (hero.swLine > 1) hero.swLine--;
-            hero.moved = true;
-        }
-    }
-    if (!upPressed && !downPressed) {
-        hero.moved = false;
-    }
-}
-=======
->>>>>>> cbe1950623ed0b57fcf7198f95d3ed471d2ba6a6
-
 function checkCollisions() {
     for (let enemy of enemies) {
-        if (enemy.x > hero.x + hero.width / 4 && enemy.x < hero.x + hero.width * 3 / 4 &&
-            enemy.y < hero.y + hero.height && enemy.y > hero.y) {
-            changeHealth(enemy);
+        if (enemy.x > hero.x + hero.getHeroWidthPerc() / 4 && enemy.x < hero.x + hero.getHeroWidthPerc() * 3 / 4 &&
+            enemy.y < hero.y + hero.getHeroHeightPerc() && enemy.y > hero.y) {
+            hero.updateHealth(enemy.score);
             removeEnemy(enemy);
             enemies.splice(enemies.indexOf(enemy), 1);
             return true;
@@ -360,9 +381,7 @@ function checkCollisions() {
     return false;
 }
 
-function changeHealth(enemy) {
-    hero.health += enemy.enemyType.score;
-
+function checkHealth() {
     if (hero.health <= 0) {
         //alert("Game Over!!!!");
         //clearInterval(interval);
@@ -401,8 +420,13 @@ function getGameWidthHeight() {
 function drawHero() {
     appendHero();
     hero.currentAnim.updateFrame();
+    updateHeroStyle();
+}
+
+function updateHeroStyle() {
     const element = document.getElementById("game__hero");
-    element.style.transform = `translate(${hero.x}px, ${hero.y}px)`;
+    element.style.left = `${hero.x}%`;
+    element.style.top = `${hero.y}%`;
     element.style.backgroundPosition = `${hero.currentAnim.posX}% ${hero.currentAnim.posY}%`
     element.style.width = `${hero.currentAnim.frameWidth}px`;
     element.style.height = `${hero.currentAnim.frameHeight}px`;
@@ -410,8 +434,10 @@ function drawHero() {
 
 function setStyleEnemy(enemy) {
     let element = document.getElementById(enemy.htmlId);
-    element.style.transform = `translate(${enemy.x}px, ${enemy.y}px) rotate(${enemy.swingDeg}deg)`;
+    element.style.transform = `rotate(${enemy.swingDeg}deg)`;
     element.style.transformOrigin = 'center top 0';
+    element.style.left = `${enemy.x}%`;
+    element.style.top = `${enemy.y}%`;
 }
 
 function drawEnemies() {
@@ -435,31 +461,24 @@ function resetGame() {
     }
 }
 
-// function animateBackground() {
-//     backgroundPosition = backgroundPosition > 0 ? backgroundPosition - 1 : 1757;
-//     const gameBackground = document.getElementById("game_container");
-//     gameBackground.style.backgroundPosition = `${backgroundPosition}px 0`;
-// }
-
-
-function animateBackground() {
-    backgroundPosition = backgroundPosition < 100 ? backgroundPosition + 0.1 : 0;
+function animateBackground(speed) {
+    backgroundPosition = backgroundPosition < 183.5 ? backgroundPosition + speed : 0;
     const gameBackground = document.getElementById("game_container");
     gameBackground.style.backgroundPosition = `${backgroundPosition}% 0`;
 }
 
 function frame() {
     calculateIntervals();
-    animateBackground();
+    animateBackground(speed);
     createNewEnemy();
     moveEnemies();
     hero.moveHero();
-    const score = checkBoundries()
+    const score = checkBoundries();
     if (score) {
-        hero.score += score;
+        hero.updateScore(score);
     }
     if (checkCollisions()) {
-        snd("snd/gulp.mp3");
+        //    snd("snd/gulp.mp3");
     }
     clearBoard();
     drawEnemies();
@@ -474,8 +493,22 @@ function snd(filename) {
 function keyPressHandler(e) {
     if (e.keyCode === 32) {
         hero.changeState("jump");
+    } else if (e.keyCode === 39) {
+        speed = 0.3;
+    } else
+    if (e.keyCode === 37) {
+        speed = 0.05;
+    } else {
+        speed = 0.1;
     }
 }
+
+function keyUpHandler(e) {
+    if (e.keyCode !== 32) {
+        speed = 0.1;
+    }
+}
+
 
 function startGameChangeBoard() {
     const game_container = document.getElementById("game_container");
@@ -499,6 +532,7 @@ function game() {
         clearInterval(interval);
         hero.changeState("run");
         document.addEventListener("keydown", keyPressHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
         setGameInterval();
     }
 
