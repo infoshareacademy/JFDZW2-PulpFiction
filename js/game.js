@@ -498,8 +498,6 @@ function keyPressHandler(e) {
     } else
     if (e.keyCode === 37) {
         speed = 0.05;
-    } else {
-        speed = 0.1;
     }
 }
 
@@ -509,6 +507,32 @@ function keyUpHandler(e) {
     }
 }
 
+function touchStartHandler(e) {
+    e.preventDefault();
+
+    let element = document.getElementById("game_container");
+    let context = element.getContext("2d");
+    let touches = e.changedTouches;
+
+    touches.forEach(touch => {
+        if (touch.pageX < gameSettings.dimensions.width / 3) {
+            speed = 0.05;
+        } else if (touch.pageX >= gameSettings.dimensions.width / 3 &&
+            touch.pageX < 2 * gameSettings.dimensions.width / 3) {
+            hero.changeState("jump");
+        } else {
+            speed = 0.3
+        }
+    });
+}
+
+
+function touchEndHandler(e) {
+    if (touch.pageX < gameSettings.dimensions.width / 3 ||
+        touch.pageX >= 2 * gameSettings.dimensions.width / 3) {
+        speed = 0.1
+    }
+}
 
 function startGameChangeBoard() {
     const game_container = document.getElementById("game_container");
@@ -524,6 +548,16 @@ function setGameInterval() {
     interval = setInterval(frame, 1000 / fps);
 }
 
+
+function registerHandlers() {
+    document.addEventListener("keydown", keyPressHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+
+    let gameContainer = document.getElementById("game_container");
+    gameContainer.addEventListener("touchstart", touchStartHandler, false);
+    gameContainer.addEventListener("touchend", touchEndHandler, false);
+}
+
 function game() {
     startGameChangeBoard();
     gameSettings.setDimensions();
@@ -531,8 +565,7 @@ function game() {
         gameSettings.gameStatus = 'start';
         clearInterval(interval);
         hero.changeState("run");
-        document.addEventListener("keydown", keyPressHandler, false);
-        document.addEventListener("keyup", keyUpHandler, false);
+        registerHandlers();
         setGameInterval();
     }
 
