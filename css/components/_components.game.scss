@@ -5,10 +5,8 @@
     background-image: url("../../img/game/street1.jpg");
     background-repeat: repeat-x;
     background-size: cover;
-    background-position: 0px 0;
+    background-position: 0 0;
 }
-
-.game_container {}
 
 .c-game-container__start {
     background-color: rgb(206, 235, 230);
@@ -101,6 +99,6 @@
     }
 
     .animate__hero--jump {
-        background-image: url("../img/game/hero_jump_small.png")
+        background-image: url("../img/game/hero_jump_small.png");
     }
 }

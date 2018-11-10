@@ -12,10 +12,10 @@
 <body>
     <div class="c-container--game">
         <div id="game_container" class="c-game-container__start">
-            <input type="button" class="c-button__start c-button--color" value="Start" onclick="game();">
+            <input type="button" class="c-button__start c-button--color" value="Start" onclick="game(event);" ontouchstart="game(event);">
         </div>
-        <div class="c-reset__button c-button--color">Reset</div>
     </div>
+    <div class="c-reset__button c-button--color">Reset</div>
     <script src="js/game.js"></script>
 </body>
 

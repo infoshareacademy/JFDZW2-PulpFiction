@@ -113,6 +113,8 @@ const gameSettings = {
         this.dimensions.noSwimLines = 2;
     },
     dimensions: {
+        top: 0,
+        left: 0,
         width: 0,
         height: 0,
     },
@@ -194,6 +196,10 @@ const hero = {
     velocity: 0,
     minY: 1000,
 
+    initialize: function () {
+        this.changeState("run");
+        this.setCurrentHeroDimensions();
+    },
 
     setCurrentAnim: function () {
         if (gameSettings.dimensions.width <= 400) {
@@ -272,6 +278,7 @@ const hero = {
     },
 
     updateHealth: function (health) {
+        console.log(this.health, health);
         this.health += health;
     },
 
@@ -372,7 +379,7 @@ function checkCollisions() {
     for (let enemy of enemies) {
         if (enemy.x > hero.x + hero.getHeroWidthPerc() / 4 && enemy.x < hero.x + hero.getHeroWidthPerc() * 3 / 4 &&
             enemy.y < hero.y + hero.getHeroHeightPerc() && enemy.y > hero.y) {
-            hero.updateHealth(enemy.score);
+            hero.updateHealth(enemy.enemyType.score);
             removeEnemy(enemy);
             enemies.splice(enemies.indexOf(enemy), 1);
             return true;
@@ -383,9 +390,10 @@ function checkCollisions() {
 
 function checkHealth() {
     if (hero.health <= 0) {
-        //alert("Game Over!!!!");
-        //clearInterval(interval);
-        //gameOver = true;
+        alert("Game Over!!!!");
+        clearInterval(interval);
+        gameOver = true;
+        gameSettings.gameStatus = 'stopped';
     }
 }
 
@@ -412,6 +420,8 @@ function getGameWidthHeight() {
     const gameContainer = document.getElementById("game_container");
     const rect = gameContainer.getBoundingClientRect();
     return {
+        top: rect.top,
+        left: rect.left,
         width: rect.width,
         height: rect.height
     }
@@ -478,8 +488,9 @@ function frame() {
         hero.updateScore(score);
     }
     if (checkCollisions()) {
-        //    snd("snd/gulp.mp3");
+        snd("snd/gulp.mp3");
     }
+    checkHealth();
     clearBoard();
     drawEnemies();
     drawHero();
@@ -495,8 +506,7 @@ function keyPressHandler(e) {
         hero.changeState("jump");
     } else if (e.keyCode === 39) {
         speed = 0.3;
-    } else
-    if (e.keyCode === 37) {
+    } else if (e.keyCode === 37) {
         speed = 0.05;
     }
 }
@@ -507,30 +517,41 @@ function keyUpHandler(e) {
     }
 }
 
+
+function getGameBoxTouch(touchX, touchY) {
+    const innerX = touchX - gameSettings.dimensions.left >= 0 ? touchX - gameSettings.dimensions.left : 0;
+    const innerY = touchY - gameSettings.dimensions.top >= 0 ? touchY - gameSettings.dimensions.top : 0;
+    return {
+        innerX: innerX,
+        innerY: innerY
+    };
+}
+
 function touchStartHandler(e) {
     e.preventDefault();
-
-    let element = document.getElementById("game_container");
-    let context = element.getContext("2d");
     let touches = e.changedTouches;
-
-    touches.forEach(touch => {
-        if (touch.pageX < gameSettings.dimensions.width / 3) {
+    for (let i = 0; i < touches.length; i++) {
+        const innerCoords = getGameBoxTouch(touches[i].pageX, touches[i].pageY);
+        if (innerCoords.innerX < gameSettings.dimensions.width / 3) {
             speed = 0.05;
-        } else if (touch.pageX >= gameSettings.dimensions.width / 3 &&
-            touch.pageX < 2 * gameSettings.dimensions.width / 3) {
+        } else if (innerCoords.innerX >= gameSettings.dimensions.width / 3 &&
+            innerCoords.innerX < 2 * gameSettings.dimensions.width / 3) {
             hero.changeState("jump");
         } else {
             speed = 0.3
         }
-    });
+    }
 }
 
-
 function touchEndHandler(e) {
-    if (touch.pageX < gameSettings.dimensions.width / 3 ||
-        touch.pageX >= 2 * gameSettings.dimensions.width / 3) {
-        speed = 0.1
+    e.preventDefault();
+    let touches = e.changedTouches;
+    for (let i = 0; i < touches.length; i++) {
+        const innerCoords = getGameBoxTouch(touches[i].pageX, touches[i].pageY);
+        if (innerCoords.innerX < gameSettings.dimensions.width / 3 ||
+            innerCoords.innerX >= 2 * gameSettings.dimensions.width / 3) {
+            speed = 0.1
+        }
     }
 }
 
@@ -543,11 +564,9 @@ function startGameChangeBoard() {
     buttonStart.style.display = "none";
 }
 
-
 function setGameInterval() {
     interval = setInterval(frame, 1000 / fps);
 }
-
 
 function registerHandlers() {
     document.addEventListener("keydown", keyPressHandler, false);
@@ -558,15 +577,16 @@ function registerHandlers() {
     gameContainer.addEventListener("touchend", touchEndHandler, false);
 }
 
-function game() {
+
+function game(event) {
+    event.stopPropagation();
     startGameChangeBoard();
     gameSettings.setDimensions();
     if (gameSettings.gameStatus === 'stoped') {
         gameSettings.gameStatus = 'start';
         clearInterval(interval);
-        hero.changeState("run");
+        hero.initialize();
         registerHandlers();
         setGameInterval();
     }
-
 }
