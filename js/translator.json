@@ -18,8 +18,15 @@
         "trainingPlanner":"TRAINING PLANNER - you can set the date and time of training and the type of exercises. Our estimator, thanks to previously entered goals, indicates how much time you should spend on a given type of exercise. Our planner reminds you about an hour before the workout. If you skip training, moves unrealized exercises for the next days.",
         "calorator":"CALORATOR - training in the PULP FITNESS program means simultaneous regular training and eating 5 meals a day. After each meal, you enter into our application what products you have eaten, and the CALORATOR indicates how many calories you could eat that day",
         "plannerDiet":"PLANNER DIET - being fit is the result of systematic exercise and changing dietary habits. Our program makes sure that you eat regularly, reminds you of appropriate doses of proteins, carbohydrates and healthy fats. 30 minutes before each meal it reminds you of it, indicates what products should be included in the upcoming meal.",
-        "trainingTogether":"TRAINING TOGETHER - our application finds new friends. If you lack the courage and need companions you will train with and achieve your goals together. Joint achievements with friends, a spirit of competition and synergy approach the intended goal."
-        
+        "trainingTogether":"TRAINING TOGETHER - our application finds new friends. If you lack the courage and need companions you will train with and achieve your goals together. Joint achievements with friends, a spirit of competition and synergy approach the intended goal.",
+        "aboutPulp":"ABOUT PULP FITNESS",
+        "trainingPlannerHeader":"TRAINING PLANNER",
+        "caloratorHeader": "CALORATOR",
+        "dietPlannerHeader":"DIET PLANNER",
+        "trainingTogetherHeader":"TRAINING TOGETHER",
+        "newsletter":"SIGN UP FOR OUR NEWSLETTER",
+        "newsletter2":"We will only send you important information"  ,
+        "send":"Send !"
 
     },
 
@@ -43,8 +50,16 @@
         "trainingPlanner":"PLANNER TRENINGÓW - w PULP FITNESS ustawiasz godzinę i czas treningu oraz rodzaj ćwiczeń. Nasz estymator dzięki wcześniej wprowadzonym do systemu personalnym celom wskazuje, ile dokładnie czasu powinieneś(-aś) przeznaczyć na dany rodzaj ćwiczeń. Nasz planner na godzinę przed treningiem przypomina o nim, jeśli pominiesz trening, przenosi niezrealizowane ćwiczenia na kolejne dni.",
         "calorator":"LICZNIK KALORII - trening w ramach programu PULP FITNESS to jednoczesne regularne treningi i jedzenie 5 posiłków dziennie. Po każdym posiłku wprowadzasz do naszej aplikacji jakie produkty zjadłeś, a LICZNIK wskazuje, ile kalorii powinieneś jeszcze tego dnia spożyć",
         "plannerDiet":"PLANNER DIETY - bycie w dobrej formie to efekt systematycznych ćwiczeń i zmiany nawyków żywieniowych. Nasz program pilnuje, abyś jadł regularnie, przypomina o odpowiednich dawkach białek, węglowodanów i zdrowych tłuszczy. Na 30 min przed każdym posiłkiem przypomina o nim, wskazuje jakie produkty powinny się znaleźć w nadchodzącym posiłku.",
-        "trainingTogether":"TRENUJMY RAZEM - dzięki naszej aplikacji możesz nawiązać nowe znajomości. Jeśli brakuje Tobie śmiałości i potrzebujesz towarzystwa, w którym będziesz trenować i realizować wspólne cele, to PULP FITNESS to umożliwia. Wspólne osiągnięcia ze znajomymi, duch rywalizacji i synergia zbliżają do osiągnięcia zamierzonego celu."
-        
+        "trainingTogether":"TRENUJMY RAZEM - dzięki naszej aplikacji możesz nawiązać nowe znajomości. Jeśli brakuje Tobie śmiałości i potrzebujesz towarzystwa, w którym będziesz trenować i realizować wspólne cele, to PULP FITNESS to umożliwia. Wspólne osiągnięcia ze znajomymi, duch rywalizacji i synergia zbliżają do osiągnięcia zamierzonego celu.",
+        "aboutPulp":"O PULP FITNESS",
+        "trainingPlannerHeader":"PLANER TRENINGÓW",
+        "caloratorHeader":"LICZNIK KALORII",
+        "dietPlannerHeader":"PLANNER DIETY",
+        "trainingTogetherHeader":"TRENUJEMY RAZEM",
+        "newsletter":"JUŻ DZIŚ ZAPISZ SIĘ NA NASZ NEWSLETTER!*",
+        "newsletter2":"BĘDZIEMY WYSYŁAĆ TOBIE TYLKO WAŻNE INFORMACJE!!!" ,
+        "send":"Wyślij !"
+         
 
     }
 

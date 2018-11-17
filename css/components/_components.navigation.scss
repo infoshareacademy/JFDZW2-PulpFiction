@@ -82,6 +82,7 @@
 
     &__item {
         padding: 10px 10px;
+        flex-basis: 175px;
         font-size: $fontBasicSize;
 
         &--hightlight {

@@ -17,6 +17,15 @@ var trainingPlanner = document.querySelector('[data-language="trainingPlanner"]'
 var calorator = document.querySelector('[data-language="calorator"]');
 var trainingTogether = document.querySelector('[data-language="trainingTogether"]');
 var plannerDiet = document.querySelector('[data-language="plannerDiet"]');
+var trainingPlannerHeader = document.querySelector('[data-language="trainingPlannerHeader"]');
+var caloratorHeader = document.querySelector('[data-language="caloratorHeader"]');
+var trainingTogetherHeader = document.querySelector('[data-language="trainingTogetherHeader"]');
+var plannerDietHeader = document.querySelector('[data-language="dietPlannerHeader"]');
+var aboutPulp = document.querySelector('[data-language="aboutPulp"]');
+var newsletter = document.querySelector('[data-form="newsletter"]'); 
+var newsletter2 = document.querySelector('[data-form="newsletter2"]'); 
+var send = document.querySelector("[data-form='send']");
+
 
 
 var flags = document.getElementsByClassName("c-header__flag--img");
@@ -61,29 +70,29 @@ function flagChanger() {
 }
 
 function changeLanguage(language) {
-  var item=sessionStorage.getItem("language");
-  if(item){
-    renderHTML(JSON.parse(item),language);
-  }else{
-  var ourRequest = new XMLHttpRequest();
-  ourRequest.open("GET", "js/translator.json");
-  ourRequest.onload = function () {
-    if (ourRequest.status >= 200 && ourRequest.status < 400) {
-      var ourData = JSON.parse(ourRequest.responseText);
-      renderHTML(ourData, language);
-      sessionStorage.setItem("language",ourRequest.responseText)
-    } else {
-      console.log("We connected to the server, but it returned an error.");
+  var item = sessionStorage.getItem("language");
+  if (item) {
+    renderHTML(JSON.parse(item), language);
+  } else {
+    var ourRequest = new XMLHttpRequest();
+    ourRequest.open("GET", "js/translator.json");
+    ourRequest.onload = function () {
+      if (ourRequest.status >= 200 && ourRequest.status < 400) {
+        var ourData = JSON.parse(ourRequest.responseText);
+        renderHTML(ourData, language);
+        sessionStorage.setItem("language", ourRequest.responseText)
+      } else {
+        console.log("We connected to the server, but it returned an error.");
+      }
     }
-  }
- 
 
-  ourRequest.onerror = function () {
-    console.log("Connection error");
+
+    ourRequest.onerror = function () {
+      console.log("Connection error");
+    };
+
+    ourRequest.send();
   };
-
-  ourRequest.send();
-};
 
 }
 
@@ -106,8 +115,17 @@ function renderHTML(data, language) {
   maria.innerHTML = data[language]["maria"];
   aneta.innerHTML = data[language]["aneta"];
   kuba.innerHTML = data[language]["kuba"];
-  trainingPlanner.innerHTML=data[language]["trainingPlanner"];
-  calorator.innerHTML=data[language]["calorator"];
-  trainingTogether.innerHTML=data[language]["calorator"];
-  plannerDiet.innerHTML=data[language]["plannerDiet"];
+  trainingPlanner.innerHTML = data[language]["trainingPlanner"];
+  calorator.innerHTML = data[language]["calorator"];
+  trainingTogether.innerHTML = data[language]["trainingTogether"];
+  plannerDiet.innerHTML = data[language]["plannerDiet"];
+  aboutPulp.innerHTML = data[language]["aboutPulp"];
+  trainingPlannerHeader.innerHTML = data[language]["trainingPlannerHeader"];
+  caloratorHeader.innerHTML = data[language]["caloratorHeader"];
+  trainingTogetherHeader.innerHTML = data[language]["trainingTogetherHeader"];
+  var test = data[language]["dietPlannerHeader"];
+  plannerDietHeader.innerHTML = data[language]["dietPlannerHeader"];
+  newsletter.innerHTML = data[language]["newsletter"];
+  newsletter2.innerHTML = data[language]["newsletter2"];
+  send.value = data[language]["send"];
 }
