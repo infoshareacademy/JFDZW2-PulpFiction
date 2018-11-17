@@ -37,17 +37,15 @@ class Enemy {
         this.htmlId = "enemy" + Date.now();
         this.enemyType = {};
         this.swing = new Swing();
-        this.swingDeg = this.swing.swingDeg();
         this.phase = Math.random() + 0.5;
-
-        this.vx = function (speed) {
-            return -speed;
-        };
-
-        this.vy = function () {
-            return 0.1 * Math.sin((this.x / (4 * Math.PI)) - 2 * Math.PI / this.phase);
-        };
     }
+    vx(speed) {
+        return -speed;
+    }
+    vy() {
+        return 0.1 * Math.sin((this.x / (4 * Math.PI)) - 2 * Math.PI / this.phase);
+    }
+
 };
 
 class Swing {
@@ -59,26 +57,24 @@ class Swing {
         this.swingFrames = this.swingDegs.length - 1;
         this.swingSeqNumber = Math.floor(Math.random() * (this.swingFrames));
         this.frameDuration = this.animationTime / this.swingFrames;
-
-        this.setSwingTimer = () => {
-            const oldTimer = this.swingTime;
-            this.swingTime = Date.now();
-            this.swingTimer += (this.swingTime - oldTimer);
+        this.swintDeg = this.setSwingDeg();
+    }
+    setSwingTimer() {
+        const oldTimer = this.swingTime;
+        this.swingTime = Date.now();
+        this.swingTimer += (this.swingTime - oldTimer);
+    }
+    resetSwingTimer() {
+        this.swingTimer = 0;
+    }
+    setSwingDeg() {
+        if (this.swingTimer <= this.frameDuration) {
+            this.setSwingTimer();
+        } else {
+            this.resetSwingTimer();
+            this.swingSeqNumber = this.swingSeqNumber < this.swingFrames ? this.swingSeqNumber + 1 : 0;
         }
-
-        this.resetSwingTimer = () => {
-            this.swingTimer = 0;
-        }
-
-        this.swingDeg = () => {
-            if (this.swingTimer <= this.frameDuration) {
-                this.setSwingTimer();
-            } else {
-                this.resetSwingTimer();
-                this.swingSeqNumber = this.swingSeqNumber < this.swingFrames ? this.swingSeqNumber + 1 : 0;
-            }
-            return this.swingDegs[this.swingSeqNumber];
-        }
+        this.swingDeg = this.swingDegs[this.swingSeqNumber];
     }
 };
 
@@ -92,25 +88,22 @@ class Animation {
         this.frameHeight = frameHeight;
         this.posX = 0;
         this.posY = 0;
-
-        this.setFramePosition = () => {
-            const currentRow = Math.floor(this.currentFrame / this.framesPerRow);
-            const currentFrame = this.currentFrame % this.framesPerRow;
-            this.posX = currentFrame / (this.framesPerRow - 1) * 100;
-            this.posY = 100 * currentRow / Math.floor((this.frames) / (this.framesPerRow));
-        }
-
-        this.updateFrame = () => {
-            this.currentFrame = (this.currentFrame + 1) % (this.frames + 1);
-            this.setFramePosition();
-        }
+    }
+    setFramePosition() {
+        const currentRow = Math.floor(this.currentFrame / this.framesPerRow);
+        const currentFrame = this.currentFrame % this.framesPerRow;
+        this.posX = currentFrame / (this.framesPerRow - 1) * 100;
+        this.posY = 100 * currentRow / Math.floor((this.frames) / (this.framesPerRow));
+    }
+    updateFrame() {
+        this.currentFrame = (this.currentFrame + 1) % (this.frames + 1);
+        this.setFramePosition();
     }
 }
 
 const gameSettings = {
     setDimensions: function () {
         this.dimensions = getGameWidthHeight();
-        this.dimensions.noSwimLines = 2;
     },
     dimensions: {
         top: 0,
@@ -121,39 +114,45 @@ const gameSettings = {
     gameStatus: "stoped"
 };
 
+function LoadImage(src) {
+    const pic = new Image();
+    pic.src = src;
+    return pic;
+}
+
 const enemyTypes = [{
         id: "beer",
-        sprite: "beer1.png",
+        sprite: LoadImage("img/game/beer1.png"),
         score: -10
     },
     {
         id: "cupcake",
-        sprite: "cupcake1.png",
+        sprite: LoadImage("img/game/cupcake1.png"),
         score: -5
     },
     {
         id: "dogfood",
-        sprite: "dogfood1.png",
+        sprite: LoadImage("img/game/dogfood1.png"),
         score: 5
     },
     {
         id: "energydrink",
-        sprite: "energydrink.png",
+        sprite: LoadImage("img/game/energydrink.png"),
         score: 5
     },
     {
         id: "hamb",
-        sprite: "hamb1.png",
+        sprite: LoadImage("img/game/hamb1.png"),
         score: -10
     },
     {
         id: "soda",
-        sprite: "soda1.png",
+        sprite: LoadImage("img/game/soda1.png"),
         score: -2
     },
     {
         id: "taco",
-        sprite: "taco1.png",
+        sprite: LoadImage("img/game/taco1.png"),
         score: -5
     }
 ];
@@ -317,23 +316,13 @@ function moveEnemies() {
     enemies.forEach(enemy => {
         enemy.x += enemy.vx(speed);
         enemy.y += enemy.vy();
-        enemy.swingDeg = enemy.swing.swingDeg();
+        enemy.swing.setSwingDeg();
     });
 }
 
 function randomizeEnemyType() {
     const enemyType = Math.floor(Math.random() * enemyTypes.length);
     return enemyType;
-}
-
-function randomizeSwimLine() {
-    const sw = Math.floor(Math.random() * gameSettings.dimensions.noSwimLines) + 1;
-    return sw;
-}
-
-function chooseEnemySwimLine() {
-    const swNumber = randomizeSwimLine() / gameSettings.dimensions.noSwimLines;
-    return swNumber;
 }
 
 function createNewEnemy() {
@@ -349,13 +338,12 @@ function createNewEnemy() {
     }
 }
 
-
 function appendEnemy(enemy) {
     const element = document.createElement("div");
     const img = document.createElement("img");
     element.classList.add("animate");
     img.classList.add("animate");
-    img.setAttribute("src", `img/game/${enemy.enemyType.sprite}`);
+    img.src = enemy.enemyType.sprite.src;
     element.appendChild(img);
     element.setAttribute("id", enemy.htmlId);
     gameContainer.appendChild(element);
@@ -377,8 +365,10 @@ function removeHero() {
 
 function checkCollisions() {
     for (let enemy of enemies) {
-        if (enemy.x > hero.x + hero.getHeroWidthPerc() / 4 && enemy.x < hero.x + hero.getHeroWidthPerc() * 3 / 4 &&
-            enemy.y < hero.y + hero.getHeroHeightPerc() && enemy.y > hero.y) {
+        if (enemy.x > hero.x + hero.getHeroWidthPerc() / 4 &&
+            enemy.x < hero.x + hero.getHeroWidthPerc() * 3 / 4 &&
+            enemy.y < hero.y + hero.getHeroHeightPerc() &&
+            enemy.y > hero.y) {
             hero.updateHealth(enemy.enemyType.score);
             removeEnemy(enemy);
             enemies.splice(enemies.indexOf(enemy), 1);
@@ -444,7 +434,7 @@ function updateHeroStyle() {
 
 function setStyleEnemy(enemy) {
     let element = document.getElementById(enemy.htmlId);
-    element.style.transform = `rotate(${enemy.swingDeg}deg)`;
+    element.style.transform = `rotate(${enemy.swing.swingDeg}deg)`;
     element.style.transformOrigin = 'center top 0';
     element.style.left = `${enemy.x}%`;
     element.style.top = `${enemy.y}%`;
@@ -516,7 +506,6 @@ function keyUpHandler(e) {
         speed = 0.1;
     }
 }
-
 
 function getGameBoxTouch(touchX, touchY) {
     const innerX = touchX - gameSettings.dimensions.left >= 0 ? touchX - gameSettings.dimensions.left : 0;
