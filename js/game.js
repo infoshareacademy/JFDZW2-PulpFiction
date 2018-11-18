@@ -121,40 +121,40 @@ function LoadImage(src) {
 }
 
 const enemyTypes = [{
-        id: "beer",
-        sprite: LoadImage("img/game/beer1.png"),
-        score: -10
-    },
-    {
-        id: "cupcake",
-        sprite: LoadImage("img/game/cupcake1.png"),
-        score: -5
-    },
-    {
-        id: "dogfood",
-        sprite: LoadImage("img/game/dogfood1.png"),
-        score: 5
-    },
-    {
-        id: "energydrink",
-        sprite: LoadImage("img/game/energydrink.png"),
-        score: 5
-    },
-    {
-        id: "hamb",
-        sprite: LoadImage("img/game/hamb1.png"),
-        score: -10
-    },
-    {
-        id: "soda",
-        sprite: LoadImage("img/game/soda1.png"),
-        score: -2
-    },
-    {
-        id: "taco",
-        sprite: LoadImage("img/game/taco1.png"),
-        score: -5
-    }
+    id: "beer",
+    sprite: LoadImage("img/game/beer1.png"),
+    score: -10
+},
+{
+    id: "cupcake",
+    sprite: LoadImage("img/game/cupcake1.png"),
+    score: -5
+},
+{
+    id: "dogfood",
+    sprite: LoadImage("img/game/dogfood1.png"),
+    score: 5
+},
+{
+    id: "energydrink",
+    sprite: LoadImage("img/game/energydrink.png"),
+    score: 5
+},
+{
+    id: "hamb",
+    sprite: LoadImage("img/game/hamb1.png"),
+    score: -10
+},
+{
+    id: "soda",
+    sprite: LoadImage("img/game/soda1.png"),
+    score: -2
+},
+{
+    id: "taco",
+    sprite: LoadImage("img/game/taco1.png"),
+    score: -5
+}
 ];
 
 const jump = {
@@ -281,7 +281,7 @@ const hero = {
         this.health += health;
     },
 
-     
+
     resetHealth: function () {
         this.health = initialHealth;
     },
@@ -381,7 +381,7 @@ function checkCollisions() {
 
 function checkHealth() {
     if (hero.health <= 0) {
-        alert("Game Over!!!!");
+        document.querySelector("#gameOver_panel").style.display= "flex";
         clearInterval(interval);
         gameOver = true;
         gameSettings.gameStatus = 'stopped';
@@ -586,18 +586,65 @@ function game(event) {
 
 /******************************************************** */
 
-document.getElementById('instruction').addEventListener("click", function() {
-	document.querySelector('#popupInstruction').style.display = "flex";
+document.getElementById('instruction').addEventListener("click", function () {
+    document.querySelector('#popupInstruction').style.display = "flex";
 });
 
-document.getElementById('bestListButton').addEventListener("click", function() {
-	document.querySelector('#popupBestList').style.display = "flex";
+document.getElementById('bestListButton').addEventListener("click", function () {
+    document.querySelector('#popupBestList').style.display = "flex";
+
+    setBestResultList();
+
 });
 
-document.querySelectorAll('.c-close').forEach((elem) =>{
+document.querySelectorAll('.c-close').forEach((elem) => {
     elem.addEventListener("click", (event) => {
-        event.target.parentNode.parentNode.style.display="none";
-       //document.querySelector('#popupInstruction').style.display = "none";
-      
+        event.target.parentNode.parentNode.style.display = "none";
+        //document.querySelector('#popupInstruction').style.display = "none";
+
     });
-}) 
+})
+
+document.querySelector("#publishButton").addEventListener("click", function () {
+    let nick = document.querySelector("#nickInput").value;
+    let result = document.querySelector("#resultInput").value;
+    let list = JSON.parse(localStorage.getItem("bestList"));
+    if (!list) {
+        localStorage.setItem("bestList", JSON.stringify([{ nick: nick, point: result }]));
+    } else {
+        if(list.length>9){
+            if(list[9].point < result){
+            list.pop();
+            list.push({ nick: nick, point: result });
+            list.sort((a,b)=>{
+               return b.point - a.point;
+            });
+            }
+        }else if(list.length<10){
+            list.push({ nick: nick, point: result });
+            list.sort((a,b) => {
+               return b.point - a.point;
+            })
+        }
+       
+        localStorage.setItem("bestList", JSON.stringify(list));
+
+    }
+
+    document.querySelector('#popupBestList').style.display = "flex";
+    setBestResultList();
+})
+
+function setBestResultList() {
+    const elem = document.querySelector("#bestResultList");
+    let list = JSON.parse(localStorage.getItem("bestList"));
+    if (!list) {
+        elem.innerHTML = "1."
+    } else {
+        let result = "";
+        list.forEach((item, index) => {
+            result += ((index + 1) + '. ' + item.nick + '\t' + item.point) + '<br>';
+        })
+        elem.innerHTML = result;
+    }
+}
