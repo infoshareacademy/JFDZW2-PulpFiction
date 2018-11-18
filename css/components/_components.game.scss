@@ -27,16 +27,16 @@
 
 .c-button--color {
     color: white;
-    background-color: deepskyblue;
+    background-color: $accentColor;
     border: solid 1px gainsboro;
 
 }
 
 .c-button--color:hover {
     cursor: pointer;
-    color: deepskyblue;
+    color: $accentColor;
     background-color: white;
-    border-color: deepskyblue;
+    border-color: $accentColor;
 }
 
 .animate {
