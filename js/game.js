@@ -164,7 +164,7 @@ const jump = {
     initialVelocity: -4,
 }
 
-let enemies = [];
+const enemies = [];
 const initialHealth = 30;
 const fps = 60;
 let interval;
@@ -390,7 +390,7 @@ function checkHealth() {
 function checkBoundries() {
     for (let i = enemies.length - 1; i >= 0; i--) {
         if (enemies[i].x < 0) {
-            let score = Math.abs(enemies[i].enemyType.score);
+            const score = Math.abs(enemies[i].enemyType.score);
             removeEnemy(enemies[i]);
             enemies.splice(i, 1);
             return score;
@@ -567,8 +567,14 @@ function registerHandlers() {
 }
 
 
+function preloadImages() {
+    const preloads = "img/game/hero_jump_small.png,img/game/hero_jump.png,img/game/hero_run_small.png,img/game/hero_run.png,img/game/street1.jpg".split(",");
+    preloads.forEach(image => LoadImage(image));
+}
+
 function game(event) {
     event.stopPropagation();
+    preloadImages();
     startGameChangeBoard();
     gameSettings.setDimensions();
     if (gameSettings.gameStatus === 'stoped') {
