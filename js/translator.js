@@ -22,8 +22,8 @@ var caloratorHeader = document.querySelector('[data-language="caloratorHeader"]'
 var trainingTogetherHeader = document.querySelector('[data-language="trainingTogetherHeader"]');
 var plannerDietHeader = document.querySelector('[data-language="dietPlannerHeader"]');
 var aboutPulp = document.querySelector('[data-language="aboutPulp"]');
-var newsletter = document.querySelector('[data-form="newsletter"]'); 
-var newsletter2 = document.querySelector('[data-form="newsletter2"]'); 
+var newsletter = document.querySelector('[data-form="newsletter"]');
+var newsletter2 = document.querySelector('[data-form="newsletter2"]');
 var send = document.querySelector("[data-form='send']");
 
 
@@ -70,28 +70,44 @@ function flagChanger() {
 }
 
 function changeLanguage(language) {
+
   var item = sessionStorage.getItem("language");
   if (item) {
     renderHTML(JSON.parse(item), language);
   } else {
-    var ourRequest = new XMLHttpRequest();
-    ourRequest.open("GET", "js/translator.json");
-    ourRequest.onload = function () {
-      if (ourRequest.status >= 200 && ourRequest.status < 400) {
-        var ourData = JSON.parse(ourRequest.responseText);
-        renderHTML(ourData, language);
-        sessionStorage.setItem("language", ourRequest.responseText)
-      } else {
-        console.log("We connected to the server, but it returned an error.");
-      }
-    }
+
+    fetch('js/translator.json', {
+      method: 'get',
+
+    }).then(function (response) {
+
+      return response.json();
+      
+    }).then(function(jsonObject){
+      renderHTML(jsonObject, language);
+      sessionStorage.setItem("language", JSON.stringify(jsonObject));
+    })
+      .catch(function (err) {
+        console.log("Connection error");
+      });
+    // var ourRequest = new XMLHttpRequest();
+    // ourRequest.open("GET", "js/translator.json");
+    // ourRequest.onload = function () {
+    //   if (ourRequest.status >= 200 && ourRequest.status < 400) {
+    //     var ourData = JSON.parse(ourRequest.responseText);
+    //     renderHTML(ourData, language);
+    //     sessionStorage.setItem("language", ourRequest.responseText)
+    //   } else {
+    //     console.log("We connected to the server, but it returned an error.");
+    //   }
+    // }
 
 
-    ourRequest.onerror = function () {
-      console.log("Connection error");
-    };
+    // ourRequest.onerror = function () {
+    //   console.log("Connection error");
+    // };
 
-    ourRequest.send();
+    // ourRequest.send();
   };
 
 }
