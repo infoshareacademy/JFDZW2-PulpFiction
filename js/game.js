@@ -281,6 +281,7 @@ const hero = {
         this.health += health;
     },
 
+     
     resetHealth: function () {
         this.health = initialHealth;
     },
@@ -579,3 +580,24 @@ function game(event) {
         setGameInterval();
     }
 }
+
+
+
+
+/******************************************************** */
+
+document.getElementById('instruction').addEventListener("click", function() {
+	document.querySelector('#popupInstruction').style.display = "flex";
+});
+
+document.getElementById('bestListButton').addEventListener("click", function() {
+	document.querySelector('#popupBestList').style.display = "flex";
+});
+
+document.querySelectorAll('.c-close').forEach((elem) =>{
+    elem.addEventListener("click", (event) => {
+        event.target.parentNode.parentNode.style.display="none";
+       //document.querySelector('#popupInstruction').style.display = "none";
+      
+    });
+}) 
