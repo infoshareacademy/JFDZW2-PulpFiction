@@ -381,7 +381,7 @@ function checkCollisions() {
 
 function checkHealth() {
     if (hero.health <= 0) {
-        document.querySelector("#gameOver_panel").style.display= "flex";
+        document.querySelector("#gameOver_panel").style.display = "flex";
         clearInterval(interval);
         gameOver = true;
         gameSettings.gameStatus = 'stopped';
@@ -609,28 +609,10 @@ document.querySelector("#publishButton").addEventListener("click", function () {
     let nick = document.querySelector("#nickInput").value;
     let result = document.querySelector("#resultInput").value;
     let list = JSON.parse(localStorage.getItem("bestList"));
-    if (!list) {
-        localStorage.setItem("bestList", JSON.stringify([{ nick: nick, point: result }]));
-    } else {
-        if(list.length>9){
-            if(list[9].point < result){
-            list.pop();
-            list.push({ nick: nick, point: result });
-            list.sort((a,b)=>{
-               return b.point - a.point;
-            });
-            }
-        }else if(list.length<10){
-            list.push({ nick: nick, point: result });
-            list.sort((a,b) => {
-               return b.point - a.point;
-            })
-        }
-       
-        localStorage.setItem("bestList", JSON.stringify(list));
 
-    }
+    setBestListToLoaclStorage(item);
 
+    document.querySelector("#gameOver_panel").style.display = "none";
     document.querySelector('#popupBestList').style.display = "flex";
     setBestResultList();
 })
@@ -647,4 +629,29 @@ function setBestResultList() {
         })
         elem.innerHTML = result;
     }
+}
+
+function setBestListToLoaclStorage(item){
+    if (!list) {
+        localStorage.setItem("bestList", JSON.stringify([{ nick: nick, point: result }]));
+    } else {
+        if (list.length > 9) {
+            if (list[9].point < result) {
+                list.pop();
+                list = addNewResultAndSortList(nick, result);
+            }
+        } else if (list.length < 10) {
+            list = addNewResultAndSortList(nick, result);
+        }
+
+        localStorage.setItem("bestList", JSON.stringify(list));
+
+    }
+}
+
+function addNewResultAndSortList(nick,result){
+    list.push({ nick: nick, point: result });
+    return list.sort((a, b) => {
+                    return b.point - a.point;
+                });
 }
