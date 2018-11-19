@@ -24,6 +24,13 @@
                 <input type="button" class="c-button__start c-button--color" value="Start" onclick="game(event);"
                     ontouchstart="game(event);">
             </div>
+            <div id="gameOver_panel" class="c-game-container__over">
+                <h3>Twój wynik:</h3>
+                <input id="resultInput" type="text">
+                <h3>Twój nick:</h3>
+                <input id="nickInput" type="text">
+                <button id="publishButton" class="c-reset__button c-button--color u-radius" >Opublikuj</button>
+            </div>
         </div>
         <div class="c-container--panel">
             <button id="instruction" class="c-button c-button--medium u-radius c-button--color">Instrukcja</button>
@@ -49,6 +56,7 @@
     
                 <div class="c-close">+</div>
                 <h3>Lista wyników</h3>
+                <div id="bestResultList"></div>
                 
             </div>
         </div>
