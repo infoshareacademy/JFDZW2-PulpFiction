@@ -10,57 +10,60 @@
 </head>
 
 <body>
-    <header class="c-header" style="position:static; justify-content: flex-start; margin-bottom:10px" id="mynav">
-        <figure class="c-figure">
-            <div class="c-figure__item">
-                <img class="c-header__logo c-figure__item" src="img/avatar.png" alt="Pulp Fitness">
+    <div class="c-container">
+        <header class="c-header c-header__game">
+            <figure class="c-figure">
+                <div class="c-figure__item">
+                    <img class="c-header__logo c-figure__item" src="img/avatar.png" alt="Pulp Fitness">
+                </div>
+                <div class="c-figure__item c-menu__item"><a class="c-menu__anchor" href="index.html">Pulp Fitness</a></div>
+            </figure>
+        </header>
+        <div class="c-container--frame u-center">
+            <div class="c-container--game">
+                <div id="game_container" class="c-game-container__start">
+                    <input type="button" class="c-button__start c-button--color" value="Start" onclick="game(event);"
+                        ontouchstart="game(event);">
+                </div>
+                <div id="gameOver_panel" class="c-game-container__over">
+                    <h3>Twój wynik:</h3>
+                    <input id="resultInput" type="text">
+                    <h3>Twój nick:</h3>
+                    <input id="nickInput" type="text">
+                    <button id="publishButton" class="c-reset__button c-button--color u-radius">Opublikuj</button>
+                </div>
             </div>
-            <div class="c-figure__item">Pulp Fitness</div>
-        </figure>
-    </header>
-    <div class="c-container--frame u-center">
-        <div class="c-container--game">
-            <div id="game_container" class="c-game-container__start">
-                <input type="button" class="c-button__start c-button--color" value="Start" onclick="game(event);"
-                    ontouchstart="game(event);">
-            </div>
-            <div id="gameOver_panel" class="c-game-container__over">
-                <h3>Twój wynik:</h3>
-                <input id="resultInput" type="text">
-                <h3>Twój nick:</h3>
-                <input id="nickInput" type="text">
-                <button id="publishButton" class="c-reset__button c-button--color u-radius" >Opublikuj</button>
+            <div class="c-container--panel">
+                <button id="instruction" class="c-button c-button--medium u-radius c-button--color">Instrukcja</button>
+                <button id="bestListButton" class="c-button c-button--medium u-radius c-button--color">Najlepsze wyniki</button>
+                <div id="resetButton" class="c-reset__button c-button--color u-radius" >Reset</div>
             </div>
         </div>
-        <div class="c-container--panel">
-            <button id="instruction" class="c-button c-button--medium u-radius c-button--color">Instrukcja</button>
-            <button id="bestListButton" class="c-button c-button--medium u-radius c-button--color">Najlepsze wyniki</button>
-            <div class="c-reset__button c-button--color u-radius">Reset</div>
-        </div>
-    </div>
 
-    <div id="popupInstruction" class="c-popup--frame">
-        <div class="c-popup--panel">
-
-            <div class="c-close">+</div>
-            <h3>Instrukcja</h3>
-            <div>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                Quidem hic totam inventore autem maxime, dicta nisi? Laudantium, 
-                nostrum eos obcaecati praesentium vero aliquam repellendus fuga quidem rerum totam, odit nihil.
-            </div>
-        </div>
-    </div>
-    <div id="popupBestList" class="c-popup--frame">
+        <div id="popupInstruction" class="c-popup--frame">
             <div class="c-popup--panel">
-    
+
+                <div class="c-close">+</div>
+                <h3>Instruction</h3>
+                <div>
+                    <div>[SPACE] Jump</div>
+                    <div>&rarr; Accelerate</div>
+                    <div>&larr; Decelerate</div>
+                    <div>Avoid bad food</div>
+                    <div>Eat good food</div>
+                </div>
+            </div>
+        </div>
+        <div id="popupBestList" class="c-popup--frame">
+            <div class="c-popup--panel">
+
                 <div class="c-close">+</div>
                 <h3>Lista wyników</h3>
                 <div id="bestResultList"></div>
-                
+
             </div>
         </div>
-
+    </div>
     <script src="js/game.js"></script>
 </body>
 

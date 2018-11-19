@@ -1,5 +1,5 @@
 let gameContainer = document.getElementById("game_container");
-let resetButton = document.querySelector('.c-reset__button');
+let resetButton = document.getElementById("resetButton");
 resetButton.addEventListener("click", function () {
     resetGame();
 })
@@ -38,14 +38,17 @@ class Enemy {
         this.enemyType = {};
         this.swing = new Swing();
         this.phase = Math.random() + 0.5;
+        this.amplitude = 0.1;
     }
     vx(speed) {
         return -speed;
     }
     vy() {
-        return 0.1 * Math.sin((this.x / (4 * Math.PI)) - 2 * Math.PI / this.phase);
+        return this.amplitude * Math.sin((this.x / (4 * Math.PI)) - 2 * Math.PI / this.phase);
     }
-
+    setAmplitude(amplitude) {
+        this.amplitude = amplitude;
+    }
 };
 
 class Swing {
@@ -121,40 +124,40 @@ function LoadImage(src) {
 }
 
 const enemyTypes = [{
-    id: "beer",
-    sprite: LoadImage("img/game/beer1.png"),
-    score: -10
-},
-{
-    id: "cupcake",
-    sprite: LoadImage("img/game/cupcake1.png"),
-    score: -5
-},
-{
-    id: "dogfood",
-    sprite: LoadImage("img/game/dogfood1.png"),
-    score: 5
-},
-{
-    id: "energydrink",
-    sprite: LoadImage("img/game/energydrink.png"),
-    score: 5
-},
-{
-    id: "hamb",
-    sprite: LoadImage("img/game/hamb1.png"),
-    score: -10
-},
-{
-    id: "soda",
-    sprite: LoadImage("img/game/soda1.png"),
-    score: -2
-},
-{
-    id: "taco",
-    sprite: LoadImage("img/game/taco1.png"),
-    score: -5
-}
+        id: "beer",
+        sprite: LoadImage("img/game/beer1.png"),
+        score: -10
+    },
+    {
+        id: "cupcake",
+        sprite: LoadImage("img/game/cupcake1.png"),
+        score: -5
+    },
+    {
+        id: "dogfood",
+        sprite: LoadImage("img/game/dogfood1.png"),
+        score: 5
+    },
+    {
+        id: "energydrink",
+        sprite: LoadImage("img/game/energydrink.png"),
+        score: 5
+    },
+    {
+        id: "hamb",
+        sprite: LoadImage("img/game/hamb1.png"),
+        score: -10
+    },
+    {
+        id: "soda",
+        sprite: LoadImage("img/game/soda1.png"),
+        score: -2
+    },
+    {
+        id: "taco",
+        sprite: LoadImage("img/game/taco1.png"),
+        score: -5
+    }
 ];
 
 const jump = {
@@ -173,7 +176,11 @@ let time = Date.now();
 let level = 1;
 let gameOver = false;
 let backgroundPosition = 0;
-let speed = 0.1;
+const initialSpeed = 0.1;
+let speed = initialSpeed;
+let speedFactor = 1;
+const initialEnemyInterval = 5000;
+const levelUpScore = 50;
 
 const hero = {
     x: 0,
@@ -253,7 +260,7 @@ const hero = {
         }
     },
 
-    moveHero: function () {
+    move: function () {
         if (hero.state === "jump") {
             hero.jumpHero();
         }
@@ -279,8 +286,10 @@ const hero = {
     updateHealth: function (health) {
         console.log(this.health, health);
         this.health += health;
+        if (this.health > initialHealth) {
+            this.health = initialHealth;
+        }
     },
-
 
     resetHealth: function () {
         this.health = initialHealth;
@@ -293,6 +302,7 @@ const hero = {
     getHeroHeightPerc: function () {
         return 100 * this.height / gameSettings.dimensions.height;
     }
+
 }
 
 function appendHero() {
@@ -313,10 +323,27 @@ function resetIntervals() {
     timeInterval = 0;
 }
 
+function upLevel() {
+    level++;
+}
+
+function resetLevel() {
+    level = 1;
+}
+
+function increaseSpeed() {
+    speed = initialSpeed + 0.02 * level;
+}
+
+function resetSpeed() {
+    speed = initialSpeed;
+}
+
 function moveEnemies() {
     enemies.forEach(enemy => {
-        enemy.x += enemy.vx(speed);
+        enemy.x += enemy.vx(speedFactor * speed);
         enemy.y += enemy.vy();
+        enemy.y = enemy.y > 90 ? 90 : enemy.y;
         enemy.swing.setSwingDeg();
     });
 }
@@ -327,10 +354,14 @@ function randomizeEnemyType() {
 }
 
 function createNewEnemy() {
-    if (timeInterval >= 5000 * (60 / fps) / level) {
+    const ffps = 60 / fps;
+    let levelDelay = 400 * (level - 1);
+    levelDelay >= 4000 ? 4000 : levelDelay;
+    if (timeInterval >= initialEnemyInterval * ffps - levelDelay) {
         const x = 100;
         const y = 55;
         const newEnemy = new Enemy(x, y);
+        newEnemy.setAmplitude(newEnemy.amplitude + 0.01 * (level - 1));
         newEnemy.enemyType = enemyTypes[randomizeEnemyType()];
         newEnemy.x -= newEnemy.iniWidth / gameSettings.dimensions.width * 100;
         enemies.push(newEnemy);
@@ -453,9 +484,14 @@ function clearBoard() {
 }
 
 function resetGame() {
+    console.log("reset")
     if (gameSettings.gameStatus === 'start') {
         removeEnemies();
-        enemies = [];
+        enemies.length = 0;
+        hero.resetScore();
+        hero.resetHealth();
+        resetLevel();
+        resetSpeed();
         clearInterval(interval);
         setGameInterval();
         gameOver = false;
@@ -463,7 +499,7 @@ function resetGame() {
 }
 
 function animateBackground(speed) {
-    backgroundPosition = backgroundPosition < 183.5 ? backgroundPosition + speed : 0;
+    backgroundPosition = backgroundPosition < 183.5 ? backgroundPosition + speedFactor * speed : 0;
     const gameBackground = document.getElementById("game_container");
     gameBackground.style.backgroundPosition = `${backgroundPosition}% 0`;
 }
@@ -473,10 +509,15 @@ function frame() {
     animateBackground(speed);
     createNewEnemy();
     moveEnemies();
-    hero.moveHero();
+    hero.move();
     const score = checkBoundries();
     if (score) {
+        const lastScore = hero.score;
         hero.updateScore(score);
+        if (lastScore % levelUpScore > hero.score % levelUpScore) {
+            upLevel();
+            increaseSpeed();
+        }
     }
     if (checkCollisions()) {
         snd("snd/gulp.mp3");
@@ -496,15 +537,15 @@ function keyPressHandler(e) {
     if (e.keyCode === 32) {
         hero.changeState("jump");
     } else if (e.keyCode === 39) {
-        speed = 0.3;
+        speedFactor = 3;
     } else if (e.keyCode === 37) {
-        speed = 0.05;
+        speedFactor = 0.5;
     }
 }
 
 function keyUpHandler(e) {
     if (e.keyCode !== 32) {
-        speed = 0.1;
+        speedFactor = 1;
     }
 }
 
@@ -593,12 +634,13 @@ function game(event) {
 /******************************************************** */
 
 document.getElementById('instruction').addEventListener("click", function () {
+    clearInterval(interval);
     document.querySelector('#popupInstruction').style.display = "flex";
 });
 
 document.getElementById('bestListButton').addEventListener("click", function () {
+    clearInterval(interval);
     document.querySelector('#popupBestList').style.display = "flex";
-
     setBestResultList();
 
 });
@@ -606,6 +648,10 @@ document.getElementById('bestListButton').addEventListener("click", function () 
 document.querySelectorAll('.c-close').forEach((elem) => {
     elem.addEventListener("click", (event) => {
         event.target.parentNode.parentNode.style.display = "none";
+        if (interval && !gameOver) {
+            clearInterval(interval);
+            setGameInterval();
+        }
         //document.querySelector('#popupInstruction').style.display = "none";
 
     });
@@ -637,9 +683,12 @@ function setBestResultList() {
     }
 }
 
-function setBestListToLoaclStorage(item){
+function setBestListToLoaclStorage(item) {
     if (!list) {
-        localStorage.setItem("bestList", JSON.stringify([{ nick: nick, point: result }]));
+        localStorage.setItem("bestList", JSON.stringify([{
+            nick: nick,
+            point: result
+        }]));
     } else {
         if (list.length > 9) {
             if (list[9].point < result) {
@@ -655,9 +704,12 @@ function setBestListToLoaclStorage(item){
     }
 }
 
-function addNewResultAndSortList(nick,result){
-    list.push({ nick: nick, point: result });
+function addNewResultAndSortList(nick, result) {
+    list.push({
+        nick: nick,
+        point: result
+    });
     return list.sort((a, b) => {
-                    return b.point - a.point;
-                });
+        return b.point - a.point;
+    });
 }
