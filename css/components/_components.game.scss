@@ -25,6 +25,11 @@
     font-size: 2rem;
 }
 
+.c-button--medium{
+    padding:0.5rem 1rem;
+
+}
+
 .c-button--color {
     color: white;
     background-color: $accentColor;
@@ -69,18 +74,67 @@
 }
 
 .c-reset__button {
-    padding: 0.5rem 2rem;
-    height: 2rem;
-    border-radius: 10px;
+    padding: 0.5rem 1rem;
     font-size: 1.2rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: 100px;
 }
 
 .c-container--game {
+    flex-grow: 2;
     display: flex;
     justify-content: space-around;
+}
+
+.c-container--frame{
+    display:flex;
+    width:80vw;
+}
+
+.c-container--panel{
+    flex-grow: 1;
+    border: 2px solid $accentColor;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.c-popup--frame {
+	background-color: rgba(0, 0, 0, 0.8);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+.c-popup--panel {
+	height: 300px;
+	width: 500px;
+	background-color: white;
+	text-align: center;
+	padding: 20px;
+	position: relative;
+	border-radius: 4px;
+}
+
+.c-close {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-size: 42px;
+	color: #333;
+	transform: rotate(45deg);
+	cursor: pointer;
+	&:hover {
+		color: #666;
+	}
 }
 
 @media (max-width:$tabletScreen) {
