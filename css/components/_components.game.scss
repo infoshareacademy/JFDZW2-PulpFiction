@@ -99,6 +99,16 @@
     min-width: 100px;
 }
 
+.c-panel--score--lives {
+    flex-grow: 1;
+    border: 2px solid $accentColor;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
 .c-container--game {
     flex-grow: 3;
     display: flex;
