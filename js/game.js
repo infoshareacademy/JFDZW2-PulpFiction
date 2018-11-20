@@ -603,15 +603,15 @@ function keyPressHandler(e) {
     if (e.keyCode === 32) {
         setTimeout(() => hero.changeState("jump"), hero.inertia, false);
     } else if (e.keyCode === 39) {
-        timeout = setTimeout(() => speedFactor = 3, hero.inertia, false);
+        setTimeout(() => speedFactor = 3, hero.inertia, false);
     } else if (e.keyCode === 37) {
-        timeout = setTimeout(() => speedFactor = 0.5, hero.inertia, false);
+        setTimeout(() => speedFactor = 0.5, hero.inertia, false);
     }
 }
 
 function keyUpHandler(e) {
     if (e.keyCode !== 32) {
-        timeout = setTimeout(() => speedFactor = 1, hero.inertia, false);
+        setTimeout(() => speedFactor = 1, hero.inertia, false);
     }
 }
 
@@ -630,12 +630,12 @@ function touchStartHandler(e) {
     for (let i = 0; i < touches.length; i++) {
         const innerCoords = getGameBoxTouch(touches[i].pageX, touches[i].pageY);
         if (innerCoords.innerX < gameSettings.dimensions.width / 3) {
-            speed = 0.05;
+            setTimeout(() => speedFactor = 0.5, hero.inertia, false);
         } else if (innerCoords.innerX >= gameSettings.dimensions.width / 3 &&
             innerCoords.innerX < 2 * gameSettings.dimensions.width / 3) {
-            hero.changeState("jump");
+            setTimeout(() => hero.changeState("jump"), hero.inertia, false);
         } else {
-            speed = 0.3
+            setTimeout(() => speedFactor = 3, hero.inertia, false);
         }
     }
 }
@@ -647,7 +647,7 @@ function touchEndHandler(e) {
         const innerCoords = getGameBoxTouch(touches[i].pageX, touches[i].pageY);
         if (innerCoords.innerX < gameSettings.dimensions.width / 3 ||
             innerCoords.innerX >= 2 * gameSettings.dimensions.width / 3) {
-            speed = 0.1
+                setTimeout(() => speedFactor = 1, hero.inertia, false);
         }
     }
 }
