@@ -1,14 +1,24 @@
 const gameContainer = document.getElementById("game_container");
 const resetButton = document.getElementById("resetButton");
-//preloadImages();
+preloadImages();
 
-resetButton.addEventListener("click", function () {
-    resetGame();
-})
+resetButton.addEventListener("click", () => resetGame());
+
+let startButton = document.getElementById("startButton");
+startButton.addEventListener("click", event => {
+    game(event);
+    startMusic();
+}, false)
+
+startButton.addEventListener("touchstart", event => {
+    game(event);
+    startMusic();
+}, false)
 
 window.onblur = function () {
     if (interval) {
         clearInterval(interval)
+        stopSnd(music, true);
     }
 };
 
@@ -16,6 +26,7 @@ window.onfocus = function () {
     if (interval && !gameOver) {
         clearInterval(interval);
         setGameInterval();
+        continueMusic();
     }
 };
 
@@ -439,9 +450,9 @@ function renderScores() {
     const docScore = document.getElementById("game-score");
     const docHealth = document.getElementById("game-health");
 
-    docLevel.innerText = `LEVEL: ${level}`;
-    docScore.innerText = `SCORE: ${hero.score}`;
-    docHealth.innerText = `HEALTH: ${hero.health < 0 ? 0 : hero.health}`;
+    docLevel.innerText = `LEVEL ${level}`;
+    docScore.innerText = `SCORE ${hero.score}`;
+    docHealth.innerText = `HEALTH ${hero.health < 0 ? 0 : hero.health}`;
 }
 
 function checkCollisions() {
@@ -592,9 +603,22 @@ function snd(filename, loop = false) {
     return audio;
 }
 
-function stopSnd(audio) {
+function stopSnd(audio, pause = false) {
     audio.pause();
-    audio.currentTime = 0;
+    if (!pause) {
+        audio.currentTime = 0;
+    }
+}
+
+function continueMusic() {
+    if (music) {
+        music.play();
+    }
+}
+
+function startMusic() {
+    music = snd('snd/bground.mp3', true);
+    music.volume = 0.2;
 }
 
 
@@ -647,7 +671,7 @@ function touchEndHandler(e) {
         const innerCoords = getGameBoxTouch(touches[i].pageX, touches[i].pageY);
         if (innerCoords.innerX < gameSettings.dimensions.width / 3 ||
             innerCoords.innerX >= 2 * gameSettings.dimensions.width / 3) {
-                setTimeout(() => speedFactor = 1, hero.inertia, false);
+            setTimeout(() => speedFactor = 1, hero.inertia, false);
         }
     }
 }
@@ -683,7 +707,6 @@ function game(event) {
     if (gameSettings.gameStatus === 'stoped') {
         gameSettings.gameStatus = 'start';
         renderScores();
-        music = snd('snd/bground.mp3', true);
         clearInterval(interval);
         hero.initialize();
         registerHandlers();
