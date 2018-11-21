@@ -100,32 +100,45 @@
 }
 
 .c-panel--score--lives {
-    flex-grow: 1;
+    min-width: 400px;
+    height:auto;
+    
     border: 2px solid $accentColor;
-    display:flex;
+    display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    position: relative;
 
 }
 
 .c-container--game {
+    min-width: 400px;
+    max-width: 800px;
+    height:auto;
     flex-grow: 3;
     display: flex;
     justify-content: space-around;
     position: relative;
 }
 
-.c-container--frame{
+.c-container--frame {
+    min-width: 400px;
+    max-width: 1200px;
     display:flex;
     width:80vw;
+    flex-wrap: wrap;
+    justify-content: center;
 
 }
 
-.c-container--panel{
+.c-container--panel {
+    min-width: 200px;
+    max-width: 400px;
     flex-grow: 1;
     border: 2px solid $accentColor;
     display:flex;
+    flex-wrap: wrap;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
