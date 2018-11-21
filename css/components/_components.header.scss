@@ -46,6 +46,13 @@
         }
     }
 
+    &__game {
+        position: static;
+        justify-content: flex-start;
+        margin-bottom: 10px;
+        padding: 0 12%;
+    }
+
 }
 
 @media (min-width:$mobileScreen) {
@@ -55,6 +62,10 @@
 
         &__flag--img {
             padding: 0;
+        }
+
+        &__game {
+            justify-content: flex-start;
         }
     }
 

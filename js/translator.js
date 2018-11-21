@@ -114,7 +114,6 @@ function changeLanguage(language) {
 
 function renderHTML(data, language) {
 
-  home.innerHTML = data[language]["home"]
   product.innerHTML = data[language]["product"];
   team[0].innerHTML = data[language]["team"];
   team[1].innerHTML = data[language]["team"];

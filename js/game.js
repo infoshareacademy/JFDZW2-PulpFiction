@@ -1,5 +1,7 @@
-let gameContainer = document.getElementById("game_container");
-let resetButton = document.querySelector('.c-reset__button');
+const gameContainer = document.getElementById("game_container");
+const resetButton = document.getElementById("resetButton");
+//preloadImages();
+
 resetButton.addEventListener("click", function () {
     resetGame();
 })
@@ -28,6 +30,10 @@ window.onresize = function () {
     }
 }
 
+function preloadImages() {
+    const preloads = "img/game/hero_jump_small.png,img/game/hero_jump.png,img/game/hero_run_small.png,img/game/hero_run.png,img/game/street1.jpg".split(",");
+    preloads.forEach(image => LoadImage(image));
+}
 class Enemy {
     constructor(x, y) {
         this.x = x;
@@ -38,14 +44,17 @@ class Enemy {
         this.enemyType = {};
         this.swing = new Swing();
         this.phase = Math.random() + 0.5;
+        this.amplitude = 0.1;
     }
     vx(speed) {
         return -speed;
     }
     vy() {
-        return 0.1 * Math.sin((this.x / (4 * Math.PI)) - 2 * Math.PI / this.phase);
+        return this.amplitude * Math.sin((this.x / (4 * Math.PI)) - 2 * Math.PI / this.phase);
     }
-
+    setAmplitude(amplitude) {
+        this.amplitude = amplitude;
+    }
 };
 
 class Swing {
@@ -104,6 +113,16 @@ class Animation {
 const gameSettings = {
     setDimensions: function () {
         this.dimensions = getGameWidthHeight();
+        this.setBackgroundToPaneRatio();
+    },
+    setBackgroundToPaneRatio: function () {
+        const backgroundDimensions = getImageDimensions("img/game/street1.jpg");
+        const coverBackgroundDims = {
+            width: backgroundDimensions.width * this.dimensions.height / backgroundDimensions.height,
+            height: this.dimensions.height
+        }
+        this.backgroundRatio = coverBackgroundDims.width - this.dimensions.width !== 0 ?
+            coverBackgroundDims.width / (coverBackgroundDims.width - this.dimensions.width) * 100 : 183.5;
     },
     dimensions: {
         top: 0,
@@ -111,6 +130,7 @@ const gameSettings = {
         width: 0,
         height: 0,
     },
+    backgroundRatio: 183.5,
     gameStatus: "stoped"
 };
 
@@ -120,41 +140,51 @@ function LoadImage(src) {
     return pic;
 }
 
-const enemyTypes = [{
-    id: "beer",
-    sprite: LoadImage("img/game/beer1.png"),
-    score: -10
-},
-{
-    id: "cupcake",
-    sprite: LoadImage("img/game/cupcake1.png"),
-    score: -5
-},
-{
-    id: "dogfood",
-    sprite: LoadImage("img/game/dogfood1.png"),
-    score: 5
-},
-{
-    id: "energydrink",
-    sprite: LoadImage("img/game/energydrink.png"),
-    score: 5
-},
-{
-    id: "hamb",
-    sprite: LoadImage("img/game/hamb1.png"),
-    score: -10
-},
-{
-    id: "soda",
-    sprite: LoadImage("img/game/soda1.png"),
-    score: -2
-},
-{
-    id: "taco",
-    sprite: LoadImage("img/game/taco1.png"),
-    score: -5
+function getImageDimensions(image) {
+    const loadedImg = LoadImage(image)
+
+    return {
+        width: loadedImg.width,
+        height: loadedImg.height
+    };
 }
+
+
+const enemyTypes = [{
+        id: "beer",
+        sprite: LoadImage("img/game/beer1.png"),
+        score: -10
+    },
+    {
+        id: "cupcake",
+        sprite: LoadImage("img/game/cupcake1.png"),
+        score: -5
+    },
+    {
+        id: "dogfood",
+        sprite: LoadImage("img/game/dogfood1.png"),
+        score: 5
+    },
+    {
+        id: "energydrink",
+        sprite: LoadImage("img/game/energydrink.png"),
+        score: 5
+    },
+    {
+        id: "hamb",
+        sprite: LoadImage("img/game/hamb1.png"),
+        score: -10
+    },
+    {
+        id: "soda",
+        sprite: LoadImage("img/game/soda1.png"),
+        score: -2
+    },
+    {
+        id: "taco",
+        sprite: LoadImage("img/game/taco1.png"),
+        score: -5
+    }
 ];
 
 const jump = {
@@ -164,16 +194,22 @@ const jump = {
     initialVelocity: -4,
 }
 
-let enemies = [];
+const enemies = [];
 const initialHealth = 30;
 const fps = 60;
 let interval;
+let timeout;
 let timeInterval = 0;
 let time = Date.now();
 let level = 1;
 let gameOver = false;
 let backgroundPosition = 0;
-let speed = 0.1;
+const initialSpeed = 0.1;
+let speed = initialSpeed;
+let speedFactor = 1;
+const initialEnemyInterval = 5000;
+const levelUpScore = 50;
+let music;
 
 const hero = {
     x: 0,
@@ -186,6 +222,7 @@ const hero = {
     health: initialHealth,
     score: 0,
     state: "run",
+    inertia: 0,
     animRun: new Animation(42, "animate__hero--run", 9, 100, 169),
     animJump: new Animation(24, "animate__hero--jump", 5, 83, 168),
 
@@ -253,7 +290,7 @@ const hero = {
         }
     },
 
-    moveHero: function () {
+    move: function () {
         if (hero.state === "jump") {
             hero.jumpHero();
         }
@@ -277,13 +314,24 @@ const hero = {
     },
 
     updateHealth: function (health) {
-        console.log(this.health, health);
         this.health += health;
+        if (this.health > initialHealth) {
+            this.health = initialHealth;
+        };
+        this.updateInertia();
     },
-
 
     resetHealth: function () {
         this.health = initialHealth;
+        this.resetInertia();
+    },
+
+    updateInertia: function () {
+        this.inertia = (initialHealth - this.health) * 20;
+    },
+
+    resetInertia: function () {
+        this.inertia = 0;
     },
 
     getHeroWidthPerc: function () {
@@ -293,6 +341,7 @@ const hero = {
     getHeroHeightPerc: function () {
         return 100 * this.height / gameSettings.dimensions.height;
     }
+
 }
 
 function appendHero() {
@@ -313,10 +362,27 @@ function resetIntervals() {
     timeInterval = 0;
 }
 
+function upLevel() {
+    level++;
+}
+
+function resetLevel() {
+    level = 1;
+}
+
+function increaseSpeed() {
+    speed = initialSpeed + 0.02 * level;
+}
+
+function resetSpeed() {
+    speed = initialSpeed;
+}
+
 function moveEnemies() {
     enemies.forEach(enemy => {
-        enemy.x += enemy.vx(speed);
+        enemy.x += enemy.vx(speedFactor * speed);
         enemy.y += enemy.vy();
+        enemy.y = enemy.y > 90 ? 90 : enemy.y;
         enemy.swing.setSwingDeg();
     });
 }
@@ -327,10 +393,14 @@ function randomizeEnemyType() {
 }
 
 function createNewEnemy() {
-    if (timeInterval >= 5000 * (60 / fps) / level) {
+    const ffps = 60 / fps;
+    let levelDelay = 400 * (level - 1);
+    levelDelay >= 4000 ? 4000 : levelDelay;
+    if (timeInterval >= initialEnemyInterval * ffps - levelDelay) {
         const x = 100;
         const y = 55;
         const newEnemy = new Enemy(x, y);
+        newEnemy.setAmplitude(newEnemy.amplitude + 0.01 * (level - 1));
         newEnemy.enemyType = enemyTypes[randomizeEnemyType()];
         newEnemy.x -= newEnemy.iniWidth / gameSettings.dimensions.width * 100;
         enemies.push(newEnemy);
@@ -358,10 +428,20 @@ function removeEnemies() {
 }
 
 function removeHero() {
-    let hero = document.getElementById("game__hero");
+    const hero = document.getElementById("game__hero");
     if (hero) {
         gameContainer.removeChild(hero);
     }
+}
+
+function renderScores() {
+    const docLevel = document.getElementById("game-level");
+    const docScore = document.getElementById("game-score");
+    const docHealth = document.getElementById("game-health");
+
+    docLevel.innerText = `LEVEL: ${level}`;
+    docScore.innerText = `SCORE: ${hero.score}`;
+    docHealth.innerText = `HEALTH: ${hero.health < 0 ? 0 : hero.health}`;
 }
 
 function checkCollisions() {
@@ -384,6 +464,7 @@ function checkHealth() {
         document.querySelector("#gameOver_panel").style.display = "flex";
         clearInterval(interval);
         gameOver = true;
+        stopSnd(music);
         gameSettings.gameStatus = 'stopped';
     }
 }
@@ -391,7 +472,7 @@ function checkHealth() {
 function checkBoundries() {
     for (let i = enemies.length - 1; i >= 0; i--) {
         if (enemies[i].x < 0) {
-            let score = Math.abs(enemies[i].enemyType.score);
+            const score = Math.abs(enemies[i].enemyType.score);
             removeEnemy(enemies[i]);
             enemies.splice(i, 1);
             return score;
@@ -455,7 +536,12 @@ function clearBoard() {
 function resetGame() {
     if (gameSettings.gameStatus === 'start') {
         removeEnemies();
-        enemies = [];
+        enemies.length = 0;
+        hero.resetScore();
+        hero.resetHealth();
+        resetLevel();
+        renderScores()
+        resetSpeed();
         clearInterval(interval);
         setGameInterval();
         gameOver = false;
@@ -463,8 +549,8 @@ function resetGame() {
 }
 
 function animateBackground(speed) {
-    backgroundPosition = backgroundPosition < 183.5 ? backgroundPosition + speed : 0;
-    const gameBackground = document.getElementById("game_container");
+    backgroundPosition = backgroundPosition < gameSettings.backgroundRatio ? backgroundPosition + speedFactor * speed : 0;
+    const gameBackground = document.getElementById('game_container');
     gameBackground.style.backgroundPosition = `${backgroundPosition}% 0`;
 }
 
@@ -473,38 +559,59 @@ function frame() {
     animateBackground(speed);
     createNewEnemy();
     moveEnemies();
-    hero.moveHero();
-    const score = checkBoundries();
-    if (score) {
-        hero.updateScore(score);
-    }
+    hero.move();
+    changeScore();
     if (checkCollisions()) {
+        renderScores();
         snd("snd/gulp.mp3");
     }
     checkHealth();
     clearBoard();
     drawEnemies();
     drawHero();
+
+    function changeScore() {
+        const score = checkBoundries();
+        if (score) {
+            const lastScore = hero.score;
+            hero.updateScore(score);
+            if (lastScore % levelUpScore > hero.score % levelUpScore) {
+                upLevel();
+
+                increaseSpeed();
+            }
+            renderScores();
+        }
+    }
 }
 
-function snd(filename) {
-    let audio = new Audio(filename);
+function snd(filename, loop = false) {
+    const audio = new Audio(filename);
+    audio.loop = loop;
     audio.play();
+    return audio;
 }
+
+function stopSnd(audio) {
+    audio.pause();
+    audio.currentTime = 0;
+}
+
+
 
 function keyPressHandler(e) {
     if (e.keyCode === 32) {
-        hero.changeState("jump");
+        setTimeout(() => hero.changeState("jump"), hero.inertia, false);
     } else if (e.keyCode === 39) {
-        speed = 0.3;
+        setTimeout(() => speedFactor = 3, hero.inertia, false);
     } else if (e.keyCode === 37) {
-        speed = 0.05;
+        setTimeout(() => speedFactor = 0.5, hero.inertia, false);
     }
 }
 
 function keyUpHandler(e) {
     if (e.keyCode !== 32) {
-        speed = 0.1;
+        setTimeout(() => speedFactor = 1, hero.inertia, false);
     }
 }
 
@@ -523,12 +630,12 @@ function touchStartHandler(e) {
     for (let i = 0; i < touches.length; i++) {
         const innerCoords = getGameBoxTouch(touches[i].pageX, touches[i].pageY);
         if (innerCoords.innerX < gameSettings.dimensions.width / 3) {
-            speed = 0.05;
+            setTimeout(() => speedFactor = 0.5, hero.inertia, false);
         } else if (innerCoords.innerX >= gameSettings.dimensions.width / 3 &&
             innerCoords.innerX < 2 * gameSettings.dimensions.width / 3) {
-            hero.changeState("jump");
+            setTimeout(() => hero.changeState("jump"), hero.inertia, false);
         } else {
-            speed = 0.3
+            setTimeout(() => speedFactor = 3, hero.inertia, false);
         }
     }
 }
@@ -540,7 +647,7 @@ function touchEndHandler(e) {
         const innerCoords = getGameBoxTouch(touches[i].pageX, touches[i].pageY);
         if (innerCoords.innerX < gameSettings.dimensions.width / 3 ||
             innerCoords.innerX >= 2 * gameSettings.dimensions.width / 3) {
-            speed = 0.1
+                setTimeout(() => speedFactor = 1, hero.inertia, false);
         }
     }
 }
@@ -568,12 +675,15 @@ function registerHandlers() {
 }
 
 
+
 function game(event) {
     event.stopPropagation();
     startGameChangeBoard();
     gameSettings.setDimensions();
     if (gameSettings.gameStatus === 'stoped') {
         gameSettings.gameStatus = 'start';
+        renderScores();
+        music = snd('snd/bground.mp3', true);
         clearInterval(interval);
         hero.initialize();
         registerHandlers();
@@ -587,12 +697,13 @@ function game(event) {
 /******************************************************** */
 
 document.getElementById('instruction').addEventListener("click", function () {
+    clearInterval(interval);
     document.querySelector('#popupInstruction').style.display = "flex";
 });
 
 document.getElementById('bestListButton').addEventListener("click", function () {
+    clearInterval(interval);
     document.querySelector('#popupBestList').style.display = "flex";
-
     setBestResultList();
 
 });
@@ -600,6 +711,10 @@ document.getElementById('bestListButton').addEventListener("click", function () 
 document.querySelectorAll('.c-close').forEach((elem) => {
     elem.addEventListener("click", (event) => {
         event.target.parentNode.parentNode.style.display = "none";
+        if (interval && !gameOver) {
+            clearInterval(interval);
+            setGameInterval();
+        }
         //document.querySelector('#popupInstruction').style.display = "none";
 
     });
@@ -631,9 +746,12 @@ function setBestResultList() {
     }
 }
 
-function setBestListToLoaclStorage(item){
+function setBestListToLoaclStorage(item) {
     if (!list) {
-        localStorage.setItem("bestList", JSON.stringify([{ nick: nick, point: result }]));
+        localStorage.setItem("bestList", JSON.stringify([{
+            nick: nick,
+            point: result
+        }]));
     } else {
         if (list.length > 9) {
             if (list[9].point < result) {
@@ -649,9 +767,12 @@ function setBestListToLoaclStorage(item){
     }
 }
 
-function addNewResultAndSortList(nick,result){
-    list.push({ nick: nick, point: result });
+function addNewResultAndSortList(nick, result) {
+    list.push({
+        nick: nick,
+        point: result
+    });
     return list.sort((a, b) => {
-                    return b.point - a.point;
-                });
+        return b.point - a.point;
+    });
 }
