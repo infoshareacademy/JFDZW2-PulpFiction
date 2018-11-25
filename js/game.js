@@ -475,6 +475,7 @@ function startGameWithMusic(event) {
     function checkHealth() {
         if (hero.health <= 0) {
             document.querySelector("#gameOver_panel").style.display = "flex";
+            document.getElementById("resultInput").value = hero.score;
             clearInterval(interval);
             gameOver = true;
             stopSnd(music);
@@ -754,11 +755,9 @@ function startGameWithMusic(event) {
     })
 
     document.querySelector("#publishButton").addEventListener("click", function () {
-        let nick = document.querySelector("#nickInput").value;
-        let result = document.querySelector("#resultInput").value;
-        let list = JSON.parse(localStorage.getItem("bestList"));
 
-        setBestListToLoaclStorage(item);
+
+        setBestListToLoaclStorage();
 
         document.querySelector("#gameOver_panel").style.display = "none";
         document.querySelector('#popupBestList').style.display = "flex";
@@ -779,7 +778,11 @@ function startGameWithMusic(event) {
         }
     }
 
-    function setBestListToLoaclStorage(item) {
+    function setBestListToLoaclStorage() {
+        let nick = document.querySelector("#nickInput").value;
+        let result = document.querySelector("#resultInput").value;
+        let list = JSON.parse(localStorage.getItem("bestList"));
+        
         if (!list) {
             localStorage.setItem("bestList", JSON.stringify([{
                 nick: nick,
@@ -792,7 +795,7 @@ function startGameWithMusic(event) {
                     list = addNewResultAndSortList(nick, result);
                 }
             } else if (list.length < 10) {
-                list = addNewResultAndSortList(nick, result);
+                list = addNewResultAndSortList(list, nick, result);
             }
 
             localStorage.setItem("bestList", JSON.stringify(list));
@@ -800,7 +803,7 @@ function startGameWithMusic(event) {
         }
     }
 
-    function addNewResultAndSortList(nick, result) {
+    function addNewResultAndSortList(list, nick, result) {
         list.push({
             nick: nick,
             point: result
