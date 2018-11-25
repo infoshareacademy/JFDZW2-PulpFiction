@@ -755,11 +755,9 @@ function startGameWithMusic(event) {
     })
 
     document.querySelector("#publishButton").addEventListener("click", function () {
-        let nick = document.querySelector("#nickInput").value;
-        let result = document.querySelector("#resultInput").value;
-        let list = JSON.parse(localStorage.getItem("bestList"));
 
-        setBestListToLoaclStorage(item);
+
+        setBestListToLoaclStorage();
 
         document.querySelector("#gameOver_panel").style.display = "none";
         document.querySelector('#popupBestList').style.display = "flex";
@@ -780,7 +778,11 @@ function startGameWithMusic(event) {
         }
     }
 
-    function setBestListToLoaclStorage(item) {
+    function setBestListToLoaclStorage() {
+        let nick = document.querySelector("#nickInput").value;
+        let result = document.querySelector("#resultInput").value;
+        let list = JSON.parse(localStorage.getItem("bestList"));
+        
         if (!list) {
             localStorage.setItem("bestList", JSON.stringify([{
                 nick: nick,
