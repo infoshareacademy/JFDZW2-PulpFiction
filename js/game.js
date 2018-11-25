@@ -795,7 +795,7 @@ function startGameWithMusic(event) {
                     list = addNewResultAndSortList(nick, result);
                 }
             } else if (list.length < 10) {
-                list = addNewResultAndSortList(nick, result);
+                list = addNewResultAndSortList(list, nick, result);
             }
 
             localStorage.setItem("bestList", JSON.stringify(list));
@@ -803,7 +803,7 @@ function startGameWithMusic(event) {
         }
     }
 
-    function addNewResultAndSortList(nick, result) {
+    function addNewResultAndSortList(list, nick, result) {
         list.push({
             nick: nick,
             point: result
