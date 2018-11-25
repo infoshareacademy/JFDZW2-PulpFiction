@@ -475,6 +475,7 @@ function startGameWithMusic(event) {
     function checkHealth() {
         if (hero.health <= 0) {
             document.querySelector("#gameOver_panel").style.display = "flex";
+            document.getElementById("resultInput").value = hero.score;
             clearInterval(interval);
             gameOver = true;
             stopSnd(music);
