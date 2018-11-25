@@ -15,18 +15,18 @@
     align-items: center;
 }
 
-.c-game-container__over{
+.c-game-container__over {
     background-color: white;
-    display:none;
+    display: none;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    position:absolute;
-    top:0;
-    left:0;
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
-    width:100%;
-    opacity: 0.8;    
+    width: 100%;
+    opacity: 0.8;
 }
 
 @font-face {
@@ -47,10 +47,14 @@
     padding: 1rem 4rem;
     border-radius: 10px;
     font-size: 2rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.c-button--medium{
-    padding:0.5rem 1rem;
+.c-button--medium {
+    padding: 0.5rem 1rem;
 
 }
 
@@ -113,56 +117,61 @@
     position: relative;
 }
 
-.c-container--frame{
-    display:flex;
+.c-container--frame {
+    display: flex;
 }
 
-.c-container--panel{
+.c-container--panel {
     flex-grow: 1;
     border: 2px solid $accentColor;
-    display:flex;
+    display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
 
 .c-popup--frame {
-	background-color: rgba(0, 0, 0, 0.8);
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	display: none;
-	justify-content: center;
-	align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
 }
 
 .c-popup--panel {
-	height: 300px;
-	width: 500px;
-	background-color: white;
-	padding: 20px;
-	position: relative;
-	border-radius: 4px;
+    height: 300px;
+    width: 500px;
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    border-radius: 4px;
 }
 
 .c-close {
-	position: absolute;
-	top: 0;
-	right: 10px;
-	font-size: 42px;
-	color: #333;
-	transform: rotate(45deg);
-	cursor: pointer;
-	&:hover {
-		color: #666;
-	}
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 42px;
+    color: #333;
+    transform: rotate(45deg);
+    cursor: pointer;
+
+    &:hover {
+        color: #666;
+    }
 }
 
 @media (max-width:$tabletScreen) {
     #game_container {
         width: 400px;
         height: 300px;
+    }
+
+    .c-game-scores {
+        font-size: 1em;
     }
 
     .animate {
