@@ -552,7 +552,7 @@ function clearBoard() {
 }
 
 function resetGame(event) {
-    removeEnemies();
+    clearBoard()
     enemies.length = 0;
     hero.resetScore();
     hero.resetHealth();
@@ -586,6 +586,7 @@ function frame() {
     if (gameSettings.gameStatus === 'gameOver') {
         openGameOverPanel();
         resetGame(null);
+        return;
     }
     clearBoard();
     drawEnemies();
@@ -788,7 +789,7 @@ function setBestResultList() {
     if (!list) {
         elem.innerHTML = "";
     } else {
-        let result = '<table style="width:100%"> ';
+        let result = '<table style="width:60%" align:"center"> ';
         list.forEach((item, index) =>
             result += "<tr><td>" + (index + 1) + '.</td><td>' + item.nick + '</td><td>' + item.point) + '</td></tr>';
         elem.innerHTML = result + "</table>";
