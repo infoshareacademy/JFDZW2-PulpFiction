@@ -111,18 +111,18 @@
 }
 
 .c-container--game {
-    flex-grow: 3;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     position: relative;
 }
 
 .c-container--frame {
     display: flex;
+    justify-content: center;
+    margin-top: calc(#{$headerHeight} + 10px);
 }
 
 .c-container--panel {
-    flex-grow: 1;
     border: 2px solid $accentColor;
     display: flex;
     flex-direction: column;
